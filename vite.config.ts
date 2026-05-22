@@ -7,6 +7,10 @@ import tailwindcss from '@tailwindcss/vite';
 const isVercel = process.env.VERCEL === '1';
 
 export default defineConfig(({isSsrBuild}) => ({
+  define: {
+    // Inline at build time so Vercel SSR bundles omit Oxygen-only imports.
+    'process.env.VERCEL': JSON.stringify(isVercel ? '1' : ''),
+  },
   plugins: [
     tailwindcss(),
     hydrogen(),

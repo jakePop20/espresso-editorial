@@ -1,7 +1,3 @@
-import {ServerRouter} from 'react-router';
-import {isbot} from 'isbot';
-import {renderToReadableStream} from 'react-dom/server';
-import {handleRequest as vercelHandleRequest} from '@vercel/react-router/entry.server';
 import {
   createContentSecurityPolicy,
   type HydrogenRouterContextProvider,
@@ -22,8 +18,12 @@ export default async function handleRequest(
     },
   });
 
-  // Vercel Node functions need pipeable streaming, not Web ReadableStream SSR.
+  // Vercel Node: pipeable stream only. Do not statically import react-dom/server
+  // renderToReadableStream — it breaks Node ESM (CJS named export) at module load.
   if (process.env.VERCEL) {
+    const {handleRequest: vercelHandleRequest} = await import(
+      '@vercel/react-router/entry.server'
+    );
     const response = await vercelHandleRequest(
       request,
       responseStatusCode,
@@ -35,6 +35,12 @@ export default async function handleRequest(
     response.headers.set('Content-Security-Policy', header);
     return response;
   }
+
+  const [{renderToReadableStream}, {ServerRouter}, {isbot}] = await Promise.all([
+    import('react-dom/server'),
+    import('react-router'),
+    import('isbot'),
+  ]);
 
   const body = await renderToReadableStream(
     <NonceProvider>
