@@ -23,7 +23,7 @@ export default defineConfig(({isSsrBuild}) => ({
     rollupOptions:
       isVercel && isSsrBuild
         ? {
-            input: './server.ts',
+            input: './server.vercel.ts',
           }
         : undefined,
   },

@@ -2,14 +2,10 @@ import * as serverBuild from 'virtual:react-router/server-build';
 import {createRequestHandler, storefrontRedirect} from '@shopify/hydrogen';
 import {createHydrogenRouterContext} from '~/lib/context';
 
-type VercelHandlerContext = {
-  waitUntil?: (promise: Promise<unknown>) => void;
-};
-
 async function handleHydrogenRequest(
   request: Request,
   env: Env,
-  executionContext?: ExecutionContext,
+  executionContext: ExecutionContext,
 ): Promise<Response> {
   const hydrogenContext = await createHydrogenRouterContext(
     request,
@@ -43,29 +39,10 @@ async function handleHydrogenRequest(
   return response;
 }
 
-async function vercelHandler(
-  request: Request,
-  vercelContext?: VercelHandlerContext,
-): Promise<Response> {
-  try {
-    const executionContext = vercelContext?.waitUntil
-      ? ({
-          waitUntil: vercelContext.waitUntil.bind(vercelContext),
-        } as ExecutionContext)
-      : undefined;
-
-    return await handleHydrogenRequest(
-      request,
-      process.env as Env,
-      executionContext,
-    );
-  } catch (error) {
-    console.error(error);
-    return new Response('An unexpected error occurred', {status: 500});
-  }
-}
-
-const oxygenHandler = {
+/**
+ * Mini Oxygen / local preview — Workers-style `{ fetch }` handler.
+ */
+export default {
   async fetch(
     request: Request,
     env: Env,
@@ -79,9 +56,3 @@ const oxygenHandler = {
     }
   },
 };
-
-/**
- * Vercel: Web API handler (function export).
- * Oxygen / mini-oxygen: Workers-style `{ fetch }` object.
- */
-export default process.env.VERCEL === '1' ? vercelHandler : oxygenHandler;
