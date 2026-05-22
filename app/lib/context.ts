@@ -19,6 +19,34 @@ declare global {
   interface HydrogenAdditionalContext extends AdditionalContextType {}
 }
 
+/** Minimal Cache API for hosts without Workers `caches` (e.g. Vercel Node). */
+function createMemoryCache(): Cache {
+  const store = new Map<string, Response>();
+  return {
+    async match(request) {
+      return store.get(request.url) ?? undefined;
+    },
+    async put(request, response) {
+      store.set(request.url, response);
+    },
+    async delete(request) {
+      return store.delete(request.url);
+    },
+    async keys() {
+      return [...store.keys()].map(
+        (url) => new Request(url) as unknown as Request,
+      );
+    },
+  } as Cache;
+}
+
+async function getCache(): Promise<Cache> {
+  if (typeof caches !== 'undefined') {
+    return caches.open('hydrogen');
+  }
+  return createMemoryCache();
+}
+
 /**
  * Creates Hydrogen context for React Router 7.9.x
  * Returns HydrogenRouterContextProvider with hybrid access patterns
@@ -26,7 +54,7 @@ declare global {
 export async function createHydrogenRouterContext(
   request: Request,
   env: Env,
-  executionContext: ExecutionContext,
+  executionContext?: ExecutionContext,
 ) {
   /**
    * Open a cache instance in the worker and a custom session instance.
@@ -35,9 +63,14 @@ export async function createHydrogenRouterContext(
     throw new Error('SESSION_SECRET environment variable is not set');
   }
 
-  const waitUntil = executionContext.waitUntil.bind(executionContext);
+  const waitUntil =
+    executionContext?.waitUntil?.bind(executionContext) ??
+    ((promise: Promise<unknown>) => {
+      promise.catch(() => {});
+    });
+
   const [cache, session] = await Promise.all([
-    caches.open('hydrogen'),
+    getCache(),
     AppSession.init(request, [env.SESSION_SECRET]),
   ]);
 
