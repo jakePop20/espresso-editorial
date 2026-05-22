@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "shopify hydrogen codegen && react-router typegen && react-router build",
-    "build:vercel": "npm run build && vercel build",
+    "build:vercel": "npm run build",
     "build:oxygen": "shopify hydrogen build --codegen",
     "dev": "shopify hydrogen dev --codegen",
     "preview": "npm run build:oxygen && shopify hydrogen preview",
