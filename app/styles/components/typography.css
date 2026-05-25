@@ -1,0 +1,37 @@
+/**
+ * Prose — long-form content inside main.
+ */
+@layer components {
+  .prose-editorial {
+    @apply font-body text-body-md text-on-background;
+  }
+
+  .prose-editorial h1 {
+    @apply font-display text-headline-xl text-espresso md:text-display-lg;
+  }
+
+  .prose-editorial h2 {
+    @apply font-display text-headline-md text-espresso;
+  }
+
+  .prose-editorial h3 {
+    @apply font-display text-headline-md text-espresso;
+  }
+
+  .prose-editorial p {
+    @apply text-ink-subtle;
+  }
+
+  .prose-editorial .lead {
+    @apply font-body text-body-lg text-ink-subtle;
+  }
+
+  .prose-editorial blockquote {
+    @apply font-display text-headline-md italic leading-snug text-espresso;
+  }
+
+  .prose-editorial a:not(.btn):not(.btn-primary):not(.btn-secondary):not(.nav-link) {
+    @apply text-espresso underline decoration-espresso/40 underline-offset-4 hover:decoration-espresso;
+    transition: text-decoration-color var(--ee-duration-medium) var(--ee-ease-editorial);
+  }
+}

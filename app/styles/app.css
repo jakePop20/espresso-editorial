@@ -3,14 +3,13 @@
   --cart-aside-summary-height-with-discount: 300px;
   --cart-aside-summary-height: 250px;
   --grid-item-width: 355px;
-  --header-height: 64px;
-  --color-dark: #000;
-  --color-light: #fff;
+  --header-height: var(--ee-header-height);
+  /* Legacy Hydrogen template vars — prefer Tailwind tokens (bg-espresso, etc.) */
+  --color-dark: var(--ee-color-espresso);
+  --color-light: var(--ee-color-cream-silk);
 }
 
-img {
-  border-radius: 4px;
-}
+/* img radius — see tailwind.css @layer base */
 
 /*
 * --------------------------------------------------
@@ -85,8 +84,8 @@ img {
 }
 
 aside {
-  background: var(--color-light);
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+  background: var(--ee-color-cream-silk);
+  box-shadow: var(--ee-shadow-editorial);
   height: 100vh;
   width: min(var(--aside-width), 100vw);
   position: fixed;
@@ -222,78 +221,15 @@ button.reset:hover:not(:has(> *)) {
 
 /*
 * --------------------------------------------------
-* components/Header
+* Header / Footer — editorial shell in components.css (.site-header, .site-footer)
 * --------------------------------------------------
 */
-.header {
-  align-items: center;
-  background: #fff;
-  display: flex;
-  height: var(--header-height);
-  padding: 0 1rem;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
-
-.header-menu-mobile-toggle {
-  @media (min-width: 48em) {
-    display: none;
-  }
-}
+/* Header layout — see components.css (.site-header*) */
 
 .header-menu-mobile {
   display: flex;
   flex-direction: column;
-  grid-gap: 1rem;
-}
-
-.header-menu-desktop {
-  display: none;
-  grid-gap: 1rem;
-  @media (min-width: 45em) {
-    display: flex;
-    grid-gap: 1rem;
-    margin-left: 3rem;
-  }
-}
-
-.header-menu-item {
-  cursor: pointer;
-}
-
-.header-ctas {
-  align-items: center;
-  display: flex;
-  grid-gap: 1rem;
-  margin-left: auto;
-}
-
-.header-ctas > * {
-  min-width: fit-content;
-}
-
-/*
-* --------------------------------------------------
-* components/Footer
-* --------------------------------------------------
-*/
-.footer {
-  background: var(--color-dark);
-  margin-top: auto;
-}
-
-.footer-menu {
-  justify-content: center;
-  display: flex;
-  flex-wrap: wrap;
-  grid-gap: 1rem;
-  padding: 1rem;
-}
-
-.footer-menu a {
-  color: var(--color-light);
-  min-width: fit-content;
+  gap: 1rem;
 }
 
 /*

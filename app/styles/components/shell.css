@@ -1,0 +1,42 @@
+/**
+ * Page shell — layout wrappers shared across routes.
+ */
+@layer components {
+  .editorial-container {
+    @apply mx-auto w-full max-w-editorial;
+    padding-inline: var(--ee-spacing-margin-mobile);
+  }
+
+  @media (width >= 48rem) {
+    .editorial-container {
+      padding-inline: var(--ee-spacing-margin-desktop);
+    }
+  }
+
+  .site-main {
+    @apply min-h-[calc(100vh-var(--ee-header-height))] pt-32 pb-section-gap;
+  }
+
+  .section {
+    @apply mx-auto w-full max-w-editorial;
+    padding-inline: var(--ee-spacing-margin-mobile);
+  }
+
+  @media (width >= 48rem) {
+    .section {
+      padding-inline: var(--ee-spacing-margin-desktop);
+    }
+  }
+
+  .section + .section {
+    @apply mt-section-gap;
+  }
+
+  .section-intro {
+    @apply mb-16 text-center;
+  }
+
+  .section-intro .eyebrow {
+    @apply mb-4 block font-label text-label-caps uppercase tracking-widest text-roasted-clay;
+  }
+}

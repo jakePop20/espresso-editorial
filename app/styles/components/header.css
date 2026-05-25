@@ -1,0 +1,52 @@
+/**
+ * Site header — fixed editorial nav (Header.tsx).
+ */
+@layer components {
+  .site-header {
+    @apply fixed top-0 z-50 h-header w-full border-b border-almond-foam/30 bg-cream-silk/90 shadow-sm backdrop-blur-md;
+  }
+
+  .site-header__inner {
+    @apply mx-auto flex h-full w-full max-w-editorial items-center justify-between;
+    padding-inline: var(--ee-spacing-margin-mobile);
+  }
+
+  @media (width >= 48rem) {
+    .site-header__inner {
+      padding-inline: var(--ee-spacing-margin-desktop);
+    }
+  }
+
+  .site-header__brand {
+    @apply font-headline-md text-headline-md tracking-tight text-espresso no-underline transition-opacity hover:opacity-80;
+  }
+
+  .site-header__nav {
+    @apply hidden items-center gap-6 md:flex;
+  }
+
+  .site-header__actions {
+    @apply flex items-center gap-6;
+  }
+
+  .site-header__actions .btn-icon {
+    @apply text-espresso;
+  }
+
+  .site-header__actions .btn-icon .material-symbols-outlined {
+    font-size: 1.5rem;
+  }
+
+  .site-header__menu-toggle {
+    @apply md:hidden;
+  }
+
+  .site-header .nav-link {
+    @apply font-body text-body-md text-ink-subtle no-underline hover:text-espresso;
+    transition: color var(--ee-duration-medium) var(--ee-ease-editorial);
+  }
+
+  .site-header .nav-link--active {
+    @apply border-b-2 border-espresso pb-1 text-espresso hover:text-espresso;
+  }
+}

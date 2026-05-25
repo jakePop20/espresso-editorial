@@ -1,0 +1,34 @@
+/**
+ * Buttons — shared across pages and chrome.
+ */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded px-10 py-4 font-label text-label-caps uppercase tracking-widest;
+    transition:
+      background-color var(--ee-duration-medium) var(--ee-ease-editorial),
+      color var(--ee-duration-medium) var(--ee-ease-editorial),
+      border-color var(--ee-duration-medium) var(--ee-ease-editorial);
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded border border-transparent bg-espresso px-10 py-4 font-label text-label-caps uppercase tracking-widest text-cream-silk hover:bg-roasted-clay;
+    transition: background-color var(--ee-duration-medium) var(--ee-ease-editorial);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded border border-espresso bg-transparent px-10 py-4 font-label text-label-caps uppercase tracking-widest text-espresso hover:bg-espresso hover:text-cream-silk;
+    transition:
+      background-color var(--ee-duration-medium) var(--ee-ease-editorial),
+      color var(--ee-duration-medium) var(--ee-ease-editorial);
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center font-label text-label-caps uppercase tracking-widest text-espresso underline decoration-espresso underline-offset-4 hover:opacity-70;
+    transition: opacity var(--ee-duration-medium) var(--ee-ease-editorial);
+  }
+
+  .btn-icon {
+    @apply inline-flex cursor-pointer border-0 bg-transparent p-0 text-espresso hover:opacity-80;
+    transition: opacity var(--ee-duration-medium) var(--ee-ease-editorial);
+  }
+}

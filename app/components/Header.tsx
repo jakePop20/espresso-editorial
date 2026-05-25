@@ -7,6 +7,8 @@ import {
 } from '@shopify/hydrogen';
 import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
+import {Icon} from '~/components/Icon';
+import {STORE_DISPLAY_NAME} from '~/lib/brand';
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -23,76 +25,67 @@ export function Header({
   cart,
   publicStoreDomain,
 }: HeaderProps) {
-  const {shop, menu} = header;
   return (
-    <header className="header">
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong>{shop.name}</strong>
-      </NavLink>
-      <HeaderMenu
-        menu={menu}
-        viewport="desktop"
-        primaryDomainUrl={header.shop.primaryDomain.url}
-        publicStoreDomain={publicStoreDomain}
-      />
-      <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+    <header className="site-header">
+      <div className="site-header__inner">
+        <div className="flex items-center gap-8">
+          <NavLink className="site-header__brand" prefetch="intent" to="/" end>
+            {STORE_DISPLAY_NAME}
+          </NavLink>
+          <HeaderMenu viewport="desktop" />
+        </div>
+        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+      </div>
     </header>
   );
 }
 
 export function HeaderMenu({
-  menu,
-  primaryDomainUrl,
   viewport,
-  publicStoreDomain,
 }: {
-  menu: HeaderProps['header']['menu'];
-  primaryDomainUrl: HeaderProps['header']['shop']['primaryDomain']['url'];
+  menu?: HeaderProps['header']['menu'];
+  primaryDomainUrl?: HeaderProps['header']['shop']['primaryDomain']['url'];
   viewport: Viewport;
-  publicStoreDomain: HeaderProps['publicStoreDomain'];
+  publicStoreDomain?: HeaderProps['publicStoreDomain'];
 }) {
-  const className = `header-menu-${viewport}`;
   const {close} = useAside();
 
+  const navClassName =
+    viewport === 'desktop' ? 'site-header__nav' : 'header-menu-mobile';
+
   return (
-    <nav className={className} role="navigation">
-      {viewport === 'mobile' && (
+    <nav className={navClassName} role="navigation">
+      {EDITORIAL_HEADER_NAV.map((item) => (
         <NavLink
-          end
+          className={navLinkClassName}
+          end={item.end}
+          key={item.to}
           onClick={close}
           prefetch="intent"
-          style={activeLinkStyle}
-          to="/"
+          to={item.to}
         >
-          Home
+          {item.label}
         </NavLink>
-      )}
-      {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
-        if (!item.url) return null;
-
-        // if the url is internal, we strip the domain
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
-        return (
-          <NavLink
-            className="header-menu-item"
-            end
-            key={item.id}
-            onClick={close}
-            prefetch="intent"
-            style={activeLinkStyle}
-            to={url}
-          >
-            {item.title}
-          </NavLink>
-        );
-      })}
+      ))}
     </nav>
   );
+}
+
+function navLinkClassName({
+  isActive,
+  isPending,
+}: {
+  isActive: boolean;
+  isPending: boolean;
+}) {
+  return [
+    'header-menu-item',
+    'nav-link',
+    isActive ? 'nav-link--active' : '',
+    isPending ? 'opacity-60' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
 }
 
 function HeaderCtas({
@@ -100,18 +93,35 @@ function HeaderCtas({
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
-    <nav className="header-ctas" role="navigation">
+    <nav className="site-header__actions" role="navigation" aria-label="Header">
+      <CartToggle cart={cart} />
+      <AccountToggle isLoggedIn={isLoggedIn} />
+      {/* Mock uses bag + person only; search stays available but off-canvas */}
+      <SearchToggle className="sr-only" />
       <HeaderMenuMobileToggle />
-      <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
+    </nav>
+  );
+}
+
+function AccountToggle({isLoggedIn}: Pick<HeaderProps, 'isLoggedIn'>) {
+  return (
+    <NavLink
+      aria-label="Account"
+      className="btn-icon"
+      prefetch="intent"
+      to="/account"
+    >
+      <span className="material-symbols-outlined" aria-hidden>
+        person
+      </span>
+      <span className="sr-only">
         <Suspense fallback="Sign in">
           <Await resolve={isLoggedIn} errorElement="Sign in">
-            {(isLoggedIn) => (isLoggedIn ? 'Account' : 'Sign in')}
+            {(loggedIn) => (loggedIn ? 'Account' : 'Sign in')}
           </Await>
         </Suspense>
-      </NavLink>
-      <SearchToggle />
-      <CartToggle cart={cart} />
-    </nav>
+      </span>
+    </NavLink>
   );
 }
 
@@ -119,19 +129,26 @@ function HeaderMenuMobileToggle() {
   const {open} = useAside();
   return (
     <button
-      className="header-menu-mobile-toggle reset"
+      aria-label="Open menu"
+      className="site-header__menu-toggle btn-icon"
       onClick={() => open('mobile')}
+      type="button"
     >
-      <h3>☰</h3>
+      <Icon name="menu" />
     </button>
   );
 }
 
-function SearchToggle() {
+function SearchToggle({className = ''}: {className?: string}) {
   const {open} = useAside();
   return (
-    <button className="reset" onClick={() => open('search')}>
-      Search
+    <button
+      aria-label="Search"
+      className={`btn-icon ${className}`.trim()}
+      onClick={() => open('search')}
+      type="button"
+    >
+      <Icon name="search" />
     </button>
   );
 }
@@ -141,8 +158,9 @@ function CartBadge({count}: {count: number}) {
   const {publish, shop, cart, prevCart} = useAnalytics();
 
   return (
-    <a
-      href="/cart"
+    <button
+      aria-label={`Cart, ${count} items`}
+      className="btn-icon"
       onClick={(e) => {
         e.preventDefault();
         open('cart');
@@ -153,9 +171,10 @@ function CartBadge({count}: {count: number}) {
           url: window.location.href || '',
         } as CartViewPayload);
       }}
+      type="button"
     >
-      Cart <span aria-label={`(items: ${count})`}>{count}</span>
-    </a>
+      <Icon name="shopping_bag" />
+    </button>
   );
 }
 
@@ -175,57 +194,10 @@ function CartBanner() {
   return <CartBadge count={cart?.totalQuantity ?? 0} />;
 }
 
-const FALLBACK_HEADER_MENU = {
-  id: 'gid://shopify/Menu/199655587896',
-  items: [
-    {
-      id: 'gid://shopify/MenuItem/461609500728',
-      resourceId: null,
-      tags: [],
-      title: 'Collections',
-      type: 'HTTP',
-      url: '/collections',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461609533496',
-      resourceId: null,
-      tags: [],
-      title: 'Blog',
-      type: 'HTTP',
-      url: '/blogs/journal',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461609566264',
-      resourceId: null,
-      tags: [],
-      title: 'Policies',
-      type: 'HTTP',
-      url: '/policies',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461609599032',
-      resourceId: 'gid://shopify/Page/92591030328',
-      tags: [],
-      title: 'About',
-      type: 'PAGE',
-      url: '/pages/about',
-      items: [],
-    },
-  ],
-};
+const EDITORIAL_HEADER_NAV = [
+  {label: 'Home', to: '/', end: true},
+  {label: 'Quiz', to: '/pages/quiz', end: false},
+  {label: 'Subscription', to: '/pages/subscription', end: false},
+  {label: 'Bundles', to: '/collections/bundles', end: false},
+] as const;
 
-function activeLinkStyle({
-  isActive,
-  isPending,
-}: {
-  isActive: boolean;
-  isPending: boolean;
-}) {
-  return {
-    fontWeight: isActive ? 'bold' : undefined,
-    color: isPending ? 'grey' : 'black',
-  };
-}
