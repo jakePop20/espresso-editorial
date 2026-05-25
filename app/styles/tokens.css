@@ -1,0 +1,176 @@
+/**
+ * Espresso Editorial — design tokens (single source of truth).
+ *
+ * To retheme: edit brand aliases in the "Brand aliases" block below.
+ * All Tailwind utilities (bg-espresso, text-on-surface, etc.) read from here.
+ */
+
+:root {
+  /* -------------------------------------------------------------------------
+   * Brand aliases — change these to retheme the storefront
+   * ------------------------------------------------------------------------- */
+  --ee-brand-primary: var(--ee-color-espresso);
+  --ee-brand-secondary: var(--ee-color-almond-foam);
+  --ee-brand-accent: var(--ee-color-roasted-clay);
+  --ee-brand-surface: var(--ee-color-cream-silk);
+  --ee-brand-ink-muted: var(--ee-color-ink-subtle);
+
+  /* -------------------------------------------------------------------------
+   * Colors — surfaces
+   * ------------------------------------------------------------------------- */
+  --ee-color-surface: #fbf9f5;
+  --ee-color-surface-dim: #dbdad6;
+  --ee-color-surface-bright: #fbf9f5;
+  --ee-color-surface-container-lowest: #ffffff;
+  --ee-color-surface-container-low: #f5f3ef;
+  --ee-color-surface-container: #efeeea;
+  --ee-color-surface-container-high: #eae8e4;
+  --ee-color-surface-container-highest: #e4e2de;
+  --ee-color-surface-variant: #e4e2de;
+  --ee-color-surface-tint: #655c5a;
+
+  --ee-color-on-surface: #1b1c1a;
+  --ee-color-on-surface-variant: #4e4542;
+  --ee-color-inverse-surface: #30312e;
+  --ee-color-inverse-on-surface: #f2f0ed;
+
+  --ee-color-outline: #807571;
+  --ee-color-outline-variant: #d1c4c0;
+
+  --ee-color-background: #fbf9f5;
+  --ee-color-on-background: #1b1c1a;
+
+  /* -------------------------------------------------------------------------
+   * Colors — brand & editorial
+   * ------------------------------------------------------------------------- */
+  --ee-color-espresso: #1a1412;
+  --ee-color-cream-silk: #fdfbf7;
+  --ee-color-roasted-clay: #9c3912;
+  --ee-color-almond-foam: #e6ded3;
+  --ee-color-ink-subtle: #4a4543;
+
+  /* -------------------------------------------------------------------------
+   * Colors — Material-style roles (map to brand aliases where sensible)
+   * ------------------------------------------------------------------------- */
+  --ee-color-primary: var(--ee-brand-primary);
+  --ee-color-on-primary: #ffffff;
+  --ee-color-primary-container: #201a18;
+  --ee-color-on-primary-container: #8c827e;
+  --ee-color-inverse-primary: #d0c4c0;
+
+  --ee-color-secondary: #7f5538;
+  --ee-color-on-secondary: #ffffff;
+  --ee-color-secondary-container: #ffc6a1;
+  --ee-color-on-secondary-container: #7a5034;
+
+  --ee-color-tertiary: #000000;
+  --ee-color-on-tertiary: #ffffff;
+  --ee-color-tertiary-container: #390c00;
+  --ee-color-on-tertiary-container: #d46238;
+
+  --ee-color-error: #ba1a1a;
+  --ee-color-on-error: #ffffff;
+  --ee-color-error-container: #ffdad6;
+  --ee-color-on-error-container: #93000a;
+
+  --ee-color-primary-fixed: #ede0dc;
+  --ee-color-primary-fixed-dim: #d0c4c0;
+  --ee-color-on-primary-fixed: #201a18;
+  --ee-color-on-primary-fixed-variant: #4d4542;
+
+  --ee-color-secondary-fixed: #ffdcc7;
+  --ee-color-secondary-fixed-dim: #f3bb97;
+  --ee-color-on-secondary-fixed: #311400;
+  --ee-color-on-secondary-fixed-variant: #643e23;
+
+  --ee-color-tertiary-fixed: #ffdbcf;
+  --ee-color-tertiary-fixed-dim: #ffb59c;
+  --ee-color-on-tertiary-fixed: #390c00;
+  --ee-color-on-tertiary-fixed-variant: #832700;
+
+  /* -------------------------------------------------------------------------
+   * Typography — font stacks
+   * ------------------------------------------------------------------------- */
+  --ee-font-display: 'EB Garamond', ui-serif, Georgia, 'Times New Roman', serif;
+  --ee-font-body: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --ee-font-label: 'Geist', ui-sans-serif, system-ui, sans-serif;
+
+  /* -------------------------------------------------------------------------
+   * Typography — scale (size / line-height / weight / tracking)
+   * ------------------------------------------------------------------------- */
+  --ee-text-display-lg-size: 4.5rem;
+  --ee-text-display-lg-line: 5rem;
+  --ee-text-display-lg-weight: 500;
+  --ee-text-display-lg-tracking: -0.02em;
+
+  --ee-text-display-lg-mobile-size: 3rem;
+  --ee-text-display-lg-mobile-line: 3.5rem;
+  --ee-text-display-lg-mobile-weight: 500;
+  --ee-text-display-lg-mobile-tracking: -0.01em;
+
+  --ee-text-headline-xl-size: 3rem;
+  --ee-text-headline-xl-line: 3.5rem;
+  --ee-text-headline-xl-weight: 400;
+
+  --ee-text-headline-md-size: 2rem;
+  --ee-text-headline-md-line: 2.5rem;
+  --ee-text-headline-md-weight: 400;
+
+  --ee-text-body-lg-size: 1.125rem;
+  --ee-text-body-lg-line: 1.75rem;
+  --ee-text-body-lg-weight: 400;
+
+  --ee-text-body-md-size: 1rem;
+  --ee-text-body-md-line: 1.5rem;
+  --ee-text-body-md-weight: 400;
+
+  --ee-text-label-caps-size: 0.75rem;
+  --ee-text-label-caps-line: 1rem;
+  --ee-text-label-caps-weight: 500;
+  --ee-text-label-caps-tracking: 0.1em;
+
+  --ee-text-label-sm-size: 0.6875rem;
+  --ee-text-label-sm-line: 0.875rem;
+  --ee-text-label-sm-weight: 400;
+
+  /* -------------------------------------------------------------------------
+   * Spacing (4px base unit)
+   * ------------------------------------------------------------------------- */
+  --ee-spacing-unit: 4px;
+  --ee-spacing-gutter: 24px;
+  --ee-spacing-gutter-mobile: 16px;
+  --ee-spacing-margin-desktop: 80px;
+  --ee-spacing-margin-mobile: 20px;
+  --ee-spacing-section-gap: 120px;
+
+  /* -------------------------------------------------------------------------
+   * Layout
+   * ------------------------------------------------------------------------- */
+  --ee-layout-max-width: 80rem; /* 1280px */
+  --ee-header-height: 5rem; /* 80px — matches editorial mock */
+
+  /* -------------------------------------------------------------------------
+   * Radius
+   * ------------------------------------------------------------------------- */
+  /* Matches subscription / global mocks (soft-modern, slightly crisp) */
+  --ee-radius-sm: 0.125rem;
+  --ee-radius-default: 0.125rem;
+  --ee-radius-md: 0.25rem;
+  --ee-radius-lg: 0.25rem;
+  --ee-radius-xl: 0.5rem;
+  --ee-radius-full: 0.75rem;
+
+  /* -------------------------------------------------------------------------
+   * Elevation & borders
+   * ------------------------------------------------------------------------- */
+  --ee-shadow-editorial: 0 10px 30px rgb(26 20 18 / 5%);
+  --ee-border-subtle: rgb(26 20 18 / 12%);
+  --ee-border-almond: rgb(230 222 211 / 30%);
+
+  /* -------------------------------------------------------------------------
+   * Motion
+   * ------------------------------------------------------------------------- */
+  --ee-ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+  --ee-duration-slow: 800ms;
+  --ee-duration-medium: 300ms;
+}

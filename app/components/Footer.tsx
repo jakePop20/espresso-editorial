@@ -1,129 +1,101 @@
-import {Suspense} from 'react';
-import {Await, NavLink} from 'react-router';
-import type {FooterQuery, HeaderQuery} from 'storefrontapi.generated';
+import {NavLink} from 'react-router';
+import {Icon} from '~/components/Icon';
+import {STORE_DISPLAY_NAME} from '~/lib/brand';
+import {
+  FOOTER_ARCHIVE_LINKS,
+  FOOTER_CUSTOMER_CARE_LINKS,
+  FOOTER_NEWSLETTER_NOTE,
+  FOOTER_SOCIAL_LINKS,
+  FOOTER_TAGLINE,
+} from '~/lib/footer-content';
 
-interface FooterProps {
-  footer: Promise<FooterQuery | null>;
-  header: HeaderQuery;
-  publicStoreDomain: string;
-}
+export function Footer() {
+  const year = new Date().getFullYear();
 
-export function Footer({
-  footer: footerPromise,
-  header,
-  publicStoreDomain,
-}: FooterProps) {
   return (
-    <Suspense>
-      <Await resolve={footerPromise}>
-        {(footer) => (
-          <footer className="footer">
-            {footer?.menu && header.shop.primaryDomain?.url && (
-              <FooterMenu
-                menu={footer.menu}
-                primaryDomainUrl={header.shop.primaryDomain.url}
-                publicStoreDomain={publicStoreDomain}
+    <footer className="site-footer">
+      <div className="site-footer__inner">
+        <div className="site-footer__grid">
+          <div className="site-footer__brand">
+            <span className="site-footer__logo">{STORE_DISPLAY_NAME}</span>
+            <p className="site-footer__tagline">{FOOTER_TAGLINE}</p>
+            <div className="site-footer__social">
+              {FOOTER_SOCIAL_LINKS.map((item) => (
+                <a
+                  key={item.href}
+                  aria-label={item.label}
+                  className="site-footer__social-link"
+                  href={item.href}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <Icon name={item.icon} />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <FooterLinkColumn heading="Archive" links={FOOTER_ARCHIVE_LINKS} />
+          <FooterLinkColumn
+            heading="Customer Care"
+            links={FOOTER_CUSTOMER_CARE_LINKS}
+          />
+
+          <div className="site-footer__newsletter">
+            <h2 className="site-footer__heading">Newsletter</h2>
+            <form
+              className="site-footer__newsletter-form"
+              onSubmit={(event) => event.preventDefault()}
+            >
+              <input
+                aria-label="Email address"
+                className="input-editorial input-editorial--on-dark site-footer__newsletter-input"
+                name="email"
+                placeholder="Email Address"
+                type="email"
               />
-            )}
-          </footer>
-        )}
-      </Await>
-    </Suspense>
+              <button
+                aria-label="Subscribe"
+                className="site-footer__newsletter-submit btn-icon"
+                type="submit"
+              >
+                <Icon name="arrow_forward" />
+              </button>
+            </form>
+            <p className="site-footer__newsletter-note">{FOOTER_NEWSLETTER_NOTE}</p>
+          </div>
+        </div>
+
+        <div className="site-footer__bottom">
+          <p className="site-footer__copyright">
+            &copy; {year} {STORE_DISPLAY_NAME}. Crafted for the slow living
+            movement.
+          </p>
+        </div>
+      </div>
+    </footer>
   );
 }
 
-function FooterMenu({
-  menu,
-  primaryDomainUrl,
-  publicStoreDomain,
+function FooterLinkColumn({
+  heading,
+  links,
 }: {
-  menu: FooterQuery['menu'];
-  primaryDomainUrl: FooterProps['header']['shop']['primaryDomain']['url'];
-  publicStoreDomain: string;
+  heading: string;
+  links: ReadonlyArray<{label: string; to: string}>;
 }) {
   return (
-    <nav className="footer-menu" role="navigation">
-      {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
-        if (!item.url) return null;
-        // if the url is internal, we strip the domain
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
-        const isExternal = !url.startsWith('/');
-        return isExternal ? (
-          <a href={url} key={item.id} rel="noopener noreferrer" target="_blank">
-            {item.title}
-          </a>
-        ) : (
-          <NavLink
-            end
-            key={item.id}
-            prefetch="intent"
-            style={activeLinkStyle}
-            to={url}
-          >
-            {item.title}
-          </NavLink>
-        );
-      })}
-    </nav>
+    <div className="site-footer__column">
+      <h2 className="site-footer__heading">{heading}</h2>
+      <ul className="site-footer__links">
+        {links.map((item) => (
+          <li key={item.to}>
+            <NavLink className="site-footer__link" prefetch="intent" to={item.to}>
+              {item.label}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
-}
-
-const FALLBACK_FOOTER_MENU = {
-  id: 'gid://shopify/Menu/199655620664',
-  items: [
-    {
-      id: 'gid://shopify/MenuItem/461633060920',
-      resourceId: 'gid://shopify/ShopPolicy/23358046264',
-      tags: [],
-      title: 'Privacy Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/privacy-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633093688',
-      resourceId: 'gid://shopify/ShopPolicy/23358013496',
-      tags: [],
-      title: 'Refund Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/refund-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633126456',
-      resourceId: 'gid://shopify/ShopPolicy/23358111800',
-      tags: [],
-      title: 'Shipping Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/shipping-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633159224',
-      resourceId: 'gid://shopify/ShopPolicy/23358079032',
-      tags: [],
-      title: 'Terms of Service',
-      type: 'SHOP_POLICY',
-      url: '/policies/terms-of-service',
-      items: [],
-    },
-  ],
-};
-
-function activeLinkStyle({
-  isActive,
-  isPending,
-}: {
-  isActive: boolean;
-  isPending: boolean;
-}) {
-  return {
-    fontWeight: isActive ? 'bold' : undefined,
-    color: isPending ? 'grey' : 'white',
-  };
 }

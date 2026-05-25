@@ -1,0 +1,28 @@
+/**
+ * Form controls — inputs, segmented selectors.
+ */
+@layer components {
+  .input-editorial {
+    @apply w-full border-0 border-b border-almond-foam/30 bg-transparent font-body text-body-md text-on-background placeholder:text-ink-subtle focus:border-espresso focus:ring-0;
+  }
+
+  .input-editorial--on-dark {
+    @apply text-cream-silk placeholder:text-ink-subtle focus:border-cream-silk;
+  }
+
+  .freq-selector {
+    @apply inline-flex rounded-lg bg-surface-container p-1;
+  }
+
+  .freq-selector input {
+    @apply sr-only;
+  }
+
+  .freq-selector label {
+    @apply cursor-pointer rounded px-6 py-2 font-label text-label-caps text-espresso transition-all duration-300;
+  }
+
+  .freq-selector input:checked + label {
+    @apply bg-espresso text-cream-silk;
+  }
+}

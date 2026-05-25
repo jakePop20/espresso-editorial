@@ -1,6 +1,270 @@
 /**
- * Configure Tailwind v4 in this file using CSS variables and directives:
- * https://tailwindcss.com/docs/v4-beta#css-first-configuration
+ * Tailwind v4 — maps design tokens to utilities.
+ * Token values live in tokens.css only.
  */
 
 @import 'tailwindcss';
+@import 'material-symbols/outlined.css';
+@import './tokens.css';
+@import './components.css';
+
+@theme {
+  /* Colors — surfaces */
+  --color-surface: var(--ee-color-surface);
+  --color-surface-dim: var(--ee-color-surface-dim);
+  --color-surface-bright: var(--ee-color-surface-bright);
+  --color-surface-container-lowest: var(--ee-color-surface-container-lowest);
+  --color-surface-container-low: var(--ee-color-surface-container-low);
+  --color-surface-container: var(--ee-color-surface-container);
+  --color-surface-container-high: var(--ee-color-surface-container-high);
+  --color-surface-container-highest: var(--ee-color-surface-container-highest);
+  --color-surface-variant: var(--ee-color-surface-variant);
+  --color-surface-tint: var(--ee-color-surface-tint);
+  --color-on-surface: var(--ee-color-on-surface);
+  --color-on-surface-variant: var(--ee-color-on-surface-variant);
+  --color-inverse-surface: var(--ee-color-inverse-surface);
+  --color-inverse-on-surface: var(--ee-color-inverse-on-surface);
+  --color-outline: var(--ee-color-outline);
+  --color-outline-variant: var(--ee-color-outline-variant);
+  --color-background: var(--ee-color-background);
+  --color-on-background: var(--ee-color-on-background);
+
+  /* Colors — editorial brand */
+  --color-espresso: var(--ee-color-espresso);
+  --color-cream-silk: var(--ee-color-cream-silk);
+  --color-roasted-clay: var(--ee-color-roasted-clay);
+  --color-almond-foam: var(--ee-color-almond-foam);
+  --color-ink-subtle: var(--ee-color-ink-subtle);
+
+  /* Colors — semantic roles */
+  --color-primary: var(--ee-color-primary);
+  --color-on-primary: var(--ee-color-on-primary);
+  --color-primary-container: var(--ee-color-primary-container);
+  --color-on-primary-container: var(--ee-color-on-primary-container);
+  --color-inverse-primary: var(--ee-color-inverse-primary);
+  --color-secondary: var(--ee-color-secondary);
+  --color-on-secondary: var(--ee-color-on-secondary);
+  --color-secondary-container: var(--ee-color-secondary-container);
+  --color-on-secondary-container: var(--ee-color-on-secondary-container);
+  --color-tertiary: var(--ee-color-tertiary);
+  --color-on-tertiary: var(--ee-color-on-tertiary);
+  --color-tertiary-container: var(--ee-color-tertiary-container);
+  --color-on-tertiary-container: var(--ee-color-on-tertiary-container);
+  --color-error: var(--ee-color-error);
+  --color-on-error: var(--ee-color-on-error);
+  --color-error-container: var(--ee-color-error-container);
+  --color-on-error-container: var(--ee-color-on-error-container);
+  --color-primary-fixed: var(--ee-color-primary-fixed);
+  --color-primary-fixed-dim: var(--ee-color-primary-fixed-dim);
+  --color-on-primary-fixed: var(--ee-color-on-primary-fixed);
+  --color-on-primary-fixed-variant: var(--ee-color-on-primary-fixed-variant);
+  --color-secondary-fixed: var(--ee-color-secondary-fixed);
+  --color-secondary-fixed-dim: var(--ee-color-secondary-fixed-dim);
+  --color-on-secondary-fixed: var(--ee-color-on-secondary-fixed);
+  --color-on-secondary-fixed-variant: var(--ee-color-on-secondary-fixed-variant);
+  --color-tertiary-fixed: var(--ee-color-tertiary-fixed);
+  --color-tertiary-fixed-dim: var(--ee-color-tertiary-fixed-dim);
+  --color-on-tertiary-fixed: var(--ee-color-on-tertiary-fixed);
+  --color-on-tertiary-fixed-variant: var(--ee-color-on-tertiary-fixed-variant);
+
+  /* Font families — use with text-* scale (e.g. font-display text-display-lg) */
+  --font-display: var(--ee-font-display);
+  --font-body: var(--ee-font-body);
+  --font-label: var(--ee-font-label);
+  --font-display-lg: var(--ee-font-display);
+  --font-display-lg-mobile: var(--ee-font-display);
+  --font-headline-xl: var(--ee-font-display);
+  --font-headline-md: var(--ee-font-display);
+  --font-body-lg: var(--ee-font-body);
+  --font-body-md: var(--ee-font-body);
+  --font-label-caps: var(--ee-font-label);
+  --font-label-sm: var(--ee-font-label);
+
+  /* Type scale */
+  --text-display-lg: var(--ee-text-display-lg-size);
+  --text-display-lg--line-height: var(--ee-text-display-lg-line);
+  --text-display-lg--font-weight: var(--ee-text-display-lg-weight);
+  --text-display-lg--letter-spacing: var(--ee-text-display-lg-tracking);
+
+  --text-display-lg-mobile: var(--ee-text-display-lg-mobile-size);
+  --text-display-lg-mobile--line-height: var(--ee-text-display-lg-mobile-line);
+  --text-display-lg-mobile--font-weight: var(--ee-text-display-lg-mobile-weight);
+  --text-display-lg-mobile--letter-spacing: var(
+    --ee-text-display-lg-mobile-tracking
+  );
+
+  --text-headline-xl: var(--ee-text-headline-xl-size);
+  --text-headline-xl--line-height: var(--ee-text-headline-xl-line);
+  --text-headline-xl--font-weight: var(--ee-text-headline-xl-weight);
+
+  --text-headline-md: var(--ee-text-headline-md-size);
+  --text-headline-md--line-height: var(--ee-text-headline-md-line);
+  --text-headline-md--font-weight: var(--ee-text-headline-md-weight);
+
+  --text-body-lg: var(--ee-text-body-lg-size);
+  --text-body-lg--line-height: var(--ee-text-body-lg-line);
+  --text-body-lg--font-weight: var(--ee-text-body-lg-weight);
+
+  --text-body-md: var(--ee-text-body-md-size);
+  --text-body-md--line-height: var(--ee-text-body-md-line);
+  --text-body-md--font-weight: var(--ee-text-body-md-weight);
+
+  --text-label-caps: var(--ee-text-label-caps-size);
+  --text-label-caps--line-height: var(--ee-text-label-caps-line);
+  --text-label-caps--font-weight: var(--ee-text-label-caps-weight);
+  --text-label-caps--letter-spacing: var(--ee-text-label-caps-tracking);
+
+  --text-label-sm: var(--ee-text-label-sm-size);
+  --text-label-sm--line-height: var(--ee-text-label-sm-line);
+  --text-label-sm--font-weight: var(--ee-text-label-sm-weight);
+
+  /* Spacing */
+  --spacing-unit: var(--ee-spacing-unit);
+  --spacing-gutter: var(--ee-spacing-gutter);
+  --spacing-gutter-mobile: var(--ee-spacing-gutter-mobile);
+  --spacing-margin-desktop: var(--ee-spacing-margin-desktop);
+  --spacing-margin-mobile: var(--ee-spacing-margin-mobile);
+  --spacing-section-gap: var(--ee-spacing-section-gap);
+
+  /* Layout */
+  --width-editorial: var(--ee-layout-max-width);
+  --max-width-editorial: var(--ee-layout-max-width);
+  --height-header: var(--ee-header-height);
+
+  /* Radius — rounded, rounded-sm, rounded-lg, etc. */
+  --radius-sm: var(--ee-radius-sm);
+  --radius: var(--ee-radius-default);
+  --radius-md: var(--ee-radius-md);
+  --radius-lg: var(--ee-radius-lg);
+  --radius-xl: var(--ee-radius-xl);
+  --radius-full: var(--ee-radius-full);
+
+  /* Shadows */
+  --shadow-editorial: var(--ee-shadow-editorial);
+
+  /* Transition */
+  --ease-editorial: var(--ee-ease-editorial);
+  --default-transition-duration: var(--ee-duration-medium);
+}
+
+/* ---------------------------------------------------------------------------
+ * Base — global defaults
+ * --------------------------------------------------------------------------- */
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply overflow-x-hidden bg-background font-body text-body-md text-on-background antialiased;
+  }
+
+  ::selection {
+    @apply bg-almond-foam text-espresso;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display text-espresso;
+  }
+
+  p {
+    @apply text-ink-subtle;
+  }
+
+  a {
+    transition: color var(--ee-duration-medium) var(--ee-ease-editorial);
+  }
+
+  img,
+  video {
+    @apply max-w-full rounded-sm;
+  }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    @apply cursor-pointer;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-espresso;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Utilities — editorial patterns from the design system
+ * --------------------------------------------------------------------------- */
+@layer utilities {
+  .editorial-shadow {
+    box-shadow: var(--ee-shadow-editorial);
+  }
+
+  .border-editorial-subtle {
+    border-color: var(--ee-border-subtle);
+  }
+
+  .border-editorial-almond {
+    border-color: var(--ee-border-almond);
+  }
+
+  .transition-editorial {
+    transition-property: color, background-color, border-color, opacity, transform,
+      box-shadow;
+    transition-duration: var(--ee-duration-slow);
+    transition-timing-function: var(--ee-ease-editorial);
+  }
+
+  .transition-editorial-fast {
+    transition-property: color, background-color, border-color, opacity, transform;
+    transition-duration: var(--ee-duration-medium);
+    transition-timing-function: var(--ee-ease-editorial);
+  }
+
+  .px-page {
+    padding-inline: var(--ee-spacing-margin-mobile);
+  }
+
+  @media (width >= 48rem) {
+    .px-page {
+      padding-inline: var(--ee-spacing-margin-desktop);
+    }
+  }
+
+  .gap-page {
+    gap: var(--ee-spacing-gutter-mobile);
+  }
+
+  @media (width >= 48rem) {
+    .gap-page {
+      gap: var(--ee-spacing-gutter);
+    }
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 300,
+      'GRAD' 0,
+      'opsz' 24;
+    user-select: none;
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(2rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-up {
+    animation: fade-up 1.2s var(--ee-ease-editorial) forwards;
+  }
+}

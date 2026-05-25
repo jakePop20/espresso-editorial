@@ -1,0 +1,28 @@
+/**
+ * Cards and surface panels.
+ */
+@layer components {
+  .card-editorial {
+    @apply border border-almond-foam bg-cream-silk p-10;
+  }
+
+  .card-interactive {
+    @apply border border-almond-foam bg-cream-silk p-10;
+    transition:
+      transform var(--ee-duration-slow) var(--ee-ease-editorial),
+      box-shadow var(--ee-duration-medium) ease;
+  }
+
+  .card-interactive:hover {
+    @apply -translate-y-2;
+    box-shadow: var(--ee-shadow-editorial);
+  }
+
+  .surface-panel {
+    @apply border border-almond-foam/50 bg-surface-container-low p-8;
+  }
+
+  .surface-panel--highlight {
+    @apply border-roasted-clay/30 bg-cream-silk shadow-sm;
+  }
+}

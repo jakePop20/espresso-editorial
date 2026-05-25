@@ -1,0 +1,12 @@
+/**
+ * Component styles — one file per UI area.
+ * Tokens: tokens.css · Utilities: tailwind.css @theme
+ */
+@import './components/shell.css';
+@import './components/header.css';
+@import './components/footer.css';
+@import './components/buttons.css';
+@import './components/forms.css';
+@import './components/cards.css';
+@import './components/chips.css';
+@import './components/typography.css';
