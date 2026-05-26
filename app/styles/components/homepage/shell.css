@@ -1,0 +1,12 @@
+/**
+ * Homepage shell — full-bleed layout under fixed header.
+ */
+@layer components {
+  .site-main:has(.homepage) {
+    @apply min-h-0 pt-0 pb-0;
+  }
+
+  .homepage {
+    @apply flex flex-col;
+  }
+}

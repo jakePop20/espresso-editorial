@@ -1,0 +1,9 @@
+/**
+ * Homepage section styles — one file per swappable section.
+ */
+@import './homepage/shell.css';
+@import './homepage/hero.css';
+@import './homepage/story.css';
+@import './homepage/subscriptions.css';
+@import './homepage/quiz.css';
+@import './homepage/editorial.css';

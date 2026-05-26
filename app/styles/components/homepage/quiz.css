@@ -1,0 +1,29 @@
+@layer components {
+  .homepage-quiz {
+    @apply relative overflow-hidden bg-espresso py-32;
+  }
+
+  .homepage-quiz__media {
+    @apply absolute inset-0 opacity-20;
+  }
+
+  .homepage-quiz__image {
+    @apply h-full w-full object-cover;
+  }
+
+  .homepage-quiz__content {
+    @apply relative z-10 text-center;
+  }
+
+  .homepage-quiz__title {
+    @apply mx-auto mb-8 max-w-2xl font-display text-headline-xl text-cream-silk;
+  }
+
+  .homepage-quiz__body {
+    @apply mx-auto mb-12 max-w-xl font-body text-body-lg text-almond-foam;
+  }
+
+  .homepage-quiz__cta {
+    @apply inline-block bg-roasted-clay px-12 py-5 font-label text-label-caps uppercase tracking-[0.2em] text-cream-silk transition-all hover:bg-roasted-clay/80 active:scale-95;
+  }
+}

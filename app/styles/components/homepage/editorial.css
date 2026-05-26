@@ -1,0 +1,69 @@
+@layer components {
+  .homepage-editorial {
+    @apply py-section-gap;
+  }
+
+  .homepage-editorial.section {
+    @apply mt-0;
+  }
+
+  .homepage-editorial__grid {
+    @apply grid grid-cols-1 gap-gutter md:grid-cols-12;
+  }
+
+  .homepage-editorial__feature {
+    @apply md:col-span-8;
+  }
+
+  .homepage-editorial__feature-image-wrap {
+    @apply mb-8 aspect-video overflow-hidden rounded;
+  }
+
+  .homepage-editorial__feature-image {
+    @apply h-full w-full object-cover transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-105;
+  }
+
+  .homepage-editorial__eyebrow {
+    @apply mb-2 block font-label text-label-caps text-roasted-clay;
+  }
+
+  .homepage-editorial__feature-title {
+    @apply mb-4 font-display text-headline-md text-espresso;
+  }
+
+  .homepage-editorial__feature-body {
+    @apply mb-6 max-w-xl font-body text-body-md text-ink-subtle;
+  }
+
+  .homepage-editorial__sidebar {
+    @apply space-y-12 md:col-span-4;
+  }
+
+  .homepage-editorial__card-link {
+    @apply block no-underline transition-opacity hover:opacity-90;
+  }
+
+  .homepage-editorial__card-image-wrap {
+    @apply mb-6 aspect-square overflow-hidden;
+  }
+
+  .homepage-editorial__card-image {
+    @apply h-full w-full object-cover grayscale transition-all duration-700;
+  }
+
+  .homepage-editorial__card:hover .homepage-editorial__card-image {
+    @apply grayscale-0;
+  }
+
+  .homepage-editorial__card-eyebrow {
+    @apply mb-2 block font-label text-label-caps text-ink-subtle;
+  }
+
+  .homepage-editorial__card-title {
+    @apply mb-2 font-display text-[24px] leading-tight text-espresso;
+  }
+
+  .homepage-editorial__card-cta {
+    @apply font-label text-label-sm uppercase tracking-widest text-espresso underline;
+  }
+}
