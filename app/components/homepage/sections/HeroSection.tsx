@@ -11,14 +11,9 @@ type HeroSectionProps = {
 };
 
 export function HeroSection({hero}: HeroSectionProps) {
-  const imageAlt =
-    hero.image?.altText ??
-    'Dark espresso pouring into a minimalist ceramic cup with dramatic low-key lighting';
-
   const media = (
     <>
       <HomepageMediaImage
-        alt={imageAlt}
         className="homepage-hero__image"
         fetchPriority="high"
         image={hero.image}

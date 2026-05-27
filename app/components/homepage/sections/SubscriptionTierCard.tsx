@@ -27,7 +27,6 @@ export function SubscriptionTierCard({tier}: SubscriptionTierCardProps) {
 
   const image = (
     <HomepageMediaImage
-      alt={tier.image?.altText ?? `${tier.name} subscription`}
       className={imageClassName}
       image={tier.image}
       sizes="(min-width: 768px) 33vw, 100vw"

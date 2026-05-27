@@ -9,7 +9,6 @@ type EditorialGridSectionProps = {
 
 export function EditorialGridSection({editorial}: EditorialGridSectionProps) {
   const {feature} = editorial;
-  const featureHref = feature.cta.to;
 
   return (
     <section className="homepage-editorial" aria-labelledby="homepage-editorial-title">
@@ -25,14 +24,10 @@ export function EditorialGridSection({editorial}: EditorialGridSectionProps) {
             aria-label={feature.title}
             className="homepage-editorial__feature-image-link"
             prefetch="intent"
-            to={featureHref}
+            to={feature.cta.to}
           >
             <div className="homepage-editorial__feature-image-wrap">
               <HomepageMediaImage
-                alt={
-                  feature.image?.altText ??
-                  'Chemex coffee maker dripping on a bright minimalist counter'
-                }
                 className="homepage-editorial__feature-image"
                 image={feature.image}
                 sizes="(min-width: 768px) 66vw, 100vw"
@@ -44,7 +39,7 @@ export function EditorialGridSection({editorial}: EditorialGridSectionProps) {
           {feature.body ? (
             <p className="homepage-editorial__feature-body">{feature.body}</p>
           ) : null}
-          <Link className="btn-ghost" prefetch="intent" to={featureHref}>
+          <Link className="btn-ghost" prefetch="intent" to={feature.cta.to}>
             {feature.cta.label}
           </Link>
           <blockquote className="homepage-editorial__review">
@@ -65,7 +60,6 @@ export function EditorialGridSection({editorial}: EditorialGridSectionProps) {
               <Link className="homepage-editorial__card-link" prefetch="intent" to={item.cta.to}>
                 <div className="homepage-editorial__card-image-wrap">
                   <HomepageMediaImage
-                    alt={item.image?.altText ?? item.title}
                     className="homepage-editorial__card-image"
                     image={item.image}
                     sizes="(min-width: 768px) 33vw, 100vw"

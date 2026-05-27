@@ -8,10 +8,6 @@ type StorySectionProps = {
 };
 
 export function StorySection({story}: StorySectionProps) {
-  const imageAlt =
-    story.image?.altText ??
-    'Freshly roasted coffee beans cooling on a tray in warm sunlight';
-
   return (
     <section className="homepage-story section" id="story">
       <div className="homepage-story__grid">
@@ -40,7 +36,6 @@ export function StorySection({story}: StorySectionProps) {
         <Reveal className="homepage-story__visual" delay={0.12}>
           <div className="homepage-story__image-wrap">
             <HomepageMediaImage
-              alt={imageAlt}
               className="homepage-story__image"
               image={story.image}
               sizes="(min-width: 768px) 50vw, 100vw"

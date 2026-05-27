@@ -31,7 +31,7 @@ export function HomepageMediaImage({
 
   return (
     <Image
-      alt={alt ?? image.altText ?? ''}
+      alt={alt ?? image.altText ?? 'WIP'}
       className={className}
       data={image}
       fetchPriority={fetchPriority}
