@@ -27,14 +27,16 @@
   --color-outline: var(--ee-color-outline);
   --color-outline-variant: var(--ee-color-outline-variant);
   --color-background: var(--ee-color-background);
+  --color-background-alt: var(--ee-color-background-alt);
   --color-on-background: var(--ee-color-on-background);
 
   /* Colors — editorial brand */
   --color-espresso: var(--ee-color-espresso);
   --color-cream-silk: var(--ee-color-cream-silk);
   --color-roasted-clay: var(--ee-color-roasted-clay);
-  --color-almond-foam: var(--ee-color-almond-foam);
   --color-ink-subtle: var(--ee-color-ink-subtle);
+  --color-header: var(--ee-color-header);
+  --color-on-header: var(--ee-color-on-header);
 
   /* Colors — semantic roles */
   --color-primary: var(--ee-color-primary);
@@ -159,8 +161,19 @@
     @apply overflow-x-hidden bg-background font-body text-body-md text-on-background antialiased;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   ::selection {
-    @apply bg-almond-foam text-espresso;
+    @apply bg-espresso text-cream-silk;
   }
 
   h1,
@@ -205,10 +218,6 @@
 
   .border-editorial-subtle {
     border-color: var(--ee-border-subtle);
-  }
-
-  .border-editorial-almond {
-    border-color: var(--ee-border-almond);
   }
 
   .transition-editorial {

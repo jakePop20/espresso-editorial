@@ -94,7 +94,7 @@
   }
 
   .site-footer__newsletter-form {
-    @apply flex items-center border-b border-almond-foam/30 pb-2;
+    @apply flex items-center border-b border-espresso/30 pb-2;
   }
 
   .site-footer__newsletter-input {
@@ -110,7 +110,7 @@
   }
 
   .site-footer__bottom {
-    @apply mt-16 border-t border-almond-foam/10 pt-16 text-center;
+    @apply mt-16 border-t border-espresso/10 pt-16 text-center;
   }
 
   @media (width >= 48rem) {

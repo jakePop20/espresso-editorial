@@ -1,0 +1,118 @@
+@layer components {
+  .homepage-subscriptions {
+    @apply py-section-gap;
+  }
+
+  .homepage-subscriptions__title {
+    @apply font-display text-headline-xl text-espresso;
+  }
+
+  .homepage-subscriptions__lead {
+    @apply mx-auto max-w-2xl font-body text-body-md text-ink-subtle;
+  }
+
+  .homepage-subscriptions__grid {
+    @apply mt-0 grid grid-cols-1 items-stretch gap-gutter md:grid-cols-3;
+  }
+
+  .homepage-subscription-card {
+    @apply relative flex h-full flex-col items-center overflow-hidden rounded-md border border-espresso/15 bg-cream-silk px-10 py-8 text-center no-underline transition-colors;
+    cursor: pointer;
+  }
+
+  .homepage-subscription-card:focus-visible {
+    @apply outline-2 outline-offset-4 outline-espresso;
+  }
+
+  .homepage-subscription-card--highlighted {
+    @apply border-espresso bg-espresso text-cream-silk;
+  }
+
+  .homepage-subscription-card--motion {
+    transition:
+      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .homepage-subscription-card:not(.homepage-subscription-card--highlighted)
+    .homepage-subscription-card__image-wrap
+    > .homepage-subscription-card__image--motion {
+    filter: grayscale(100%);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .homepage-subscription-card--motion:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 16px 40px rgb(26 20 18 / 8%);
+    }
+
+    .homepage-subscription-card--motion:hover
+      .homepage-subscription-card__image-wrap
+      > .homepage-subscription-card__image--motion {
+      filter: grayscale(0%);
+    }
+  }
+
+  .homepage-subscription-card__badge {
+    @apply absolute top-2 right-3 rounded-sm bg-roasted-clay px-2 py-1 font-label text-[10px] uppercase tracking-tighter text-cream-silk;
+  }
+
+  .homepage-subscription-card__tier {
+    @apply mb-8 font-display text-headline-xl font-bold tracking-tight;
+  }
+
+  .homepage-subscription-card:not(.homepage-subscription-card--highlighted)
+    .homepage-subscription-card__tier {
+    @apply text-espresso;
+  }
+
+  .homepage-subscription-card--highlighted .homepage-subscription-card__tier {
+    @apply text-cream-silk;
+  }
+
+  .homepage-subscription-card__image-wrap {
+    @apply mb-8 aspect-[8/8.5] w-full overflow-hidden rounded-md bg-surface-container;
+  }
+
+  .homepage-subscription-card--highlighted .homepage-subscription-card__image-wrap {
+    @apply bg-primary-container;
+  }
+
+  .homepage-subscription-card__image {
+    @apply h-full w-full object-cover;
+  }
+
+  .homepage-subscription-card__image--motion {
+    @apply will-change-transform;
+  }
+
+  .homepage-subscription-card__bags {
+    @apply mb-2 font-display text-headline-md;
+  }
+
+  .homepage-subscription-card:not(.homepage-subscription-card--highlighted)
+    .homepage-subscription-card__bags {
+    @apply text-espresso;
+  }
+
+  .homepage-subscription-card--highlighted .homepage-subscription-card__bags {
+    @apply text-cream-silk;
+  }
+
+  .homepage-subscription-card__description {
+    @apply font-body text-body-md;
+  }
+
+  .homepage-subscription-card:not(.homepage-subscription-card--highlighted)
+    .homepage-subscription-card__description {
+    @apply text-ink-subtle;
+  }
+
+  .homepage-subscription-card--highlighted .homepage-subscription-card__description {
+    @apply text-cream-silk/80;
+  }
+
+  .homepage-subscription-card__price {
+    @apply mt-auto w-full pt-4 font-label text-label-caps text-roasted-clay;
+  }
+}

@@ -3,11 +3,11 @@
  */
 @layer components {
   .card-editorial {
-    @apply border border-almond-foam bg-cream-silk p-10;
+    @apply border border-espresso/15 bg-cream-silk p-10;
   }
 
   .card-interactive {
-    @apply border border-almond-foam bg-cream-silk p-10;
+    @apply border border-espresso/15 bg-cream-silk p-10;
     transition:
       transform var(--ee-duration-slow) var(--ee-ease-editorial),
       box-shadow var(--ee-duration-medium) ease;
@@ -19,7 +19,7 @@
   }
 
   .surface-panel {
-    @apply border border-almond-foam/50 bg-surface-container-low p-8;
+    @apply border border-espresso/30 bg-surface-container-low p-8;
   }
 
   .surface-panel--highlight {

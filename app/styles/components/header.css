@@ -3,7 +3,8 @@
  */
 @layer components {
   .site-header {
-    @apply fixed top-0 z-50 h-header w-full border-b border-almond-foam/30 bg-cream-silk/90 shadow-sm backdrop-blur-md;
+    @apply fixed top-0 z-50 h-header w-full border-b border-espresso/20 bg-header/90 text-on-header shadow-sm backdrop-blur-md;
+    will-change: transform;
   }
 
   .site-header__inner {

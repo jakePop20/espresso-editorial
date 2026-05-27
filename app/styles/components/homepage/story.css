@@ -1,0 +1,74 @@
+@layer components {
+  .homepage-story {
+    @apply py-section-gap;
+  }
+
+  .homepage-story.section {
+    @apply mt-0;
+  }
+
+  .homepage-story__grid {
+    @apply grid grid-cols-1 items-center gap-gutter md:grid-cols-12;
+  }
+
+  .homepage-story__copy {
+    @apply space-y-8 md:col-span-5;
+  }
+
+  .homepage-story__eyebrow {
+    @apply block font-label text-label-caps uppercase tracking-widest text-roasted-clay;
+  }
+
+  .homepage-story__title {
+    @apply font-display text-headline-xl text-espresso;
+  }
+
+  .homepage-story__body {
+    @apply font-body text-body-lg text-ink-subtle;
+  }
+
+  .homepage-story__pillars {
+    @apply space-y-6 pt-4;
+  }
+
+  .homepage-story__pillar {
+    @apply flex items-start gap-4;
+  }
+
+  .homepage-story__pillar-number {
+    @apply font-display text-headline-md italic text-espresso;
+  }
+
+  .homepage-story__pillar-title {
+    @apply mb-1 font-label text-label-caps text-espresso;
+  }
+
+  .homepage-story__pillar-body {
+    @apply text-ink-subtle;
+  }
+
+  .homepage-story__visual {
+    @apply relative md:col-span-6 md:col-start-7;
+  }
+
+  .homepage-story__image-wrap {
+    @apply aspect-[3/4] overflow-hidden rounded;
+  }
+
+  .homepage-story__image {
+    @apply h-full w-full object-cover;
+  }
+
+  .homepage-story__quote {
+    @apply absolute -bottom-10 -left-10 hidden max-w-xs border border-espresso/15 bg-cream-silk p-8 lg:block;
+    box-shadow: var(--ee-shadow-editorial);
+  }
+
+  .homepage-story__quote-text {
+    @apply font-body text-body-md italic text-ink-subtle;
+  }
+
+  .homepage-story__quote-cite {
+    @apply mt-4 block font-label text-label-caps not-italic text-espresso;
+  }
+}

@@ -8,6 +8,7 @@ import {
 import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
 import {Icon} from '~/components/Icon';
+import {ScrollSiteHeader} from '~/components/ScrollSiteHeader';
 import {STORE_DISPLAY_NAME} from '~/lib/brand';
 
 interface HeaderProps {
@@ -26,7 +27,7 @@ export function Header({
   publicStoreDomain,
 }: HeaderProps) {
   return (
-    <header className="site-header">
+    <ScrollSiteHeader>
       <div className="site-header__inner">
         <div className="flex items-center gap-8">
           <NavLink className="site-header__brand" prefetch="intent" to="/" end>
@@ -36,7 +37,7 @@ export function Header({
         </div>
         <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
       </div>
-    </header>
+    </ScrollSiteHeader>
   );
 }
 

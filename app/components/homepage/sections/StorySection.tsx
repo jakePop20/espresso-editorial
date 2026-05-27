@@ -1,0 +1,52 @@
+import {Reveal} from '~/components/motion/Reveal';
+import {Stagger, StaggerItem} from '~/components/motion/Stagger';
+import {HomepageMediaImage} from '~/components/homepage/HomepageMediaImage';
+import type {HomepageStoryContent} from '~/lib/homepage/types';
+
+type StorySectionProps = {
+  story: HomepageStoryContent;
+};
+
+export function StorySection({story}: StorySectionProps) {
+  return (
+    <section className="homepage-story section" id="story">
+      <div className="homepage-story__grid">
+        <div className="homepage-story__copy">
+          <Reveal>
+            <span className="homepage-story__eyebrow">{story.eyebrow}</span>
+            <h2 className="homepage-story__title">{story.title}</h2>
+            <p className="homepage-story__body">{story.body}</p>
+          </Reveal>
+          <Stagger as="ul" className="homepage-story__pillars">
+            {story.pillars.map((pillar) => (
+              <StaggerItem
+                as="li"
+                className="homepage-story__pillar"
+                key={pillar.number}
+              >
+                <span className="homepage-story__pillar-number">{pillar.number}</span>
+                <div>
+                  <h3 className="homepage-story__pillar-title">{pillar.title}</h3>
+                  <p className="homepage-story__pillar-body">{pillar.body}</p>
+                </div>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </div>
+        <Reveal className="homepage-story__visual" delay={0.12}>
+          <div className="homepage-story__image-wrap">
+            <HomepageMediaImage
+              className="homepage-story__image"
+              image={story.image}
+              sizes="(min-width: 768px) 50vw, 100vw"
+            />
+          </div>
+          <Reveal as="blockquote" className="homepage-story__quote" delay={0.2}>
+            <p className="homepage-story__quote-text">{story.quote.text}</p>
+            <cite className="homepage-story__quote-cite">{story.quote.attribution}</cite>
+          </Reveal>
+        </Reveal>
+      </div>
+    </section>
+  );
+}

@@ -3,6 +3,6 @@
  */
 @layer components {
   .chip {
-    @apply inline-flex items-center rounded-full bg-almond-foam px-3 py-1 font-label text-label-sm text-espresso;
+    @apply inline-flex items-center rounded-full bg-espresso px-3 py-1 font-label text-label-sm text-cream-silk;
   }
 }

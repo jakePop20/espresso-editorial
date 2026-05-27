@@ -1,0 +1,93 @@
+@layer components {
+  .homepage-editorial {
+    @apply py-section-gap;
+  }
+
+  .homepage-editorial__title {
+    @apply font-display text-headline-xl text-espresso;
+  }
+
+  .homepage-editorial__grid {
+    @apply grid grid-cols-1 gap-gutter md:grid-cols-12;
+  }
+
+  .homepage-editorial__feature {
+    @apply flex flex-col md:col-span-8;
+  }
+
+  .homepage-editorial__feature-image-link {
+    @apply mb-8 block no-underline transition-opacity hover:opacity-90;
+  }
+
+  .homepage-editorial__feature-image-wrap {
+    @apply aspect-video overflow-hidden rounded;
+  }
+
+  .homepage-editorial__feature-image {
+    @apply h-full w-full object-cover;
+  }
+
+  .homepage-editorial__eyebrow {
+    @apply mb-2 block font-label text-label-caps text-roasted-clay;
+  }
+
+  .homepage-editorial__feature-title {
+    @apply mb-4 font-display text-headline-md text-espresso;
+  }
+
+  .homepage-editorial__feature-body {
+    @apply mb-6 max-w-xl font-body text-body-md text-ink-subtle;
+  }
+
+  .homepage-editorial__review {
+    @apply mt-12 border-t border-espresso/15 pt-10 md:mt-auto;
+  }
+
+  .homepage-editorial__review-text {
+    @apply max-w-2xl font-display text-headline-md italic leading-snug text-espresso;
+  }
+
+  .homepage-editorial__review-footer {
+    @apply mt-6;
+  }
+
+  .homepage-editorial__review-cite {
+    @apply block font-label text-label-caps not-italic text-espresso;
+  }
+
+  .homepage-editorial__review-detail {
+    @apply mt-1 block font-label text-label-sm text-roasted-clay;
+  }
+
+  .homepage-editorial__sidebar {
+    @apply space-y-12 md:col-span-4;
+  }
+
+  .homepage-editorial__card-link {
+    @apply block no-underline transition-opacity hover:opacity-90;
+  }
+
+  .homepage-editorial__card-image-wrap {
+    @apply mb-6 aspect-square overflow-hidden;
+  }
+
+  .homepage-editorial__card-image {
+    @apply h-full w-full object-cover grayscale transition-all duration-700;
+  }
+
+  .homepage-editorial__card:hover .homepage-editorial__card-image {
+    @apply grayscale-0;
+  }
+
+  .homepage-editorial__card-eyebrow {
+    @apply mb-2 block font-label text-label-caps text-ink-subtle;
+  }
+
+  .homepage-editorial__card-title {
+    @apply mb-2 font-display text-[24px] leading-tight text-espresso;
+  }
+
+  .homepage-editorial__card-cta {
+    @apply font-label text-label-sm uppercase tracking-widest text-espresso underline;
+  }
+}

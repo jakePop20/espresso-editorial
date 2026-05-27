@@ -3,7 +3,7 @@
  */
 @layer components {
   .input-editorial {
-    @apply w-full border-0 border-b border-almond-foam/30 bg-transparent font-body text-body-md text-on-background placeholder:text-ink-subtle focus:border-espresso focus:ring-0;
+    @apply w-full border-0 border-b border-espresso/30 bg-transparent font-body text-body-md text-on-background placeholder:text-ink-subtle focus:border-espresso focus:ring-0;
   }
 
   .input-editorial--on-dark {
