@@ -4,6 +4,11 @@ import {
 } from '@shopify/hydrogen';
 import type {EntryContext} from 'react-router';
 
+const cspDirectives = {
+  styleSrc: ['https://fonts.googleapis.com'],
+  fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+};
+
 export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
@@ -16,21 +21,21 @@ export default async function handleRequest(
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
+    ...cspDirectives,
   });
 
-  // Vercel Node: pipeable stream only. Do not statically import react-dom/server
-  // renderToReadableStream — it breaks Node ESM (CJS named export) at module load.
+  // Vercel Node: pipeable stream only — never import react-dom/server here.
+  // renderToReadableStream breaks Node ESM (CJS named export) at module load.
+  // Vercel SSR lives in ~/lib/vercel-ssr.server (dynamic import below).
   if (process.env.VERCEL) {
-    const {handleRequest: vercelHandleRequest} = await import(
-      '@vercel/react-router/entry.server'
-    );
-    const response = await vercelHandleRequest(
+    const {handleVercelHydrogenRequest} = await import('~/lib/vercel-ssr.server');
+    const response = await handleVercelHydrogenRequest(
       request,
       responseStatusCode,
       responseHeaders,
       reactRouterContext,
-      context,
-      {nonce},
+      nonce,
+      NonceProvider,
     );
     response.headers.set('Content-Security-Policy', header);
     return response;
