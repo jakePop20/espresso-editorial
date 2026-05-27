@@ -49,7 +49,39 @@ export type HomepageSubscriptionTierContent = {
   badge?: string;
 };
 
+export type HomepageQuizContent = {
+  title: string;
+  body: string;
+  image: HomepageImage | null;
+  cta: HomepageCta;
+};
+
+export type HomepageEditorialItemContent = {
+  handle: string;
+  eyebrow: string;
+  title: string;
+  body?: string;
+  image: HomepageImage | null;
+  cta: HomepageCta;
+};
+
+export type HomepageEditorialContent = {
+  intro: {
+    eyebrow: string;
+    title: string;
+  };
+  feature: HomepageEditorialItemContent;
+  sidebar: HomepageEditorialItemContent[];
+  review: {
+    text: string;
+    attribution: string;
+    detail: string;
+  };
+};
+
 export type HomepageDeferredContent = {
   story: HomepageStoryContent;
   subscriptionTiers: HomepageSubscriptionTierContent[];
+  quiz: HomepageQuizContent;
+  editorial: HomepageEditorialContent;
 };

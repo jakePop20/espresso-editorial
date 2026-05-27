@@ -40,6 +40,37 @@ export const METAOBJECT_STORY_PILLAR_FRAGMENT = `#graphql
   }
 ` as const;
 
+export const METAOBJECT_EDITORIAL_ITEM_FRAGMENT = `#graphql
+  fragment MetaobjectEditorialItem on Metaobject {
+    handle
+    eyebrow: field(key: "eyebrow") {
+      value
+    }
+    title: field(key: "title") {
+      value
+    }
+    body: field(key: "body") {
+      value
+    }
+    image: field(key: "image") {
+      reference {
+        __typename
+        ... on MediaImage {
+          ...MetaobjectImage
+        }
+      }
+    }
+    cta: field(key: "cta") {
+      reference {
+        __typename
+        ... on Metaobject {
+          ...MetaobjectCta
+        }
+      }
+    }
+  }
+` as const;
+
 export const HOMEPAGE_HERO_QUERY = `#graphql
   query HomepageHero(
     $handle: String!
@@ -90,6 +121,12 @@ export const HOMEPAGE_DEFERRED_QUERY = `#graphql
   query HomepageDeferred(
     $storyHandle: String!
     $storyType: String!
+    $quizHandle: String!
+    $quizType: String!
+    $editorialFeatureHandle: String!
+    $editorialFeatureType: String!
+    $editorialSidebarHandle: String!
+    $editorialSidebarType: String!
     $country: CountryCode
     $language: LanguageCode
   ) @inContext(country: $country, language: $language) {
@@ -172,7 +209,60 @@ export const HOMEPAGE_DEFERRED_QUERY = `#graphql
         }
       }
     }
+    quiz: metaobject(handle: {type: $quizType, handle: $quizHandle}) {
+      __typename
+      id
+      handle
+      title: field(key: "title") {
+        value
+      }
+      body: field(key: "body") {
+        value
+      }
+      image: field(key: "image") {
+        reference {
+          __typename
+          ... on MediaImage {
+            ...MetaobjectImage
+          }
+        }
+      }
+      cta: field(key: "cta") {
+        reference {
+          __typename
+          ... on Metaobject {
+            ...MetaobjectCta
+          }
+        }
+      }
+    }
+    editorialFeature: metaobject(
+      handle: {type: $editorialFeatureType, handle: $editorialFeatureHandle}
+    ) {
+      __typename
+      id
+      handle
+      ...MetaobjectEditorialItem
+    }
+    editorialSidebar: metaobject(
+      handle: {type: $editorialSidebarType, handle: $editorialSidebarHandle}
+    ) {
+      id
+      handle
+      items: field(key: "editorial_sidebar_item") {
+        references(first: 10) {
+          nodes {
+            __typename
+            ... on Metaobject {
+              ...MetaobjectEditorialItem
+            }
+          }
+        }
+      }
+    }
   }
+  ${METAOBJECT_CTA_FRAGMENT}
   ${METAOBJECT_IMAGE_FRAGMENT}
   ${METAOBJECT_STORY_PILLAR_FRAGMENT}
+  ${METAOBJECT_EDITORIAL_ITEM_FRAGMENT}
 ` as const;

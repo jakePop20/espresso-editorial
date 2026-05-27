@@ -2,7 +2,10 @@ import type {Route} from './+types/($locale)._index';
 import {useLoaderData} from 'react-router';
 import {Homepage} from '~/components/homepage/Homepage';
 import {
+  HOMEPAGE_EDITORIAL_FEATURE_METAOBJECT,
+  HOMEPAGE_EDITORIAL_SIDEBAR_METAOBJECT,
   HOMEPAGE_HERO_METAOBJECT,
+  HOMEPAGE_QUIZ_METAOBJECT,
   HOMEPAGE_STORY_METAOBJECT,
 } from '~/lib/homepage/constants';
 import {
@@ -58,6 +61,12 @@ function loadDeferredData({context}: Route.LoaderArgs) {
       variables: {
         storyHandle: HOMEPAGE_STORY_METAOBJECT.handle,
         storyType: HOMEPAGE_STORY_METAOBJECT.type,
+        quizHandle: HOMEPAGE_QUIZ_METAOBJECT.handle,
+        quizType: HOMEPAGE_QUIZ_METAOBJECT.type,
+        editorialFeatureHandle: HOMEPAGE_EDITORIAL_FEATURE_METAOBJECT.handle,
+        editorialFeatureType: HOMEPAGE_EDITORIAL_FEATURE_METAOBJECT.type,
+        editorialSidebarHandle: HOMEPAGE_EDITORIAL_SIDEBAR_METAOBJECT.handle,
+        editorialSidebarType: HOMEPAGE_EDITORIAL_SIDEBAR_METAOBJECT.type,
       },
       cache: storefront.CacheLong(),
     })

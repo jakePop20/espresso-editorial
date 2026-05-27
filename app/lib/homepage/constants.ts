@@ -9,16 +9,33 @@ export const HOMEPAGE_STORY_METAOBJECT = {
   handle: 'the-editorial-standard',
 } as const;
 
+export const HOMEPAGE_QUIZ_METAOBJECT = {
+  type: 'quiz_cta',
+  handle: 'not-sure-where-to-begin-your-story',
+} as const;
+
+export const HOMEPAGE_EDITORIAL_FEATURE_METAOBJECT = {
+  type: 'editorial_feature',
+  handle: 'brew-guide',
+} as const;
+
+export const HOMEPAGE_EDITORIAL_SIDEBAR_METAOBJECT = {
+  type: 'editorial_sidebar',
+  handle: 'editorial-sidebar-2gdyd1uh',
+} as const;
+
 export const SUBSCRIPTION_TIER_ORDER = [
   'discover',
   'enthusiast',
   'master',
 ] as const;
 
-/** Metaobject types to load below the fold (add entries in Shopify as you build CMS). */
+/** Metaobject types loaded below the fold. */
 export const HOMEPAGE_DEFERRED_METAOBJECT_TYPES = [
   'homepage_story',
   'subscription_tier',
-  'homepage_quiz',
-  'homepage_editorial_item',
+  'quiz_cta',
+  'editorial_feature',
+  'editorial_sidebar',
+  'editorial_sidebar_item',
 ] as const;

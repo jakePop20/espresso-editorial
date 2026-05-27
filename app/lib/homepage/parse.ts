@@ -1,15 +1,25 @@
 import type {SubscriptionTierId} from '~/lib/homepage/content';
 import {
+  HOMEPAGE_EDITORIAL_FEATURE,
+  HOMEPAGE_EDITORIAL_INTRO,
+  HOMEPAGE_EDITORIAL_SIDEBAR,
+  HOMEPAGE_EDITORIAL_SUBSCRIPTION_REVIEW,
   HOMEPAGE_HERO,
+  HOMEPAGE_QUIZ_CTA,
   HOMEPAGE_STORY,
   HOMEPAGE_SUBSCRIPTION_TIERS,
 } from '~/lib/homepage/content';
-import {SUBSCRIPTION_TIER_ORDER} from '~/lib/homepage/constants';
+import {
+  SUBSCRIPTION_TIER_ORDER,
+} from '~/lib/homepage/constants';
 import type {
   HomepageCta,
   HomepageDeferredContent,
+  HomepageEditorialContent,
+  HomepageEditorialItemContent,
   HomepageHeroContent,
   HomepageImage,
+  HomepageQuizContent,
   HomepageStoryContent,
   HomepageStoryPillar,
   HomepageSubscriptionTierContent,
@@ -24,6 +34,13 @@ type HomepageHeroRecord = NonNullable<HomepageHeroQueryHero>;
 type HomepageDeferredStory = HomepageDeferredQuery['story'];
 type HomepageDeferredTier = NonNullable<
   HomepageDeferredQuery['subscriptionTiers']
+>['nodes'][number];
+type HomepageDeferredQuiz = HomepageDeferredQuery['quiz'];
+type HomepageDeferredEditorialFeature = HomepageDeferredQuery['editorialFeature'];
+type HomepageDeferredEditorialSidebarItem = NonNullable<
+  NonNullable<
+    NonNullable<HomepageDeferredQuery['editorialSidebar']>['items']
+  >['references']
 >['nodes'][number];
 
 type CtaReference = NonNullable<
@@ -132,10 +149,43 @@ export function getDefaultSubscriptionTiers(): HomepageSubscriptionTierContent[]
   }));
 }
 
+export function getDefaultHomepageQuiz(): HomepageQuizContent {
+  return {
+    title: HOMEPAGE_QUIZ_CTA.title,
+    body: HOMEPAGE_QUIZ_CTA.body,
+    image: null,
+    cta: {...HOMEPAGE_QUIZ_CTA.cta},
+  };
+}
+
+function getDefaultEditorialItem(
+  fallback: (typeof HOMEPAGE_EDITORIAL_SIDEBAR)[number] | typeof HOMEPAGE_EDITORIAL_FEATURE,
+): HomepageEditorialItemContent {
+  return {
+    handle: fallback.handle,
+    eyebrow: fallback.eyebrow,
+    title: fallback.title,
+    body: 'body' in fallback ? fallback.body : undefined,
+    image: null,
+    cta: {...fallback.cta},
+  };
+}
+
+export function getDefaultHomepageEditorial(): HomepageEditorialContent {
+  return {
+    intro: {...HOMEPAGE_EDITORIAL_INTRO},
+    feature: getDefaultEditorialItem(HOMEPAGE_EDITORIAL_FEATURE),
+    sidebar: HOMEPAGE_EDITORIAL_SIDEBAR.map((item) => getDefaultEditorialItem(item)),
+    review: {...HOMEPAGE_EDITORIAL_SUBSCRIPTION_REVIEW},
+  };
+}
+
 export function getDefaultHomepageDeferred(): HomepageDeferredContent {
   return {
     story: getDefaultHomepageStory(),
     subscriptionTiers: getDefaultSubscriptionTiers(),
+    quiz: getDefaultHomepageQuiz(),
+    editorial: getDefaultHomepageEditorial(),
   };
 }
 
@@ -249,6 +299,105 @@ export function parseSubscriptionTiers(
   ).filter(Boolean);
 }
 
+function isEditorialMetaobject(
+  node: HomepageDeferredEditorialFeature | HomepageDeferredEditorialSidebarItem,
+): boolean {
+  if (!node) return false;
+  if (node.__typename === 'Metaobject') return true;
+  return 'id' in node && Boolean(node.id);
+}
+
+function parseEditorialItemNode(
+  node: HomepageDeferredEditorialFeature | HomepageDeferredEditorialSidebarItem,
+  fallback: HomepageEditorialItemContent,
+): HomepageEditorialItemContent | null {
+  if (!isEditorialMetaobject(node)) return null;
+
+  const eyebrow = node.eyebrow?.value?.trim();
+  const title = node.title?.value?.trim();
+  if (!eyebrow || !title) return null;
+
+  const body = node.body?.value?.trim();
+
+  return {
+    handle: node.handle ?? fallback.handle,
+    eyebrow,
+    title,
+    body: body || fallback.body,
+    image: parseMediaImageReference(
+      node.image?.reference as MediaImageReference | null | undefined,
+    ),
+    cta: parseCta(node.cta?.reference, fallback.cta),
+  };
+}
+
+function parseEditorialFeature(
+  feature: HomepageDeferredEditorialFeature,
+): HomepageEditorialItemContent {
+  const defaults = getDefaultHomepageEditorial();
+  return (
+    parseEditorialItemNode(feature, defaults.feature) ?? defaults.feature
+  );
+}
+
+function parseEditorialSidebar(
+  nodes:
+    | NonNullable<
+        NonNullable<HomepageDeferredQuery['editorialSidebar']>['items']
+      >['references']['nodes']
+    | null
+    | undefined,
+): HomepageEditorialItemContent[] {
+  const defaults = getDefaultHomepageEditorial();
+
+  const parsed =
+    nodes
+      ?.map((node) => {
+        const handle = node?.__typename === 'Metaobject' ? node.handle ?? '' : '';
+        const fallback =
+          defaults.sidebar.find((item) => item.handle === handle) ??
+          defaults.sidebar[0];
+        return parseEditorialItemNode(node, fallback);
+      })
+      .filter((item): item is HomepageEditorialItemContent => item !== null) ??
+    [];
+
+  return parsed.length ? parsed : defaults.sidebar;
+}
+
+function parseEditorialContent(
+  data: HomepageDeferredQuery,
+): HomepageEditorialContent {
+  const defaults = getDefaultHomepageEditorial();
+
+  return {
+    intro: defaults.intro,
+    feature: parseEditorialFeature(data.editorialFeature),
+    sidebar: parseEditorialSidebar(data.editorialSidebar?.items?.references?.nodes),
+    review: defaults.review,
+  };
+}
+
+export function parseHomepageQuiz(
+  quiz: HomepageDeferredQuiz,
+): HomepageQuizContent | null {
+  if (!quiz?.id) return null;
+
+  const defaults = getDefaultHomepageQuiz();
+  const title = quiz.title?.value?.trim();
+  const body = quiz.body?.value?.trim();
+  if (!title || !body) return null;
+
+  return {
+    title,
+    body,
+    image: parseMediaImageReference(
+      quiz.image?.reference as MediaImageReference | null | undefined,
+    ),
+    cta: parseCta(quiz.cta?.reference, defaults.cta),
+  };
+}
+
 export function parseHomepageDeferred(
   data: HomepageDeferredQuery,
 ): HomepageDeferredContent {
@@ -257,5 +406,7 @@ export function parseHomepageDeferred(
   return {
     story: parseHomepageStory(data.story) ?? defaults.story,
     subscriptionTiers: parseSubscriptionTiers(data.subscriptionTiers?.nodes),
+    quiz: parseHomepageQuiz(data.quiz) ?? defaults.quiz,
+    editorial: parseEditorialContent(data),
   };
 }

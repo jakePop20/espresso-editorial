@@ -1,10 +1,9 @@
-import {Image} from '@shopify/hydrogen';
 import {Link} from 'react-router';
 import {
   HeroEntrance,
   HeroEntranceItem,
 } from '~/components/motion/HeroEntrance';
-import {HOMEPAGE_ASSETS} from '~/lib/homepage/assets';
+import {HomepageMediaImage} from '~/components/homepage/HomepageMediaImage';
 import type {HomepageHeroContent} from '~/lib/homepage/types';
 
 type HeroSectionProps = {
@@ -18,24 +17,15 @@ export function HeroSection({hero}: HeroSectionProps) {
 
   const media = (
     <>
-      {hero.image ? (
-        <Image
-          alt={imageAlt}
-          className="homepage-hero__image"
-          data={hero.image}
-          fetchPriority="high"
-          sizes="100vw"
-        />
-      ) : (
-        <img
-          alt={imageAlt}
-          className="homepage-hero__image"
-          fetchPriority="high"
-          height={1080}
-          src={HOMEPAGE_ASSETS.hero}
-          width={1920}
-        />
-      )}
+      <HomepageMediaImage
+        alt={imageAlt}
+        className="homepage-hero__image"
+        fetchPriority="high"
+        image={hero.image}
+        loading="eager"
+        placeholderClassName="homepage-hero__image bg-espresso"
+        sizes="100vw"
+      />
       <div aria-hidden className="homepage-hero__overlay" />
     </>
   );

@@ -1,10 +1,14 @@
 import {Link} from 'react-router';
 import {Reveal} from '~/components/motion/Reveal';
 import {fadeIn} from '~/lib/motion/presets';
-import {HOMEPAGE_ASSETS} from '~/lib/homepage/assets';
-import {HOMEPAGE_QUIZ_CTA} from '~/lib/homepage/content';
+import {HomepageMediaImage} from '~/components/homepage/HomepageMediaImage';
+import type {HomepageQuizContent} from '~/lib/homepage/types';
 
-export function QuizCtaSection() {
+type QuizCtaSectionProps = {
+  quiz: HomepageQuizContent;
+};
+
+export function QuizCtaSection({quiz}: QuizCtaSectionProps) {
   return (
     <section className="homepage-quiz" id="quiz">
       <Reveal
@@ -13,20 +17,18 @@ export function QuizCtaSection() {
         duration={1.2}
         variants={fadeIn}
       >
-        <img
-          alt=""
+        <HomepageMediaImage
           className="homepage-quiz__image"
-          height={800}
-          loading="lazy"
-          src={HOMEPAGE_ASSETS.quiz}
-          width={1920}
+          image={quiz.image}
+          placeholderClassName="homepage-quiz__image bg-espresso"
+          sizes="100vw"
         />
       </Reveal>
       <Reveal className="homepage-quiz__content section">
-        <h2 className="homepage-quiz__title">{HOMEPAGE_QUIZ_CTA.title}</h2>
-        <p className="homepage-quiz__body">{HOMEPAGE_QUIZ_CTA.body}</p>
-        <Link className="homepage-quiz__cta" prefetch="intent" to={HOMEPAGE_QUIZ_CTA.cta.to}>
-          {HOMEPAGE_QUIZ_CTA.cta.label}
+        <h2 className="homepage-quiz__title">{quiz.title}</h2>
+        <p className="homepage-quiz__body">{quiz.body}</p>
+        <Link className="homepage-quiz__cta" prefetch="intent" to={quiz.cta.to}>
+          {quiz.cta.label}
         </Link>
       </Reveal>
     </section>

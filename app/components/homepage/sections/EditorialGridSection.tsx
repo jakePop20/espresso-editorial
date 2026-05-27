@@ -1,82 +1,74 @@
 import {Link} from 'react-router';
 import {Stagger, StaggerItem} from '~/components/motion/Stagger';
-import {HOMEPAGE_ASSETS} from '~/lib/homepage/assets';
-import {
-  HOMEPAGE_EDITORIAL_FEATURE,
-  HOMEPAGE_EDITORIAL_INTRO,
-  HOMEPAGE_EDITORIAL_SIDEBAR,
-  HOMEPAGE_EDITORIAL_SUBSCRIPTION_REVIEW,
-} from '~/lib/homepage/content';
+import {HomepageMediaImage} from '~/components/homepage/HomepageMediaImage';
+import type {HomepageEditorialContent} from '~/lib/homepage/types';
 
-const SIDEBAR_IMAGES = {
-  huila: HOMEPAGE_ASSETS.editorial.huila,
-  slowLiving: HOMEPAGE_ASSETS.editorial.slowLiving,
-} as const;
+type EditorialGridSectionProps = {
+  editorial: HomepageEditorialContent;
+};
 
-export function EditorialGridSection() {
-  const featureHref = HOMEPAGE_EDITORIAL_FEATURE.cta.to;
+export function EditorialGridSection({editorial}: EditorialGridSectionProps) {
+  const {feature} = editorial;
+  const featureHref = feature.cta.to;
 
   return (
     <section className="homepage-editorial" aria-labelledby="homepage-editorial-title">
       <div className="homepage-editorial__intro section section-intro">
-        <span className="eyebrow">{HOMEPAGE_EDITORIAL_INTRO.eyebrow}</span>
+        <span className="eyebrow">{editorial.intro.eyebrow}</span>
         <h2 className="homepage-editorial__title" id="homepage-editorial-title">
-          {HOMEPAGE_EDITORIAL_INTRO.title}
+          {editorial.intro.title}
         </h2>
       </div>
       <div className="homepage-editorial__grid section">
         <article className="homepage-editorial__feature">
           <Link
-            aria-label={HOMEPAGE_EDITORIAL_FEATURE.title}
+            aria-label={feature.title}
             className="homepage-editorial__feature-image-link"
             prefetch="intent"
             to={featureHref}
           >
             <div className="homepage-editorial__feature-image-wrap">
-              <img
-                alt="Chemex coffee maker dripping on a bright minimalist counter"
+              <HomepageMediaImage
+                alt={
+                  feature.image?.altText ??
+                  'Chemex coffee maker dripping on a bright minimalist counter'
+                }
                 className="homepage-editorial__feature-image"
-                height={720}
-                loading="lazy"
-                src={HOMEPAGE_ASSETS.editorial.chemex}
-                width={1280}
+                image={feature.image}
+                sizes="(min-width: 768px) 66vw, 100vw"
               />
             </div>
           </Link>
-          <span className="homepage-editorial__eyebrow">{HOMEPAGE_EDITORIAL_FEATURE.eyebrow}</span>
-          <h3 className="homepage-editorial__feature-title">
-            {HOMEPAGE_EDITORIAL_FEATURE.title}
-          </h3>
-          <p className="homepage-editorial__feature-body">{HOMEPAGE_EDITORIAL_FEATURE.body}</p>
+          <span className="homepage-editorial__eyebrow">{feature.eyebrow}</span>
+          <h3 className="homepage-editorial__feature-title">{feature.title}</h3>
+          {feature.body ? (
+            <p className="homepage-editorial__feature-body">{feature.body}</p>
+          ) : null}
           <Link className="btn-ghost" prefetch="intent" to={featureHref}>
-            {HOMEPAGE_EDITORIAL_FEATURE.cta.label}
+            {feature.cta.label}
           </Link>
           <blockquote className="homepage-editorial__review">
-            <p className="homepage-editorial__review-text">
-              {HOMEPAGE_EDITORIAL_SUBSCRIPTION_REVIEW.text}
-            </p>
+            <p className="homepage-editorial__review-text">{editorial.review.text}</p>
             <footer className="homepage-editorial__review-footer">
               <cite className="homepage-editorial__review-cite">
-                {HOMEPAGE_EDITORIAL_SUBSCRIPTION_REVIEW.attribution}
+                {editorial.review.attribution}
               </cite>
               <span className="homepage-editorial__review-detail">
-                {HOMEPAGE_EDITORIAL_SUBSCRIPTION_REVIEW.detail}
+                {editorial.review.detail}
               </span>
             </footer>
           </blockquote>
         </article>
         <Stagger className="homepage-editorial__sidebar">
-          {HOMEPAGE_EDITORIAL_SIDEBAR.map((item) => (
-            <StaggerItem as="article" className="homepage-editorial__card" key={item.title}>
+          {editorial.sidebar.map((item) => (
+            <StaggerItem as="article" className="homepage-editorial__card" key={item.handle}>
               <Link className="homepage-editorial__card-link" prefetch="intent" to={item.cta.to}>
                 <div className="homepage-editorial__card-image-wrap">
-                  <img
-                    alt=""
+                  <HomepageMediaImage
+                    alt={item.image?.altText ?? item.title}
                     className="homepage-editorial__card-image"
-                    height={600}
-                    loading="lazy"
-                    src={SIDEBAR_IMAGES[item.imageKey]}
-                    width={600}
+                    image={item.image}
+                    sizes="(min-width: 768px) 33vw, 100vw"
                   />
                 </div>
                 <span className="homepage-editorial__card-eyebrow">{item.eyebrow}</span>

@@ -5,9 +5,7 @@ import {QuizCtaSection} from '~/components/homepage/sections/QuizCtaSection';
 import {StorySection} from '~/components/homepage/sections/StorySection';
 import {SubscriptionsSection} from '~/components/homepage/sections/SubscriptionsSection';
 import {HeroSection} from '~/components/homepage/sections/HeroSection';
-import {
-  getDefaultHomepageDeferred,
-} from '~/lib/homepage/parse';
+import {getDefaultHomepageDeferred} from '~/lib/homepage/parse';
 import type {
   HomepageDeferredContent,
   HomepageHeroContent,
@@ -23,8 +21,8 @@ function HomepageBelowFold({content}: {content: HomepageDeferredContent}) {
     <>
       <StorySection story={content.story} />
       <SubscriptionsSection tiers={content.subscriptionTiers} />
-      <QuizCtaSection />
-      <EditorialGridSection />
+      <QuizCtaSection quiz={content.quiz} />
+      <EditorialGridSection editorial={content.editorial} />
     </>
   );
 }
