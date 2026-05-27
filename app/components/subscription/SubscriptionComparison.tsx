@@ -1,0 +1,137 @@
+import type {
+  SubscriptionComparisonColumn,
+  SubscriptionComparisonContent,
+  SubscriptionTierId,
+} from '~/lib/subscription/types';
+
+type SubscriptionComparisonProps = {
+  comparison: SubscriptionComparisonContent;
+};
+
+function ComparisonCellValue({
+  tierId,
+  value,
+}: {
+  tierId: SubscriptionTierId;
+  value: string | boolean;
+}) {
+  const emphasized = tierId === 'enthusiast';
+
+  if (typeof value === 'boolean') {
+    if (!value) {
+      return (
+        <span
+          className="font-body text-body-md text-ink-subtle/30"
+          aria-label="Not included"
+        >
+          —
+        </span>
+      );
+    }
+
+    return (
+      <span
+        aria-hidden
+        className="material-symbols-outlined text-roasted-clay"
+        style={{fontVariationSettings: "'FILL' 1, 'wght' 300"}}
+      >
+        check_circle
+      </span>
+    );
+  }
+
+  return (
+    <span
+      className={`font-body text-body-md ${
+        emphasized ? 'font-medium text-espresso' : 'text-ink-subtle'
+      }`}
+    >
+      {value}
+    </span>
+  );
+}
+
+function ComparisonHeaderCell({column}: {column: SubscriptionComparisonColumn}) {
+  const featured = column.id === 'enthusiast';
+
+  return (
+    <div
+      className={
+        featured
+          ? 'ee-subscription-compare__head-cell ee-subscription-compare__head-cell--featured'
+          : 'ee-subscription-compare__head-cell'
+      }
+    >
+      {featured ? <span className="ee-subscription-compare__featured-bar" aria-hidden /> : null}
+      <span
+        className={`mb-1 block font-label text-[10px] uppercase tracking-[0.2em] ${
+          featured ? 'text-roasted-clay' : 'text-ink-subtle'
+        }`}
+      >
+        {column.tierLabel}
+      </span>
+      <h3 className="font-display text-xl text-espresso">{column.name}</h3>
+      {column.editorsChoice ? (
+        <span className="ee-subscription-compare__editors-choice sr-only">
+          {column.editorsChoice}
+        </span>
+      ) : null}
+    </div>
+  );
+}
+
+export function SubscriptionComparison({comparison}: SubscriptionComparisonProps) {
+  return (
+    <section className="section ee-subscription__comparison-section">
+      <h2 className="ee-subscription-compare__title">{comparison.title}</h2>
+      <div className="ee-subscription-compare__scroll">
+        <div className="ee-subscription-compare__table">
+          <div className="ee-subscription-compare__header">
+            <div className="ee-subscription-compare__corner" aria-hidden />
+            {comparison.columns.map((column) => (
+              <ComparisonHeaderCell key={column.id} column={column} />
+            ))}
+          </div>
+
+          <div className="ee-subscription-compare__body">
+            {comparison.rows.map((row, index) => {
+              const isLast = index === comparison.rows.length - 1;
+              return (
+                <div
+                  key={row.label}
+                  className={
+                    isLast
+                      ? 'ee-subscription-compare__data-row ee-subscription-compare__data-row--last'
+                      : 'ee-subscription-compare__data-row'
+                  }
+                >
+                  <div className="ee-subscription-compare__label-cell">
+                    <span>{row.label}</span>
+                  </div>
+                  {comparison.columns.map((column) => {
+                    const featured = column.id === 'enthusiast';
+                    return (
+                      <div
+                        key={column.id}
+                        className={
+                          featured
+                            ? 'ee-subscription-compare__cell ee-subscription-compare__cell--featured'
+                            : 'ee-subscription-compare__cell'
+                        }
+                      >
+                        <ComparisonCellValue
+                          tierId={column.id}
+                          value={row.values[column.id]}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

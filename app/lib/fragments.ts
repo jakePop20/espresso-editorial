@@ -11,6 +11,12 @@ export const CART_QUERY_FRAGMENT = `#graphql
       key
       value
     }
+    sellingPlanAllocation {
+      sellingPlan {
+        id
+        name
+      }
+    }
     cost {
       totalAmount {
         ...Money
@@ -47,6 +53,7 @@ export const CART_QUERY_FRAGMENT = `#graphql
           title
           id
           vendor
+          tags
         }
         selectedOptions {
           name
@@ -66,6 +73,12 @@ export const CART_QUERY_FRAGMENT = `#graphql
     attributes {
       key
       value
+    }
+    sellingPlanAllocation {
+      sellingPlan {
+        id
+        name
+      }
     }
     cost {
       totalAmount {
@@ -102,6 +115,7 @@ export const CART_QUERY_FRAGMENT = `#graphql
           title
           id
           vendor
+          tags
         }
         selectedOptions {
           name

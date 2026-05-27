@@ -2,6 +2,7 @@ import type {CartLineUpdateInput} from '@shopify/hydrogen/storefront-api-types';
 import type {CartLayout, LineItemChildrenMap} from '~/components/CartMain';
 import {CartForm, Image, type OptimisticCartLine} from '@shopify/hydrogen';
 import {useVariantUrl} from '~/lib/variants';
+import {isSubscriptionProductHandle} from '~/lib/subscription/commerce';
 import {Link} from 'react-router';
 import {ProductPrice} from './ProductPrice';
 import {useAside} from './Aside';
@@ -104,6 +105,18 @@ export function CartLineItem({
  */
 function CartLineQuantity({line}: {line: CartLine}) {
   if (!line || typeof line?.quantity === 'undefined') return null;
+
+  const isSubscriptionLine =
+    line.sellingPlanAllocation?.sellingPlan != null ||
+    line.attributes?.some(
+      (attribute) => attribute?.key === '_subscription' && attribute?.value === 'true',
+    ) ||
+    isSubscriptionProductHandle(line.merchandise.product.handle);
+
+  if (isSubscriptionLine) {
+    return <small>Subscription · Qty 1</small>;
+  }
+
   const {id: lineId, quantity, isOptimistic} = line;
   const prevQuantity = Number(Math.max(0, quantity - 1).toFixed(0));
   const nextQuantity = Number((quantity + 1).toFixed(0));

@@ -7,7 +7,7 @@ import type {
 } from 'storefrontapi.generated';
 import {Aside} from '~/components/Aside';
 import {Footer} from '~/components/Footer';
-import {Header, HeaderMenu} from '~/components/Header';
+import {Header} from '~/components/Header';
 import {CartMain} from '~/components/CartMain';
 import {
   SEARCH_ENDPOINT,
@@ -28,22 +28,12 @@ export function PageLayout({
   cart,
   children = null,
   header,
-  isLoggedIn,
-  publicStoreDomain,
 }: PageLayoutProps) {
   return (
     <Aside.Provider>
       <CartAside cart={cart} />
       <SearchAside />
-      <MobileMenuAside />
-      {header && (
-        <Header
-          header={header}
-          cart={cart}
-          isLoggedIn={isLoggedIn}
-          publicStoreDomain={publicStoreDomain}
-        />
-      )}
+      {header && <Header header={header} />}
       <main className="site-main">{children}</main>
       <Footer />
     </Aside.Provider>
@@ -142,14 +132,6 @@ function SearchAside() {
           }}
         </SearchResultsPredictive>
       </div>
-    </Aside>
-  );
-}
-
-function MobileMenuAside() {
-  return (
-    <Aside type="mobile" heading="MENU">
-      <HeaderMenu viewport="mobile" />
     </Aside>
   );
 }
