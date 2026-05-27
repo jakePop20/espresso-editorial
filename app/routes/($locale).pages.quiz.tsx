@@ -1,11 +1,158 @@
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {Link, useLoaderData} from 'react-router';
 import type {Route} from './+types/($locale).pages.quiz';
 import {AnimatePresence, motion, useReducedMotion} from 'motion/react';
+import {QuizEntrance, QuizEntranceItem} from '~/components/motion/QuizEntrance';
+import {
+  EDITORIAL_EASE,
+  QUIZ_STEP_CARD_DURATION,
+  quizStepEntranceDelay,
+  quizStepFadeUp,
+} from '~/lib/motion/presets';
 import {QUIZ_PAGE_METAOBJECT} from '~/lib/quiz/constants';
 import {getDefaultQuizPage, parseQuizPage} from '~/lib/quiz/parse';
 import {QUIZ_PAGE_LIST_QUERY, QUIZ_PAGE_QUERY} from '~/lib/quiz/queries';
-import type {QuizAnswerIndex} from '~/lib/quiz/types';
+import type {
+  QuizAnswerIndex,
+  QuizChoiceContent,
+  QuizStepContent,
+} from '~/lib/quiz/types';
+
+const quizStepItemTransition = {
+  duration: QUIZ_STEP_CARD_DURATION,
+  ease: EDITORIAL_EASE,
+};
+
+function ChoiceCardContent({choice}: {choice: QuizChoiceContent}) {
+  return (
+    <>
+      <span
+        aria-hidden
+        className="material-symbols-outlined mb-4 text-3xl text-roasted-clay"
+        style={{fontVariationSettings: "'FILL' 0, 'wght' 200"}}
+      >
+        {choice.icon}
+      </span>
+      <h3 className="font-display text-headline-md mb-2 text-espresso">
+        {choice.title}
+      </h3>
+      <p className="font-body text-body-md text-ink-subtle">
+        {choice.description}
+      </p>
+    </>
+  );
+}
+
+type QuizStepPanelProps = {
+  step: QuizStepContent;
+  stepKey: string;
+  pendingChoice: QuizAnswerIndex | null;
+  onPick: (choice: QuizAnswerIndex) => void;
+  getCardClassName: (isActive: boolean) => string;
+};
+
+function QuizStepPanel({
+  step,
+  stepKey,
+  pendingChoice,
+  onPick,
+  getCardClassName,
+}: QuizStepPanelProps) {
+  const reducedMotion = useReducedMotion();
+  const [play, setPlay] = useState(false);
+
+  useEffect(() => {
+    if (reducedMotion) {
+      setPlay(true);
+      return;
+    }
+
+    setPlay(false);
+
+    let outerFrame = 0;
+    let innerFrame = 0;
+
+    outerFrame = requestAnimationFrame(() => {
+      innerFrame = requestAnimationFrame(() => setPlay(true));
+    });
+
+    return () => {
+      cancelAnimationFrame(outerFrame);
+      cancelAnimationFrame(innerFrame);
+    };
+  }, [stepKey, reducedMotion]);
+
+  if (reducedMotion) {
+    return (
+      <>
+        <div className="text-center mb-8">
+          <h1 className="font-display text-headline-xl text-espresso mb-2">
+            {step.question}
+          </h1>
+          <p className="font-body text-body-lg text-ink-subtle">{step.lead}</p>
+        </div>
+        <div className="grid grid-cols-1 gap-page md:grid-cols-3">
+          {step.choices.map((choice) => {
+            const isActive = pendingChoice === choice.id;
+            return (
+              <button
+                key={choice.id}
+                className={getCardClassName(isActive)}
+                onClick={() => onPick(choice.id)}
+                type="button"
+              >
+                <ChoiceCardContent choice={choice} />
+              </button>
+            );
+          })}
+        </div>
+      </>
+    );
+  }
+
+  const stepItemTransition = (itemIndex: number) => ({
+    ...quizStepItemTransition,
+    delay: quizStepEntranceDelay(itemIndex, play),
+  });
+
+  return (
+    <div className="ee-quiz__choices grid w-full grid-cols-1 gap-page md:grid-cols-3">
+      <motion.div
+        initial="hidden"
+        animate={play ? 'visible' : 'hidden'}
+        variants={quizStepFadeUp}
+        transition={stepItemTransition(0)}
+        className="col-span-1 mb-8 text-center md:col-span-3"
+      >
+        <h1 className="font-display text-headline-xl text-espresso mb-2">
+          {step.question}
+        </h1>
+        <p className="font-body text-body-lg text-ink-subtle">{step.lead}</p>
+      </motion.div>
+      {step.choices.map((choice, index) => {
+        const isActive = pendingChoice === choice.id;
+        return (
+          <motion.div
+            key={choice.id}
+            className="ee-quiz__choice-cell h-full"
+            initial="hidden"
+            animate={play ? 'visible' : 'hidden'}
+            variants={quizStepFadeUp}
+            transition={stepItemTransition(index)}
+          >
+            <button
+              className={`${getCardClassName(isActive)} h-full w-full`}
+              onClick={() => onPick(choice.id)}
+              type="button"
+            >
+              <ChoiceCardContent choice={choice} />
+            </button>
+          </motion.div>
+        );
+      })}
+    </div>
+  );
+}
 
 function computeProfile(answers: QuizAnswerIndex[]): QuizAnswerIndex {
   const counts: Record<QuizAnswerIndex, number> = {0: 0, 1: 0, 2: 0};
@@ -88,18 +235,24 @@ export default function QuizRoute() {
     return quiz.profiles[profileKey];
   }, [answers, isComplete, quiz.profiles]);
 
-  const transition = reducedMotion
+  const showProgressEntrance =
+    stepIndex === 0 && answers.length === 0 && !isComplete && !reducedMotion;
+
+  const stepEase = [0.22, 1, 0.36, 1] as const;
+  const stepExitTransition = reducedMotion
     ? {duration: 0}
-    : {duration: 0.7, ease: [0.22, 1, 0.36, 1] as const};
+    : {duration: 0.45, ease: stepEase};
+  const resultTransition = reducedMotion
+    ? {duration: 0}
+    : {duration: 0.7, ease: stepEase};
 
   const handlePick = (choice: QuizAnswerIndex) => {
     if (pendingChoice !== null) return;
 
     setPendingChoice(choice);
-    const nextAnswers = [...answers, choice];
-    setAnswers(nextAnswers);
 
     const advance = () => {
+      setAnswers((prev) => [...prev, choice]);
       setPendingChoice(null);
       setStepIndex((index) => index + 1);
     };
@@ -109,7 +262,7 @@ export default function QuizRoute() {
       return;
     }
 
-    window.setTimeout(advance, 220);
+    window.setTimeout(advance, 180);
   };
 
   const reset = () => {
@@ -118,114 +271,103 @@ export default function QuizRoute() {
     setStepIndex(0);
   };
 
+  const choiceCardClass = (isActive: boolean) =>
+    [
+      'ee-quiz__card group flex flex-col items-center text-center px-10 py-10 bg-cream-silk border border-espresso/15 rounded-md transition-editorial-fast',
+      isActive ? 'ee-quiz__card--active' : '',
+    ]
+      .filter(Boolean)
+      .join(' ');
+
+  const progressHeader = (
+    <div className="flex justify-between items-end">
+      <span className="font-label text-label-caps text-espresso tracking-widest">
+        {stepLabel}
+      </span>
+      <span className="font-label text-label-caps text-ink-subtle">
+        {isComplete ? quiz.resultLabel : activeStep.category}
+      </span>
+    </div>
+  );
+
+  const progressBar = (
+    <div className="w-full h-[1px] bg-espresso/15 relative">
+      <div
+        className="ee-quiz__progress-line absolute top-0 left-0 h-[1px] bg-espresso"
+        style={{width: `${progressPct}%`}}
+      />
+    </div>
+  );
+
   return (
     <main className="ee-quiz flex flex-col items-center">
       <section className="w-full -mt-12 max-w-[720px] px-page">
-        <div className="flex flex-col">
-          <div className="flex justify-between items-end">
-            <span className="font-label text-label-caps text-espresso tracking-widest">
-              {stepLabel}
-            </span>
-            <span className="font-label text-label-caps text-ink-subtle">
-              {isComplete ? quiz.resultLabel : activeStep.category}
-            </span>
+        {showProgressEntrance ? (
+          <QuizEntrance className="flex flex-col">
+            <QuizEntranceItem>{progressHeader}</QuizEntranceItem>
+            <QuizEntranceItem>{progressBar}</QuizEntranceItem>
+          </QuizEntrance>
+        ) : (
+          <div className="flex flex-col">
+            {progressHeader}
+            {progressBar}
           </div>
-          <div className="w-full h-[1px] bg-espresso/15 relative">
-            <div
-              className="ee-quiz__progress-line absolute top-0 left-0 h-[1px] bg-espresso"
-              style={{width: `${progressPct}%`}}
-            />
-          </div>
-        </div>
+        )}
       </section>
 
       <section className="w-full max-w-[1080px] px-page -mt-16 flex flex-col items-center">
-        <AnimatePresence mode="wait" initial={false}>
-          {!isComplete ? (
-            <motion.div
-              key={`step-${stepIndex}`}
-              initial={{opacity: 0, y: 24}}
-              animate={{opacity: 1, y: 0}}
-              exit={{opacity: 0, y: 24}}
-              transition={transition}
-              className="w-full"
-            >
-              <div className="text-center mb-8">
-                <h1 className="font-display text-headline-xl text-espresso mb-2">
-                  {activeStep.question}
+        <div className="ee-quiz__step-stage w-full">
+          <AnimatePresence mode="sync" initial={false}>
+            {!isComplete ? (
+              <motion.div
+                key={`step-${stepIndex}`}
+                exit={{opacity: 0, y: 16}}
+                transition={stepExitTransition}
+                className="w-full"
+              >
+                <QuizStepPanel
+                  getCardClassName={choiceCardClass}
+                  onPick={handlePick}
+                  pendingChoice={pendingChoice}
+                  step={activeStep}
+                  stepKey={`step-${stepIndex}`}
+                />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="result"
+                initial={{opacity: 0, y: 24}}
+                animate={{opacity: 1, y: 0}}
+                transition={resultTransition}
+                exit={{opacity: 0, y: 24}}
+                className="w-full text-center"
+              >
+                <h1 className="font-display text-headline-xl text-espresso mb-6">
+                  {result?.title}
                 </h1>
-                <p className="font-body text-body-lg text-ink-subtle">
-                  {activeStep.lead}
+                <p className="font-label text-label-caps tracking-widest text-roasted-clay mb-10">
+                  {result?.subtitle}
                 </p>
-              </div>
+                <p className="font-body text-body-lg text-ink-subtle mb-12 max-w-[600px] mx-auto">
+                  {result?.description}
+                </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-page">
-                {activeStep.choices.map((choice) => {
-                  const isActive = pendingChoice === choice.id;
-                  return (
-                    <button
-                      key={choice.id}
-                      className={[
-                        'ee-quiz__card group flex flex-col items-center text-center px-10 py-10 bg-cream-silk border border-espresso/15 rounded-md transition-editorial-fast',
-                        isActive ? 'ee-quiz__card--active' : '',
-                      ]
-                        .filter(Boolean)
-                        .join(' ')}
-                      onClick={() => handlePick(choice.id)}
-                      type="button"
-                    >
-                      <span
-                        aria-hidden
-                        className="material-symbols-outlined mb-4 text-3xl text-roasted-clay"
-                        style={{fontVariationSettings: "'FILL' 0, 'wght' 200"}}
-                      >
-                        {choice.icon}
-                      </span>
-                      <h3 className="font-display text-headline-md mb-2 text-espresso">
-                        {choice.title}
-                      </h3>
-                      <p className="font-body text-body-md text-ink-subtle">
-                        {choice.description}
-                      </p>
-                    </button>
-                  );
-                })}
-              </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="result"
-              initial={{opacity: 0, y: 24}}
-              animate={{opacity: 1, y: 0}}
-              exit={{opacity: 0, y: 24}}
-              transition={transition}
-              className="w-full text-center"
-            >
-              <h1 className="font-display text-headline-xl text-espresso mb-6">
-                {result?.title}
-              </h1>
-              <p className="font-label text-label-caps tracking-widest text-roasted-clay mb-10">
-                {result?.subtitle}
-              </p>
-              <p className="font-body text-body-lg text-ink-subtle mb-12 max-w-[600px] mx-auto">
-                {result?.description}
-              </p>
-
-              <div className="flex flex-col md:flex-row gap-page justify-center">
-                <Link
-                  className="btn-primary"
-                  prefetch="intent"
-                  to={quiz.primaryCta.to}
-                >
-                  {quiz.primaryCta.label}
-                </Link>
-                <button className="btn-ghost" onClick={reset} type="button">
-                  {quiz.retakeLabel}
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                <div className="flex flex-col md:flex-row gap-page justify-center">
+                  <Link
+                    className="btn-primary"
+                    prefetch="intent"
+                    to={quiz.primaryCta.to}
+                  >
+                    {quiz.primaryCta.label}
+                  </Link>
+                  <button className="btn-ghost" onClick={reset} type="button">
+                    {quiz.retakeLabel}
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </section>
     </main>
   );
