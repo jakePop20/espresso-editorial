@@ -23,7 +23,15 @@
   }
 
   .site-header__nav {
-    @apply flex flex-wrap items-center justify-end gap-4 md:gap-6;
+    @apply hidden items-center gap-6 md:flex;
+  }
+
+  .site-header__menu-toggle {
+    @apply text-espresso md:hidden;
+  }
+
+  .site-header__menu-toggle .material-symbols-outlined {
+    font-size: 1.5rem;
   }
 
   .site-header .nav-link {

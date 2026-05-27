@@ -1,5 +1,7 @@
 import {NavLink} from 'react-router';
 import type {HeaderQuery} from 'storefrontapi.generated';
+import {useAside} from '~/components/Aside';
+import {Icon} from '~/components/Icon';
 import {ScrollSiteHeader} from '~/components/ScrollSiteHeader';
 import {STORE_DISPLAY_NAME} from '~/lib/brand';
 
@@ -14,20 +16,27 @@ export function Header({header: _header}: HeaderProps) {
         <NavLink className="site-header__brand" prefetch="intent" to="/" end>
           {STORE_DISPLAY_NAME}
         </NavLink>
-        <HeaderMenu />
+        <HeaderMenu viewport="desktop" />
+        <HeaderMenuMobileToggle />
       </div>
     </ScrollSiteHeader>
   );
 }
 
-export function HeaderMenu() {
+export function HeaderMenu({viewport}: {viewport: 'desktop' | 'mobile'}) {
+  const {close} = useAside();
+
+  const className =
+    viewport === 'desktop' ? 'site-header__nav' : 'header-menu-mobile';
+
   return (
-    <nav className="site-header__nav" role="navigation">
+    <nav className={className} role="navigation">
       {EDITORIAL_HEADER_NAV.map((item) => (
         <NavLink
           className={navLinkClassName}
           end={item.end}
           key={item.to}
+          onClick={viewport === 'mobile' ? close : undefined}
           prefetch="intent"
           to={item.to}
         >
@@ -35,6 +44,21 @@ export function HeaderMenu() {
         </NavLink>
       ))}
     </nav>
+  );
+}
+
+function HeaderMenuMobileToggle() {
+  const {open} = useAside();
+
+  return (
+    <button
+      aria-label="Open menu"
+      className="site-header__menu-toggle btn-icon"
+      onClick={() => open('mobile')}
+      type="button"
+    >
+      <Icon name="menu" />
+    </button>
   );
 }
 

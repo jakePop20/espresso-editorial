@@ -229,7 +229,12 @@ button.reset:hover:not(:has(> *)) {
 .header-menu-mobile {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
+  padding-top: 0.5rem;
+}
+
+.header-menu-mobile .nav-link {
+  font-size: 1.125rem;
 }
 
 /*
