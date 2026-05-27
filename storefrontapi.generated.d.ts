@@ -699,61 +699,68 @@ export type HomepageDeferredQuery = {
     >;
   };
   quiz?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Metaobject, 'id' | 'handle'> & {
-      title?: StorefrontAPI.Maybe<Pick<StorefrontAPI.MetaobjectField, 'value'>>;
-      body?: StorefrontAPI.Maybe<Pick<StorefrontAPI.MetaobjectField, 'value'>>;
-      image?: StorefrontAPI.Maybe<{
-        reference?: StorefrontAPI.Maybe<
-          | {
-              __typename:
-                | 'Article'
-                | 'Collection'
-                | 'GenericFile'
-                | 'Metaobject'
-                | 'Model3d'
-                | 'Page'
-                | 'Product'
-                | 'ProductVariant'
-                | 'Video';
-            }
-          | ({__typename: 'MediaImage'} & {
-              image?: StorefrontAPI.Maybe<
-                Pick<
-                  StorefrontAPI.Image,
-                  'url' | 'altText' | 'width' | 'height'
-                >
-              >;
-            })
+    {__typename: 'Metaobject'} & Pick<
+      StorefrontAPI.Metaobject,
+      'id' | 'handle'
+    > & {
+        title?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.MetaobjectField, 'value'>
         >;
-      }>;
-      cta?: StorefrontAPI.Maybe<{
-        reference?: StorefrontAPI.Maybe<
-          | {
-              __typename:
-                | 'Article'
-                | 'Collection'
-                | 'GenericFile'
-                | 'MediaImage'
-                | 'Model3d'
-                | 'Page'
-                | 'Product'
-                | 'ProductVariant'
-                | 'Video';
-            }
-          | ({__typename: 'Metaobject'} & Pick<
-              StorefrontAPI.Metaobject,
-              'handle'
-            > & {
-                label?: StorefrontAPI.Maybe<
-                  Pick<StorefrontAPI.MetaobjectField, 'value'>
-                >;
-                to?: StorefrontAPI.Maybe<
-                  Pick<StorefrontAPI.MetaobjectField, 'value'>
+        body?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.MetaobjectField, 'value'>
+        >;
+        image?: StorefrontAPI.Maybe<{
+          reference?: StorefrontAPI.Maybe<
+            | {
+                __typename:
+                  | 'Article'
+                  | 'Collection'
+                  | 'GenericFile'
+                  | 'Metaobject'
+                  | 'Model3d'
+                  | 'Page'
+                  | 'Product'
+                  | 'ProductVariant'
+                  | 'Video';
+              }
+            | ({__typename: 'MediaImage'} & {
+                image?: StorefrontAPI.Maybe<
+                  Pick<
+                    StorefrontAPI.Image,
+                    'url' | 'altText' | 'width' | 'height'
+                  >
                 >;
               })
-        >;
-      }>;
-    }
+          >;
+        }>;
+        cta?: StorefrontAPI.Maybe<{
+          reference?: StorefrontAPI.Maybe<
+            | {
+                __typename:
+                  | 'Article'
+                  | 'Collection'
+                  | 'GenericFile'
+                  | 'MediaImage'
+                  | 'Model3d'
+                  | 'Page'
+                  | 'Product'
+                  | 'ProductVariant'
+                  | 'Video';
+              }
+            | ({__typename: 'Metaobject'} & Pick<
+                StorefrontAPI.Metaobject,
+                'handle'
+              > & {
+                  label?: StorefrontAPI.Maybe<
+                    Pick<StorefrontAPI.MetaobjectField, 'value'>
+                  >;
+                  to?: StorefrontAPI.Maybe<
+                    Pick<StorefrontAPI.MetaobjectField, 'value'>
+                  >;
+                })
+          >;
+        }>;
+      }
   >;
   editorialFeature?: StorefrontAPI.Maybe<
     {__typename: 'Metaobject'} & Pick<
@@ -1747,7 +1754,7 @@ interface GeneratedQueryTypes {
     return: HomepageHeroQuery;
     variables: HomepageHeroQueryVariables;
   };
-  '#graphql\n  query HomepageDeferred(\n    $storyHandle: String!\n    $storyType: String!\n    $quizHandle: String!\n    $quizType: String!\n    $editorialFeatureHandle: String!\n    $editorialFeatureType: String!\n    $editorialSidebarHandle: String!\n    $editorialSidebarType: String!\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(country: $country, language: $language) {\n    story: metaobject(handle: {type: $storyType, handle: $storyHandle}) {\n      id\n      handle\n      eyebrow: field(key: "eyebrow") {\n        value\n      }\n      title: field(key: "title") {\n        value\n      }\n      body: field(key: "body") {\n        value\n      }\n      image: field(key: "image") {\n        reference {\n          __typename\n          ... on MediaImage {\n            ...MetaobjectImage\n          }\n        }\n      }\n      quote: field(key: "quote") {\n        reference {\n          __typename\n          ... on Metaobject {\n            text: field(key: "text") {\n              value\n            }\n            attribution: field(key: "attribution") {\n              value\n            }\n          }\n        }\n      }\n      pillars: field(key: "pillars") {\n        references(first: 10) {\n          nodes {\n            __typename\n            ... on Metaobject {\n              ...MetaobjectStoryPillar\n            }\n          }\n        }\n      }\n    }\n    subscriptionTiers: metaobjects(type: "subscription_tier", first: 10) {\n      nodes {\n        id\n        handle\n        tierId: field(key: "tier_id") {\n          value\n        }\n        name: field(key: "name") {\n          value\n        }\n        bagsLabel: field(key: "bags_label") {\n          value\n        }\n        description: field(key: "description") {\n          value\n        }\n        priceLabel: field(key: "price_label") {\n          value\n        }\n        badge: field(key: "badge") {\n          value\n        }\n        highlighted: field(key: "highlighted") {\n          value\n        }\n        image: field(key: "image") {\n          reference {\n            __typename\n            ... on MediaImage {\n              ...MetaobjectImage\n            }\n          }\n        }\n      }\n    }\n    quiz: metaobject(handle: {type: $quizType, handle: $quizHandle}) {\n      id\n      handle\n      title: field(key: "title") {\n        value\n      }\n      body: field(key: "body") {\n        value\n      }\n      image: field(key: "image") {\n        reference {\n          __typename\n          ... on MediaImage {\n            ...MetaobjectImage\n          }\n        }\n      }\n      cta: field(key: "cta") {\n        reference {\n          __typename\n          ... on Metaobject {\n            ...MetaobjectCta\n          }\n        }\n      }\n    }\n    editorialFeature: metaobject(\n      handle: {type: $editorialFeatureType, handle: $editorialFeatureHandle}\n    ) {\n      __typename\n      id\n      handle\n      ...MetaobjectEditorialItem\n    }\n    editorialSidebar: metaobject(\n      handle: {type: $editorialSidebarType, handle: $editorialSidebarHandle}\n    ) {\n      id\n      handle\n      items: field(key: "editorial_sidebar_item") {\n        references(first: 10) {\n          nodes {\n            __typename\n            ... on Metaobject {\n              ...MetaobjectEditorialItem\n            }\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment MetaobjectCta on Metaobject {\n    handle\n    label: field(key: "label") {\n      value\n    }\n    to: field(key: "to") {\n      value\n    }\n  }\n\n  #graphql\n  fragment MetaobjectImage on MediaImage {\n    image {\n      url\n      altText\n      width\n      height\n    }\n  }\n\n  #graphql\n  fragment MetaobjectStoryPillar on Metaobject {\n    number: field(key: "number") {\n      value\n    }\n    title: field(key: "title") {\n      value\n    }\n    body: field(key: "body") {\n      value\n    }\n  }\n\n  #graphql\n  fragment MetaobjectEditorialItem on Metaobject {\n    handle\n    eyebrow: field(key: "eyebrow") {\n      value\n    }\n    title: field(key: "title") {\n      value\n    }\n    body: field(key: "body") {\n      value\n    }\n    image: field(key: "image") {\n      reference {\n        __typename\n        ... on MediaImage {\n          ...MetaobjectImage\n        }\n      }\n    }\n    cta: field(key: "cta") {\n      reference {\n        __typename\n        ... on Metaobject {\n          ...MetaobjectCta\n        }\n      }\n    }\n  }\n\n': {
+  '#graphql\n  query HomepageDeferred(\n    $storyHandle: String!\n    $storyType: String!\n    $quizHandle: String!\n    $quizType: String!\n    $editorialFeatureHandle: String!\n    $editorialFeatureType: String!\n    $editorialSidebarHandle: String!\n    $editorialSidebarType: String!\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(country: $country, language: $language) {\n    story: metaobject(handle: {type: $storyType, handle: $storyHandle}) {\n      id\n      handle\n      eyebrow: field(key: "eyebrow") {\n        value\n      }\n      title: field(key: "title") {\n        value\n      }\n      body: field(key: "body") {\n        value\n      }\n      image: field(key: "image") {\n        reference {\n          __typename\n          ... on MediaImage {\n            ...MetaobjectImage\n          }\n        }\n      }\n      quote: field(key: "quote") {\n        reference {\n          __typename\n          ... on Metaobject {\n            text: field(key: "text") {\n              value\n            }\n            attribution: field(key: "attribution") {\n              value\n            }\n          }\n        }\n      }\n      pillars: field(key: "pillars") {\n        references(first: 10) {\n          nodes {\n            __typename\n            ... on Metaobject {\n              ...MetaobjectStoryPillar\n            }\n          }\n        }\n      }\n    }\n    subscriptionTiers: metaobjects(type: "subscription_tier", first: 10) {\n      nodes {\n        id\n        handle\n        tierId: field(key: "tier_id") {\n          value\n        }\n        name: field(key: "name") {\n          value\n        }\n        bagsLabel: field(key: "bags_label") {\n          value\n        }\n        description: field(key: "description") {\n          value\n        }\n        priceLabel: field(key: "price_label") {\n          value\n        }\n        badge: field(key: "badge") {\n          value\n        }\n        highlighted: field(key: "highlighted") {\n          value\n        }\n        image: field(key: "image") {\n          reference {\n            __typename\n            ... on MediaImage {\n              ...MetaobjectImage\n            }\n          }\n        }\n      }\n    }\n    quiz: metaobject(handle: {type: $quizType, handle: $quizHandle}) {\n      __typename\n      id\n      handle\n      title: field(key: "title") {\n        value\n      }\n      body: field(key: "body") {\n        value\n      }\n      image: field(key: "image") {\n        reference {\n          __typename\n          ... on MediaImage {\n            ...MetaobjectImage\n          }\n        }\n      }\n      cta: field(key: "cta") {\n        reference {\n          __typename\n          ... on Metaobject {\n            ...MetaobjectCta\n          }\n        }\n      }\n    }\n    editorialFeature: metaobject(\n      handle: {type: $editorialFeatureType, handle: $editorialFeatureHandle}\n    ) {\n      __typename\n      id\n      handle\n      ...MetaobjectEditorialItem\n    }\n    editorialSidebar: metaobject(\n      handle: {type: $editorialSidebarType, handle: $editorialSidebarHandle}\n    ) {\n      id\n      handle\n      items: field(key: "editorial_sidebar_item") {\n        references(first: 10) {\n          nodes {\n            __typename\n            ... on Metaobject {\n              ...MetaobjectEditorialItem\n            }\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment MetaobjectCta on Metaobject {\n    handle\n    label: field(key: "label") {\n      value\n    }\n    to: field(key: "to") {\n      value\n    }\n  }\n\n  #graphql\n  fragment MetaobjectImage on MediaImage {\n    image {\n      url\n      altText\n      width\n      height\n    }\n  }\n\n  #graphql\n  fragment MetaobjectStoryPillar on Metaobject {\n    number: field(key: "number") {\n      value\n    }\n    title: field(key: "title") {\n      value\n    }\n    body: field(key: "body") {\n      value\n    }\n  }\n\n  #graphql\n  fragment MetaobjectEditorialItem on Metaobject {\n    handle\n    eyebrow: field(key: "eyebrow") {\n      value\n    }\n    title: field(key: "title") {\n      value\n    }\n    body: field(key: "body") {\n      value\n    }\n    image: field(key: "image") {\n      reference {\n        __typename\n        ... on MediaImage {\n          ...MetaobjectImage\n        }\n      }\n    }\n    cta: field(key: "cta") {\n      reference {\n        __typename\n        ... on Metaobject {\n          ...MetaobjectCta\n        }\n      }\n    }\n  }\n\n': {
     return: HomepageDeferredQuery;
     variables: HomepageDeferredQueryVariables;
   };
