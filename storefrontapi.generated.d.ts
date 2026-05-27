@@ -918,6 +918,190 @@ export type HomepageDeferredQuery = {
   >;
 };
 
+export type MetaobjectQuizChoiceFragment = {
+  answerIndex?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.MetaobjectField, 'value'>
+  >;
+  title?: StorefrontAPI.Maybe<Pick<StorefrontAPI.MetaobjectField, 'value'>>;
+  description?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.MetaobjectField, 'value'>
+  >;
+  icon?: StorefrontAPI.Maybe<Pick<StorefrontAPI.MetaobjectField, 'value'>>;
+};
+
+export type MetaobjectQuizStepFragment = {
+  category?: StorefrontAPI.Maybe<Pick<StorefrontAPI.MetaobjectField, 'value'>>;
+  question?: StorefrontAPI.Maybe<Pick<StorefrontAPI.MetaobjectField, 'value'>>;
+  lead?: StorefrontAPI.Maybe<Pick<StorefrontAPI.MetaobjectField, 'value'>>;
+  choices?: StorefrontAPI.Maybe<{
+    references?: StorefrontAPI.Maybe<{
+      nodes: Array<
+        | {
+            __typename:
+              | 'Article'
+              | 'Collection'
+              | 'GenericFile'
+              | 'MediaImage'
+              | 'Model3d'
+              | 'Page'
+              | 'Product'
+              | 'ProductVariant'
+              | 'Video';
+          }
+        | ({__typename: 'Metaobject'} & {
+            answerIndex?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.MetaobjectField, 'value'>
+            >;
+            title?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.MetaobjectField, 'value'>
+            >;
+            description?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.MetaobjectField, 'value'>
+            >;
+            icon?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.MetaobjectField, 'value'>
+            >;
+          })
+      >;
+    }>;
+  }>;
+};
+
+export type MetaobjectQuizProfileFragment = {
+  profileKey?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.MetaobjectField, 'value'>
+  >;
+  title?: StorefrontAPI.Maybe<Pick<StorefrontAPI.MetaobjectField, 'value'>>;
+  subtitle?: StorefrontAPI.Maybe<Pick<StorefrontAPI.MetaobjectField, 'value'>>;
+  description?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.MetaobjectField, 'value'>
+  >;
+};
+
+export type QuizPageListQueryVariables = StorefrontAPI.Exact<{
+  type: StorefrontAPI.Scalars['String']['input'];
+}>;
+
+export type QuizPageListQuery = {
+  quizPages: {nodes: Array<Pick<StorefrontAPI.Metaobject, 'id' | 'handle'>>};
+};
+
+export type QuizPageQueryVariables = StorefrontAPI.Exact<{
+  handle: StorefrontAPI.Scalars['String']['input'];
+  type: StorefrontAPI.Scalars['String']['input'];
+  country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
+  language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
+}>;
+
+export type QuizPageQuery = {
+  quizPage?: StorefrontAPI.Maybe<
+    {__typename: 'Metaobject'} & Pick<
+      StorefrontAPI.Metaobject,
+      'id' | 'handle'
+    > & {
+        metaTitle?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.MetaobjectField, 'value'>
+        >;
+        resultLabel?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.MetaobjectField, 'value'>
+        >;
+        steps?: StorefrontAPI.Maybe<{
+          references?: StorefrontAPI.Maybe<{
+            nodes: Array<
+              | {
+                  __typename:
+                    | 'Article'
+                    | 'Collection'
+                    | 'GenericFile'
+                    | 'MediaImage'
+                    | 'Model3d'
+                    | 'Page'
+                    | 'Product'
+                    | 'ProductVariant'
+                    | 'Video';
+                }
+              | ({__typename: 'Metaobject'} & {
+                  category?: StorefrontAPI.Maybe<
+                    Pick<StorefrontAPI.MetaobjectField, 'value'>
+                  >;
+                  question?: StorefrontAPI.Maybe<
+                    Pick<StorefrontAPI.MetaobjectField, 'value'>
+                  >;
+                  lead?: StorefrontAPI.Maybe<
+                    Pick<StorefrontAPI.MetaobjectField, 'value'>
+                  >;
+                  choices?: StorefrontAPI.Maybe<{
+                    references?: StorefrontAPI.Maybe<{
+                      nodes: Array<
+                        | {
+                            __typename:
+                              | 'Article'
+                              | 'Collection'
+                              | 'GenericFile'
+                              | 'MediaImage'
+                              | 'Model3d'
+                              | 'Page'
+                              | 'Product'
+                              | 'ProductVariant'
+                              | 'Video';
+                          }
+                        | ({__typename: 'Metaobject'} & {
+                            answerIndex?: StorefrontAPI.Maybe<
+                              Pick<StorefrontAPI.MetaobjectField, 'value'>
+                            >;
+                            title?: StorefrontAPI.Maybe<
+                              Pick<StorefrontAPI.MetaobjectField, 'value'>
+                            >;
+                            description?: StorefrontAPI.Maybe<
+                              Pick<StorefrontAPI.MetaobjectField, 'value'>
+                            >;
+                            icon?: StorefrontAPI.Maybe<
+                              Pick<StorefrontAPI.MetaobjectField, 'value'>
+                            >;
+                          })
+                      >;
+                    }>;
+                  }>;
+                })
+            >;
+          }>;
+        }>;
+        profiles?: StorefrontAPI.Maybe<{
+          references?: StorefrontAPI.Maybe<{
+            nodes: Array<
+              | {
+                  __typename:
+                    | 'Article'
+                    | 'Collection'
+                    | 'GenericFile'
+                    | 'MediaImage'
+                    | 'Model3d'
+                    | 'Page'
+                    | 'Product'
+                    | 'ProductVariant'
+                    | 'Video';
+                }
+              | ({__typename: 'Metaobject'} & {
+                  profileKey?: StorefrontAPI.Maybe<
+                    Pick<StorefrontAPI.MetaobjectField, 'value'>
+                  >;
+                  title?: StorefrontAPI.Maybe<
+                    Pick<StorefrontAPI.MetaobjectField, 'value'>
+                  >;
+                  subtitle?: StorefrontAPI.Maybe<
+                    Pick<StorefrontAPI.MetaobjectField, 'value'>
+                  >;
+                  description?: StorefrontAPI.Maybe<
+                    Pick<StorefrontAPI.MetaobjectField, 'value'>
+                  >;
+                })
+            >;
+          }>;
+        }>;
+      }
+  >;
+};
+
 export type ArticleQueryVariables = StorefrontAPI.Exact<{
   articleHandle: StorefrontAPI.Scalars['String']['input'];
   blogHandle: StorefrontAPI.Scalars['String']['input'];
@@ -1757,6 +1941,14 @@ interface GeneratedQueryTypes {
   '#graphql\n  query HomepageDeferred(\n    $storyHandle: String!\n    $storyType: String!\n    $quizHandle: String!\n    $quizType: String!\n    $editorialFeatureHandle: String!\n    $editorialFeatureType: String!\n    $editorialSidebarHandle: String!\n    $editorialSidebarType: String!\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(country: $country, language: $language) {\n    story: metaobject(handle: {type: $storyType, handle: $storyHandle}) {\n      id\n      handle\n      eyebrow: field(key: "eyebrow") {\n        value\n      }\n      title: field(key: "title") {\n        value\n      }\n      body: field(key: "body") {\n        value\n      }\n      image: field(key: "image") {\n        reference {\n          __typename\n          ... on MediaImage {\n            ...MetaobjectImage\n          }\n        }\n      }\n      quote: field(key: "quote") {\n        reference {\n          __typename\n          ... on Metaobject {\n            text: field(key: "text") {\n              value\n            }\n            attribution: field(key: "attribution") {\n              value\n            }\n          }\n        }\n      }\n      pillars: field(key: "pillars") {\n        references(first: 10) {\n          nodes {\n            __typename\n            ... on Metaobject {\n              ...MetaobjectStoryPillar\n            }\n          }\n        }\n      }\n    }\n    subscriptionTiers: metaobjects(type: "subscription_tier", first: 10) {\n      nodes {\n        id\n        handle\n        tierId: field(key: "tier_id") {\n          value\n        }\n        name: field(key: "name") {\n          value\n        }\n        bagsLabel: field(key: "bags_label") {\n          value\n        }\n        description: field(key: "description") {\n          value\n        }\n        priceLabel: field(key: "price_label") {\n          value\n        }\n        badge: field(key: "badge") {\n          value\n        }\n        highlighted: field(key: "highlighted") {\n          value\n        }\n        image: field(key: "image") {\n          reference {\n            __typename\n            ... on MediaImage {\n              ...MetaobjectImage\n            }\n          }\n        }\n      }\n    }\n    quiz: metaobject(handle: {type: $quizType, handle: $quizHandle}) {\n      __typename\n      id\n      handle\n      title: field(key: "title") {\n        value\n      }\n      body: field(key: "body") {\n        value\n      }\n      image: field(key: "image") {\n        reference {\n          __typename\n          ... on MediaImage {\n            ...MetaobjectImage\n          }\n        }\n      }\n      cta: field(key: "cta") {\n        reference {\n          __typename\n          ... on Metaobject {\n            ...MetaobjectCta\n          }\n        }\n      }\n    }\n    editorialFeature: metaobject(\n      handle: {type: $editorialFeatureType, handle: $editorialFeatureHandle}\n    ) {\n      __typename\n      id\n      handle\n      ...MetaobjectEditorialItem\n    }\n    editorialSidebar: metaobject(\n      handle: {type: $editorialSidebarType, handle: $editorialSidebarHandle}\n    ) {\n      id\n      handle\n      items: field(key: "editorial_sidebar_item") {\n        references(first: 10) {\n          nodes {\n            __typename\n            ... on Metaobject {\n              ...MetaobjectEditorialItem\n            }\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment MetaobjectCta on Metaobject {\n    handle\n    label: field(key: "label") {\n      value\n    }\n    to: field(key: "to") {\n      value\n    }\n  }\n\n  #graphql\n  fragment MetaobjectImage on MediaImage {\n    image {\n      url\n      altText\n      width\n      height\n    }\n  }\n\n  #graphql\n  fragment MetaobjectStoryPillar on Metaobject {\n    number: field(key: "number") {\n      value\n    }\n    title: field(key: "title") {\n      value\n    }\n    body: field(key: "body") {\n      value\n    }\n  }\n\n  #graphql\n  fragment MetaobjectEditorialItem on Metaobject {\n    handle\n    eyebrow: field(key: "eyebrow") {\n      value\n    }\n    title: field(key: "title") {\n      value\n    }\n    body: field(key: "body") {\n      value\n    }\n    image: field(key: "image") {\n      reference {\n        __typename\n        ... on MediaImage {\n          ...MetaobjectImage\n        }\n      }\n    }\n    cta: field(key: "cta") {\n      reference {\n        __typename\n        ... on Metaobject {\n          ...MetaobjectCta\n        }\n      }\n    }\n  }\n\n': {
     return: HomepageDeferredQuery;
     variables: HomepageDeferredQueryVariables;
+  };
+  '#graphql\n  query QuizPageList($type: String!) {\n    quizPages: metaobjects(type: $type, first: 1) {\n      nodes {\n        id\n        handle\n      }\n    }\n  }\n': {
+    return: QuizPageListQuery;
+    variables: QuizPageListQueryVariables;
+  };
+  '#graphql\n  query QuizPage(\n    $handle: String!\n    $type: String!\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(country: $country, language: $language) {\n    quizPage: metaobject(handle: {type: $type, handle: $handle}) {\n      __typename\n      id\n      handle\n      metaTitle: field(key: "meta_title") {\n        value\n      }\n      resultLabel: field(key: "result_label") {\n        value\n      }\n      steps: field(key: "steps") {\n        references(first: 10) {\n          nodes {\n            __typename\n            ... on Metaobject {\n              ...MetaobjectQuizStep\n            }\n          }\n        }\n      }\n      profiles: field(key: "profiles") {\n        references(first: 5) {\n          nodes {\n            __typename\n            ... on Metaobject {\n              ...MetaobjectQuizProfile\n            }\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment MetaobjectQuizChoice on Metaobject {\n    answerIndex: field(key: "answer_index") {\n      value\n    }\n    title: field(key: "title") {\n      value\n    }\n    description: field(key: "description") {\n      value\n    }\n    icon: field(key: "icon") {\n      value\n    }\n  }\n\n  #graphql\n  fragment MetaobjectQuizStep on Metaobject {\n    category: field(key: "category") {\n      value\n    }\n    question: field(key: "question") {\n      value\n    }\n    lead: field(key: "lead") {\n      value\n    }\n    choices: field(key: "choices") {\n      references(first: 5) {\n        nodes {\n          __typename\n          ... on Metaobject {\n            ...MetaobjectQuizChoice\n          }\n        }\n      }\n    }\n  }\n\n  #graphql\n  fragment MetaobjectQuizProfile on Metaobject {\n    profileKey: field(key: "profile_key") {\n      value\n    }\n    title: field(key: "title") {\n      value\n    }\n    subtitle: field(key: "subtitle") {\n      value\n    }\n    description: field(key: "description") {\n      value\n    }\n  }\n\n': {
+    return: QuizPageQuery;
+    variables: QuizPageQueryVariables;
   };
   '#graphql\n  query Article(\n    $articleHandle: String!\n    $blogHandle: String!\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(language: $language, country: $country) {\n    blog(handle: $blogHandle) {\n      handle\n      articleByHandle(handle: $articleHandle) {\n        handle\n        title\n        contentHtml\n        publishedAt\n        author: authorV2 {\n          name\n        }\n        image {\n          id\n          altText\n          url\n          width\n          height\n        }\n        seo {\n          description\n          title\n        }\n      }\n    }\n  }\n': {
     return: ArticleQuery;

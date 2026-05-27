@@ -1,0 +1,56 @@
+/**
+ * Quiz page — interactive, single-route flow.
+ */
+@layer components {
+  /* Stack entering/exiting steps in the same place (no vertical jump). */
+  .ee-quiz__step-stage {
+    @apply relative grid w-full;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .ee-quiz__step-stage > * {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .ee-quiz__choices {
+    @apply w-full;
+  }
+
+  .ee-quiz__choice-cell {
+    @apply h-full min-h-0;
+  }
+
+  .ee-quiz__progress-line {
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .ee-quiz__card:hover {
+    background-color: #f6f1e7 !important;
+    border-color: var(--ee-color-espresso) !important;
+  }
+
+  .ee-quiz__card:active {
+    transform: scale(0.985);
+    background-color: #efe6d5 !important;
+    border-color: var(--ee-color-espresso) !important;
+    box-shadow:
+      0 0 0 1px var(--ee-color-espresso) inset,
+      0 12px 24px rgba(26, 20, 18, 0.12);
+  }
+
+  .ee-quiz__card:focus-visible {
+    outline: 2px solid var(--ee-color-roasted-clay);
+    outline-offset: 3px;
+  }
+
+  .ee-quiz__card--active {
+    border-color: var(--ee-color-espresso) !important;
+    background-color: #efe6d5 !important;
+    box-shadow:
+      0 0 0 1px var(--ee-color-espresso) inset,
+      0 16px 32px rgba(26, 20, 18, 0.14);
+  }
+}
+

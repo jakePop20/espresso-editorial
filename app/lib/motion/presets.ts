@@ -32,6 +32,34 @@ export const staggerContainer = {
   },
 } as const;
 
+/** Quiz entrance — more travel than default fade-up (hero uses ~32px in CSS). */
+export const quizFadeUp = {
+  hidden: {opacity: 0, y: 48},
+  visible: {opacity: 1, y: 0},
+} as const;
+
+/** Step-transition cards — gentler travel than first-load entrance. */
+export const quizStepFadeUp = {
+  hidden: {opacity: 0, y: 32},
+  visible: {opacity: 1, y: 0},
+} as const;
+
+export const QUIZ_STEP_CARD_DURATION = 1.15;
+
+/** Shared start for step header + first card; gap between subsequent cards. */
+export const QUIZ_STEP_ENTRANCE_START_DELAY = 0.1;
+export const QUIZ_STEP_CARD_STAGGER_DELAY = 0.22;
+
+export function quizStepEntranceDelay(
+  itemIndex: number,
+  play: boolean,
+): number {
+  if (!play) return 0;
+  return (
+    QUIZ_STEP_ENTRANCE_START_DELAY + itemIndex * QUIZ_STEP_CARD_STAGGER_DELAY
+  );
+}
+
 export const viewport = {
   once: true,
   amount: 0.2,
