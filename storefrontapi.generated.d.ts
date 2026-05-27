@@ -13,6 +13,9 @@ export type CartLineFragment = Pick<
   'id' | 'quantity'
 > & {
   attributes: Array<Pick<StorefrontAPI.Attribute, 'key' | 'value'>>;
+  sellingPlanAllocation?: StorefrontAPI.Maybe<{
+    sellingPlan: Pick<StorefrontAPI.SellingPlan, 'id' | 'name'>;
+  }>;
   cost: {
     totalAmount: Pick<StorefrontAPI.MoneyV2, 'currencyCode' | 'amount'>;
     amountPerQuantity: Pick<StorefrontAPI.MoneyV2, 'currencyCode' | 'amount'>;
@@ -31,7 +34,10 @@ export type CartLineFragment = Pick<
     image?: StorefrontAPI.Maybe<
       Pick<StorefrontAPI.Image, 'id' | 'url' | 'altText' | 'width' | 'height'>
     >;
-    product: Pick<StorefrontAPI.Product, 'handle' | 'title' | 'id' | 'vendor'>;
+    product: Pick<
+      StorefrontAPI.Product,
+      'handle' | 'title' | 'id' | 'vendor' | 'tags'
+    >;
     selectedOptions: Array<
       Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
     >;
@@ -46,6 +52,9 @@ export type CartLineComponentFragment = Pick<
   'id' | 'quantity'
 > & {
   attributes: Array<Pick<StorefrontAPI.Attribute, 'key' | 'value'>>;
+  sellingPlanAllocation?: StorefrontAPI.Maybe<{
+    sellingPlan: Pick<StorefrontAPI.SellingPlan, 'id' | 'name'>;
+  }>;
   cost: {
     totalAmount: Pick<StorefrontAPI.MoneyV2, 'currencyCode' | 'amount'>;
     amountPerQuantity: Pick<StorefrontAPI.MoneyV2, 'currencyCode' | 'amount'>;
@@ -64,7 +73,10 @@ export type CartLineComponentFragment = Pick<
     image?: StorefrontAPI.Maybe<
       Pick<StorefrontAPI.Image, 'id' | 'url' | 'altText' | 'width' | 'height'>
     >;
-    product: Pick<StorefrontAPI.Product, 'handle' | 'title' | 'id' | 'vendor'>;
+    product: Pick<
+      StorefrontAPI.Product,
+      'handle' | 'title' | 'id' | 'vendor' | 'tags'
+    >;
     selectedOptions: Array<
       Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
     >;
@@ -72,6 +84,9 @@ export type CartLineComponentFragment = Pick<
   lineComponents: Array<
     Pick<StorefrontAPI.CartLine, 'id' | 'quantity'> & {
       attributes: Array<Pick<StorefrontAPI.Attribute, 'key' | 'value'>>;
+      sellingPlanAllocation?: StorefrontAPI.Maybe<{
+        sellingPlan: Pick<StorefrontAPI.SellingPlan, 'id' | 'name'>;
+      }>;
       cost: {
         totalAmount: Pick<StorefrontAPI.MoneyV2, 'currencyCode' | 'amount'>;
         amountPerQuantity: Pick<
@@ -98,7 +113,7 @@ export type CartLineComponentFragment = Pick<
         >;
         product: Pick<
           StorefrontAPI.Product,
-          'handle' | 'title' | 'id' | 'vendor'
+          'handle' | 'title' | 'id' | 'vendor' | 'tags'
         >;
         selectedOptions: Array<
           Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
@@ -135,6 +150,9 @@ export type CartApiQueryFragment = Pick<
     nodes: Array<
       | (Pick<StorefrontAPI.CartLine, 'id' | 'quantity'> & {
           attributes: Array<Pick<StorefrontAPI.Attribute, 'key' | 'value'>>;
+          sellingPlanAllocation?: StorefrontAPI.Maybe<{
+            sellingPlan: Pick<StorefrontAPI.SellingPlan, 'id' | 'name'>;
+          }>;
           cost: {
             totalAmount: Pick<StorefrontAPI.MoneyV2, 'currencyCode' | 'amount'>;
             amountPerQuantity: Pick<
@@ -161,7 +179,7 @@ export type CartApiQueryFragment = Pick<
             >;
             product: Pick<
               StorefrontAPI.Product,
-              'handle' | 'title' | 'id' | 'vendor'
+              'handle' | 'title' | 'id' | 'vendor' | 'tags'
             >;
             selectedOptions: Array<
               Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
@@ -173,6 +191,9 @@ export type CartApiQueryFragment = Pick<
         })
       | (Pick<StorefrontAPI.ComponentizableCartLine, 'id' | 'quantity'> & {
           attributes: Array<Pick<StorefrontAPI.Attribute, 'key' | 'value'>>;
+          sellingPlanAllocation?: StorefrontAPI.Maybe<{
+            sellingPlan: Pick<StorefrontAPI.SellingPlan, 'id' | 'name'>;
+          }>;
           cost: {
             totalAmount: Pick<StorefrontAPI.MoneyV2, 'currencyCode' | 'amount'>;
             amountPerQuantity: Pick<
@@ -199,7 +220,7 @@ export type CartApiQueryFragment = Pick<
             >;
             product: Pick<
               StorefrontAPI.Product,
-              'handle' | 'title' | 'id' | 'vendor'
+              'handle' | 'title' | 'id' | 'vendor' | 'tags'
             >;
             selectedOptions: Array<
               Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
@@ -208,6 +229,9 @@ export type CartApiQueryFragment = Pick<
           lineComponents: Array<
             Pick<StorefrontAPI.CartLine, 'id' | 'quantity'> & {
               attributes: Array<Pick<StorefrontAPI.Attribute, 'key' | 'value'>>;
+              sellingPlanAllocation?: StorefrontAPI.Maybe<{
+                sellingPlan: Pick<StorefrontAPI.SellingPlan, 'id' | 'name'>;
+              }>;
               cost: {
                 totalAmount: Pick<
                   StorefrontAPI.MoneyV2,
@@ -237,7 +261,7 @@ export type CartApiQueryFragment = Pick<
                 >;
                 product: Pick<
                   StorefrontAPI.Product,
-                  'handle' | 'title' | 'id' | 'vendor'
+                  'handle' | 'title' | 'id' | 'vendor' | 'tags'
                 >;
                 selectedOptions: Array<
                   Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
@@ -1102,6 +1126,125 @@ export type QuizPageQuery = {
   >;
 };
 
+export type SubscriptionProductFragment = Pick<
+  StorefrontAPI.Product,
+  'handle' | 'tags'
+> & {
+  variants: {
+    nodes: Array<
+      Pick<StorefrontAPI.ProductVariant, 'id'> & {
+        price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+      }
+    >;
+  };
+  sellingPlanGroups: {
+    nodes: Array<{
+      sellingPlans: {
+        nodes: Array<
+          Pick<StorefrontAPI.SellingPlan, 'id' | 'name'> & {
+            options: Array<
+              Pick<StorefrontAPI.SellingPlanOption, 'name' | 'value'>
+            >;
+          }
+        >;
+      };
+    }>;
+  };
+};
+
+export type SubscriptionProductsQueryVariables = StorefrontAPI.Exact<{
+  country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
+  language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
+}>;
+
+export type SubscriptionProductsQuery = {
+  products: {
+    nodes: Array<
+      Pick<StorefrontAPI.Product, 'handle' | 'tags'> & {
+        variants: {
+          nodes: Array<
+            Pick<StorefrontAPI.ProductVariant, 'id'> & {
+              price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+            }
+          >;
+        };
+        sellingPlanGroups: {
+          nodes: Array<{
+            sellingPlans: {
+              nodes: Array<
+                Pick<StorefrontAPI.SellingPlan, 'id' | 'name'> & {
+                  options: Array<
+                    Pick<StorefrontAPI.SellingPlanOption, 'name' | 'value'>
+                  >;
+                }
+              >;
+            };
+          }>;
+        };
+      }
+    >;
+  };
+};
+
+export type SubscriptionPageTiersQueryVariables = StorefrontAPI.Exact<{
+  country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
+  language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
+}>;
+
+export type SubscriptionPageTiersQuery = {
+  subscriptionTiers: {
+    nodes: Array<
+      Pick<StorefrontAPI.Metaobject, 'id' | 'handle'> & {
+        tierId?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.MetaobjectField, 'value'>
+        >;
+        name?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.MetaobjectField, 'value'>
+        >;
+        bagsLabel?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.MetaobjectField, 'value'>
+        >;
+        description?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.MetaobjectField, 'value'>
+        >;
+        priceLabel?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.MetaobjectField, 'value'>
+        >;
+        badge?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.MetaobjectField, 'value'>
+        >;
+        highlighted?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.MetaobjectField, 'value'>
+        >;
+        image?: StorefrontAPI.Maybe<{
+          reference?: StorefrontAPI.Maybe<
+            | {
+                __typename:
+                  | 'Article'
+                  | 'Collection'
+                  | 'GenericFile'
+                  | 'Metaobject'
+                  | 'Model3d'
+                  | 'Page'
+                  | 'Product'
+                  | 'ProductVariant'
+                  | 'Video';
+              }
+            | ({__typename: 'MediaImage'} & {
+                image?: StorefrontAPI.Maybe<
+                  Pick<
+                    StorefrontAPI.Image,
+                    'url' | 'altText' | 'width' | 'height'
+                  >
+                >;
+              })
+          >;
+        }>;
+      }
+    >;
+  };
+};
+
 export type ArticleQueryVariables = StorefrontAPI.Exact<{
   articleHandle: StorefrontAPI.Scalars['String']['input'];
   blogHandle: StorefrontAPI.Scalars['String']['input'];
@@ -1949,6 +2092,14 @@ interface GeneratedQueryTypes {
   '#graphql\n  query QuizPage(\n    $handle: String!\n    $type: String!\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(country: $country, language: $language) {\n    quizPage: metaobject(handle: {type: $type, handle: $handle}) {\n      __typename\n      id\n      handle\n      metaTitle: field(key: "meta_title") {\n        value\n      }\n      resultLabel: field(key: "result_label") {\n        value\n      }\n      steps: field(key: "steps") {\n        references(first: 10) {\n          nodes {\n            __typename\n            ... on Metaobject {\n              ...MetaobjectQuizStep\n            }\n          }\n        }\n      }\n      profiles: field(key: "profiles") {\n        references(first: 5) {\n          nodes {\n            __typename\n            ... on Metaobject {\n              ...MetaobjectQuizProfile\n            }\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment MetaobjectQuizChoice on Metaobject {\n    answerIndex: field(key: "answer_index") {\n      value\n    }\n    title: field(key: "title") {\n      value\n    }\n    description: field(key: "description") {\n      value\n    }\n    icon: field(key: "icon") {\n      value\n    }\n  }\n\n  #graphql\n  fragment MetaobjectQuizStep on Metaobject {\n    category: field(key: "category") {\n      value\n    }\n    question: field(key: "question") {\n      value\n    }\n    lead: field(key: "lead") {\n      value\n    }\n    choices: field(key: "choices") {\n      references(first: 5) {\n        nodes {\n          __typename\n          ... on Metaobject {\n            ...MetaobjectQuizChoice\n          }\n        }\n      }\n    }\n  }\n\n  #graphql\n  fragment MetaobjectQuizProfile on Metaobject {\n    profileKey: field(key: "profile_key") {\n      value\n    }\n    title: field(key: "title") {\n      value\n    }\n    subtitle: field(key: "subtitle") {\n      value\n    }\n    description: field(key: "description") {\n      value\n    }\n  }\n\n': {
     return: QuizPageQuery;
     variables: QuizPageQueryVariables;
+  };
+  '#graphql\n  query SubscriptionProducts(\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(country: $country, language: $language) {\n    products(first: 20, query: "tag:subscription") {\n      nodes {\n        ...SubscriptionProduct\n      }\n    }\n  }\n  #graphql\n  fragment SubscriptionProduct on Product {\n    handle\n    tags\n    variants(first: 1) {\n      nodes {\n        id\n        price {\n          amount\n          currencyCode\n        }\n      }\n    }\n    sellingPlanGroups(first: 5) {\n      nodes {\n        sellingPlans(first: 10) {\n          nodes {\n            id\n            name\n            options {\n              name\n              value\n            }\n          }\n        }\n      }\n    }\n  }\n\n': {
+    return: SubscriptionProductsQuery;
+    variables: SubscriptionProductsQueryVariables;
+  };
+  '#graphql\n  query SubscriptionPageTiers(\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(country: $country, language: $language) {\n    subscriptionTiers: metaobjects(type: "subscription_tier", first: 10) {\n      nodes {\n        id\n        handle\n        tierId: field(key: "tier_id") {\n          value\n        }\n        name: field(key: "name") {\n          value\n        }\n        bagsLabel: field(key: "bags_label") {\n          value\n        }\n        description: field(key: "description") {\n          value\n        }\n        priceLabel: field(key: "price_label") {\n          value\n        }\n        badge: field(key: "badge") {\n          value\n        }\n        highlighted: field(key: "highlighted") {\n          value\n        }\n        image: field(key: "image") {\n          reference {\n            __typename\n            ... on MediaImage {\n              ...MetaobjectImage\n            }\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment MetaobjectImage on MediaImage {\n    image {\n      url\n      altText\n      width\n      height\n    }\n  }\n\n': {
+    return: SubscriptionPageTiersQuery;
+    variables: SubscriptionPageTiersQueryVariables;
   };
   '#graphql\n  query Article(\n    $articleHandle: String!\n    $blogHandle: String!\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(language: $language, country: $country) {\n    blog(handle: $blogHandle) {\n      handle\n      articleByHandle(handle: $articleHandle) {\n        handle\n        title\n        contentHtml\n        publishedAt\n        author: authorV2 {\n          name\n        }\n        image {\n          id\n          altText\n          url\n          width\n          height\n        }\n        seo {\n          description\n          title\n        }\n      }\n    }\n  }\n': {
     return: ArticleQuery;

@@ -1,0 +1,198 @@
+/**
+ * Subscription page — layout rhythm, frequency selector, and detail-card extensions.
+ */
+@layer components {
+  /* Tighter top clearance than default site-main (header + 8px). */
+  .site-main:has(.ee-subscription) {
+    padding-top: calc(var(--ee-header-height) + 0.5rem);
+  }
+
+  .ee-subscription {
+    --ee-subscription-gap-after-hero: 1rem;
+    --ee-subscription-gap-after-freq: 0.75rem;
+    --ee-subscription-gap-section: var(--ee-spacing-section-gap);
+  }
+
+  /* Cancel global .section + .section stacking; spacing is set per block below. */
+  .ee-subscription .section + .section {
+    @apply mt-0;
+  }
+
+  .ee-subscription .section-intro {
+    @apply mb-0;
+  }
+
+  .ee-subscription__freq-section {
+    margin-top: var(--ee-subscription-gap-after-hero);
+  }
+
+  .ee-subscription__tier-section {
+    margin-top: var(--ee-subscription-gap-after-freq);
+  }
+
+  .ee-subscription__comparison-section,
+  .ee-subscription__testimonials-section {
+    margin-top: var(--ee-subscription-gap-section);
+  }
+
+  .homepage-subscription-card--detail {
+    cursor: default;
+  }
+
+  .homepage-subscription-card__tier-label {
+    @apply mb-2 block font-label text-label-caps tracking-widest;
+  }
+
+  .homepage-subscription-card:not(.homepage-subscription-card--highlighted)
+    .homepage-subscription-card__tier-label {
+    @apply text-ink-subtle;
+  }
+
+  .homepage-subscription-card--highlighted .homepage-subscription-card__tier-label {
+    @apply text-cream-silk/70;
+  }
+
+  .homepage-subscription-card__features {
+    @apply mb-8 flex w-full flex-grow flex-col gap-4 text-left;
+  }
+
+  .homepage-subscription-card__feature {
+    @apply flex items-start gap-3;
+  }
+
+  .homepage-subscription-card__feature-text {
+    @apply font-body text-body-md;
+  }
+
+  .homepage-subscription-card:not(.homepage-subscription-card--highlighted)
+    .homepage-subscription-card__feature-text {
+    @apply text-ink-subtle;
+  }
+
+  .homepage-subscription-card--highlighted .homepage-subscription-card__feature-text {
+    @apply text-cream-silk/80;
+  }
+
+  .homepage-subscription-card__feature-text--emphasis {
+    @apply font-medium text-espresso;
+  }
+
+  .homepage-subscription-card--highlighted
+    .homepage-subscription-card__feature-text--emphasis {
+    @apply text-cream-silk;
+  }
+
+  .homepage-subscription-card--detail .homepage-subscription-card__price {
+    @apply font-display text-headline-md normal-case tracking-normal text-espresso;
+  }
+
+  .homepage-subscription-card--detail.homepage-subscription-card--highlighted
+    .homepage-subscription-card__price {
+    @apply text-cream-silk;
+  }
+
+  .homepage-subscription-card__price-suffix {
+    @apply font-body text-body-md normal-case tracking-normal text-ink-subtle opacity-100;
+  }
+
+  .homepage-subscription-card--detail.homepage-subscription-card--highlighted
+    .homepage-subscription-card__price-suffix {
+    @apply text-cream-silk/70;
+  }
+
+  .homepage-subscription-card__cta {
+    @apply mt-2 w-full rounded border border-espresso bg-transparent px-10 py-4 font-label text-label-caps uppercase tracking-widest text-espresso transition-colors;
+    transition:
+      background-color var(--ee-duration-medium) var(--ee-ease-editorial),
+      color var(--ee-duration-medium) var(--ee-ease-editorial),
+      border-color var(--ee-duration-medium) var(--ee-ease-editorial);
+  }
+
+  .homepage-subscription-card__cta:hover {
+    @apply bg-espresso text-cream-silk;
+  }
+
+  .homepage-subscription-card__cta--highlighted {
+    @apply border-cream-silk bg-cream-silk text-espresso;
+  }
+
+  .homepage-subscription-card__cta--highlighted:hover {
+    @apply border-cream-silk bg-roasted-clay text-cream-silk;
+  }
+
+  .homepage-subscription-card__cta:focus-visible {
+    @apply outline-2 outline-offset-4 outline-espresso;
+  }
+
+  .homepage-subscription-card--highlighted
+    .homepage-subscription-card__cta:focus-visible {
+    @apply outline-cream-silk;
+  }
+
+  .ee-subscription__freq-option:focus-within {
+    @apply outline-2 outline-offset-2 outline-roasted-clay;
+  }
+
+  /* Comparison table — bordered card with header/body contrast */
+  .ee-subscription-compare__title {
+    @apply mb-16 text-center font-display text-headline-md uppercase tracking-widest text-espresso;
+  }
+
+  .ee-subscription-compare__scroll {
+    @apply overflow-x-auto;
+  }
+
+  .ee-subscription-compare__table {
+    @apply min-w-[800px] overflow-hidden rounded-lg border border-outline-variant/40;
+  }
+
+  .ee-subscription-compare__header,
+  .ee-subscription-compare__data-row {
+    @apply grid items-center;
+    grid-template-columns: 240px repeat(3, minmax(0, 1fr));
+  }
+
+  .ee-subscription-compare__header {
+    @apply border-b border-outline-variant/40 bg-cream-silk;
+  }
+
+  .ee-subscription-compare__corner {
+    @apply p-8;
+  }
+
+  .ee-subscription-compare__head-cell {
+    @apply relative border-l border-outline-variant/20 p-8 text-center;
+  }
+
+  .ee-subscription-compare__head-cell--featured {
+    @apply bg-surface-container-low/50;
+  }
+
+  .ee-subscription-compare__featured-bar {
+    @apply absolute inset-x-0 top-0 h-1 bg-roasted-clay;
+  }
+
+  .ee-subscription-compare__body {
+    @apply bg-surface-container-lowest;
+  }
+
+  .ee-subscription-compare__data-row {
+    @apply border-b border-outline-variant/20;
+  }
+
+  .ee-subscription-compare__data-row--last {
+    @apply border-b-0;
+  }
+
+  .ee-subscription-compare__label-cell {
+    @apply bg-cream-silk/30 px-8 py-6 font-label text-label-caps uppercase tracking-widest text-espresso;
+  }
+
+  .ee-subscription-compare__cell {
+    @apply border-l border-outline-variant/10 px-6 py-6 text-center;
+  }
+
+  .ee-subscription-compare__cell--featured {
+    @apply bg-surface-container-low/30;
+  }
+}
