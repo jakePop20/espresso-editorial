@@ -6,7 +6,7 @@
   --header-height: var(--ee-header-height);
   /* Legacy Hydrogen template vars — prefer Tailwind tokens (bg-espresso, etc.) */
   --color-dark: var(--ee-color-espresso);
-  --color-light: var(--ee-color-cream-silk);
+  --color-light: var(--ee-color-background);
 }
 
 /* img radius — see tailwind.css @layer base */

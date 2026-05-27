@@ -20,10 +20,14 @@
   }
 
   .homepage-quiz__body {
-    @apply mx-auto mb-12 max-w-xl font-body text-body-lg text-almond-foam;
+    @apply mx-auto mb-12 max-w-xl font-body text-body-lg text-cream-silk/90;
   }
 
   .homepage-quiz__cta {
-    @apply inline-block bg-roasted-clay px-12 py-5 font-label text-label-caps uppercase tracking-[0.2em] text-cream-silk transition-all hover:bg-roasted-clay/80 active:scale-95;
+    @apply inline-block bg-roasted-clay px-12 py-5 font-label text-label-caps uppercase tracking-[0.2em] text-cream-silk transition-colors active:scale-95;
+  }
+
+  .homepage-quiz__cta:hover {
+    background-color: color-mix(in srgb, var(--ee-color-roasted-clay) 72%, black);
   }
 }

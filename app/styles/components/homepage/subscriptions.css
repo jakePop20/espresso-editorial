@@ -1,6 +1,6 @@
 @layer components {
   .homepage-subscriptions {
-    @apply bg-surface py-section-gap;
+    @apply py-section-gap;
   }
 
   .homepage-subscriptions__title {
@@ -12,44 +12,66 @@
   }
 
   .homepage-subscriptions__grid {
-    @apply mt-0 grid grid-cols-1 gap-gutter md:grid-cols-3;
+    @apply mt-0 grid grid-cols-1 items-stretch gap-gutter md:grid-cols-3;
   }
 
   .homepage-subscription-card {
-    @apply relative flex flex-col items-center overflow-hidden border border-almond-foam bg-cream-silk p-10 text-center;
+    @apply relative flex h-full flex-col items-center overflow-hidden rounded-md border border-espresso/15 bg-cream-silk px-10 py-8 text-center no-underline transition-colors;
+    cursor: pointer;
+  }
+
+  .homepage-subscription-card:focus-visible {
+    @apply outline-2 outline-offset-4 outline-espresso;
   }
 
   .homepage-subscription-card--highlighted {
     @apply border-espresso bg-espresso text-cream-silk;
-    transition:
-      transform var(--ee-duration-slow) var(--ee-ease-editorial),
-      box-shadow var(--ee-duration-medium) ease;
   }
 
-  .homepage-subscription-card--highlighted:hover {
-    @apply -translate-y-2;
-    box-shadow: var(--ee-shadow-editorial);
+  .homepage-subscription-card--motion {
+    transition:
+      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .homepage-subscription-card:not(.homepage-subscription-card--highlighted)
+    .homepage-subscription-card__image-wrap
+    > .homepage-subscription-card__image--motion {
+    filter: grayscale(100%);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .homepage-subscription-card--motion:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 16px 40px rgb(26 20 18 / 8%);
+    }
+
+    .homepage-subscription-card--motion:hover
+      .homepage-subscription-card__image-wrap
+      > .homepage-subscription-card__image--motion {
+      filter: grayscale(0%);
+    }
   }
 
   .homepage-subscription-card__badge {
-    @apply absolute top-4 right-4 bg-roasted-clay px-2 py-1 font-label text-[10px] uppercase tracking-tighter text-cream-silk;
+    @apply absolute top-2 right-3 rounded-sm bg-roasted-clay px-2 py-1 font-label text-[10px] uppercase tracking-tighter text-cream-silk;
   }
 
   .homepage-subscription-card__tier {
-    @apply mb-8 font-label text-label-caps uppercase;
+    @apply mb-8 font-display text-headline-xl font-bold tracking-tight;
   }
 
   .homepage-subscription-card:not(.homepage-subscription-card--highlighted)
     .homepage-subscription-card__tier {
-    @apply text-ink-subtle;
+    @apply text-espresso;
   }
 
   .homepage-subscription-card--highlighted .homepage-subscription-card__tier {
-    @apply text-almond-foam;
+    @apply text-cream-silk;
   }
 
   .homepage-subscription-card__image-wrap {
-    @apply mb-8 aspect-[4/5] w-full overflow-hidden bg-surface-container;
+    @apply mb-8 aspect-[8/8.5] w-full overflow-hidden rounded-md bg-surface-container;
   }
 
   .homepage-subscription-card--highlighted .homepage-subscription-card__image-wrap {
@@ -60,13 +82,8 @@
     @apply h-full w-full object-cover;
   }
 
-  .homepage-subscription-card__image--grayscale {
-    @apply grayscale transition-all duration-700 group-hover:grayscale-0;
-  }
-
-  .homepage-subscription-card:has(.homepage-subscription-card__image--grayscale):hover
-    .homepage-subscription-card__image--grayscale {
-    @apply grayscale-0;
+  .homepage-subscription-card__image--motion {
+    @apply will-change-transform;
   }
 
   .homepage-subscription-card__bags {
@@ -78,8 +95,12 @@
     @apply text-espresso;
   }
 
+  .homepage-subscription-card--highlighted .homepage-subscription-card__bags {
+    @apply text-cream-silk;
+  }
+
   .homepage-subscription-card__description {
-    @apply mb-8 font-body text-body-md;
+    @apply font-body text-body-md;
   }
 
   .homepage-subscription-card:not(.homepage-subscription-card--highlighted)
@@ -88,23 +109,10 @@
   }
 
   .homepage-subscription-card--highlighted .homepage-subscription-card__description {
-    @apply text-almond-foam;
+    @apply text-cream-silk/80;
   }
 
   .homepage-subscription-card__price {
-    @apply mb-8 font-label text-label-caps text-roasted-clay;
-  }
-
-  .homepage-subscription-card__cta {
-    @apply w-full border border-espresso py-4 font-label text-label-caps uppercase tracking-widest transition-colors;
-  }
-
-  .homepage-subscription-card:not(.homepage-subscription-card--highlighted)
-    .homepage-subscription-card__cta {
-    @apply text-espresso hover:bg-espresso hover:text-cream-silk;
-  }
-
-  .homepage-subscription-card__cta--light {
-    @apply border-0 bg-cream-silk text-espresso hover:bg-almond-foam;
+    @apply mt-auto w-full pt-4 font-label text-label-caps text-roasted-clay;
   }
 }

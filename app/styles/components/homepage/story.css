@@ -1,6 +1,6 @@
 @layer components {
   .homepage-story {
-    @apply bg-background py-section-gap;
+    @apply py-section-gap;
   }
 
   .homepage-story.section {
@@ -36,7 +36,7 @@
   }
 
   .homepage-story__pillar-number {
-    @apply font-display text-headline-md italic text-almond-foam;
+    @apply font-display text-headline-md italic text-espresso;
   }
 
   .homepage-story__pillar-title {
@@ -56,11 +56,11 @@
   }
 
   .homepage-story__image {
-    @apply h-full w-full object-cover transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-110;
+    @apply h-full w-full object-cover;
   }
 
   .homepage-story__quote {
-    @apply absolute -bottom-10 -left-10 hidden max-w-xs border border-almond-foam/20 bg-cream-silk p-8 lg:block;
+    @apply absolute -bottom-10 -left-10 hidden max-w-xs border border-espresso/15 bg-cream-silk p-8 lg:block;
     box-shadow: var(--ee-shadow-editorial);
   }
 

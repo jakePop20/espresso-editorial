@@ -47,6 +47,8 @@ export default defineConfig(({isSsrBuild}) => ({
         'react-router > set-cookie-parser',
         'react-router > cookie',
         'react-router',
+        'motion',
+        'motion/react',
       ],
     },
   },

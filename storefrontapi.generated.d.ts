@@ -377,6 +377,266 @@ export type FooterQuery = {
   >;
 };
 
+export type MetaobjectCtaFragment = Pick<StorefrontAPI.Metaobject, 'handle'> & {
+  label?: StorefrontAPI.Maybe<Pick<StorefrontAPI.MetaobjectField, 'value'>>;
+  to?: StorefrontAPI.Maybe<Pick<StorefrontAPI.MetaobjectField, 'value'>>;
+};
+
+export type MetaobjectImageFragment = {
+  image?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Image, 'url' | 'altText' | 'width' | 'height'>
+  >;
+};
+
+export type MetaobjectStoryPillarFragment = {
+  number?: StorefrontAPI.Maybe<Pick<StorefrontAPI.MetaobjectField, 'value'>>;
+  title?: StorefrontAPI.Maybe<Pick<StorefrontAPI.MetaobjectField, 'value'>>;
+  body?: StorefrontAPI.Maybe<Pick<StorefrontAPI.MetaobjectField, 'value'>>;
+};
+
+export type HomepageHeroQueryVariables = StorefrontAPI.Exact<{
+  handle: StorefrontAPI.Scalars['String']['input'];
+  type: StorefrontAPI.Scalars['String']['input'];
+  country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
+  language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
+}>;
+
+export type HomepageHeroQuery = {
+  hero?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Metaobject, 'id' | 'handle'> & {
+      title?: StorefrontAPI.Maybe<Pick<StorefrontAPI.MetaobjectField, 'value'>>;
+      eyebrow?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.MetaobjectField, 'value'>
+      >;
+      image?: StorefrontAPI.Maybe<{
+        reference?: StorefrontAPI.Maybe<
+          | {
+              __typename:
+                | 'Article'
+                | 'Collection'
+                | 'GenericFile'
+                | 'Metaobject'
+                | 'Model3d'
+                | 'Page'
+                | 'Product'
+                | 'ProductVariant'
+                | 'Video';
+            }
+          | ({__typename: 'MediaImage'} & {
+              image?: StorefrontAPI.Maybe<
+                Pick<
+                  StorefrontAPI.Image,
+                  'url' | 'altText' | 'width' | 'height'
+                >
+              >;
+            })
+        >;
+      }>;
+      primaryCta?: StorefrontAPI.Maybe<{
+        reference?: StorefrontAPI.Maybe<
+          | {
+              __typename:
+                | 'Article'
+                | 'Collection'
+                | 'GenericFile'
+                | 'MediaImage'
+                | 'Model3d'
+                | 'Page'
+                | 'Product'
+                | 'ProductVariant'
+                | 'Video';
+            }
+          | ({__typename: 'Metaobject'} & Pick<
+              StorefrontAPI.Metaobject,
+              'handle'
+            > & {
+                label?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.MetaobjectField, 'value'>
+                >;
+                to?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.MetaobjectField, 'value'>
+                >;
+              })
+        >;
+      }>;
+      secondaryCta?: StorefrontAPI.Maybe<{
+        reference?: StorefrontAPI.Maybe<
+          | {
+              __typename:
+                | 'Article'
+                | 'Collection'
+                | 'GenericFile'
+                | 'MediaImage'
+                | 'Model3d'
+                | 'Page'
+                | 'Product'
+                | 'ProductVariant'
+                | 'Video';
+            }
+          | ({__typename: 'Metaobject'} & Pick<
+              StorefrontAPI.Metaobject,
+              'handle'
+            > & {
+                label?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.MetaobjectField, 'value'>
+                >;
+                to?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.MetaobjectField, 'value'>
+                >;
+              })
+        >;
+      }>;
+    }
+  >;
+};
+
+export type HomepageDeferredQueryVariables = StorefrontAPI.Exact<{
+  storyHandle: StorefrontAPI.Scalars['String']['input'];
+  storyType: StorefrontAPI.Scalars['String']['input'];
+  country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
+  language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
+}>;
+
+export type HomepageDeferredQuery = {
+  story?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Metaobject, 'id' | 'handle'> & {
+      eyebrow?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.MetaobjectField, 'value'>
+      >;
+      title?: StorefrontAPI.Maybe<Pick<StorefrontAPI.MetaobjectField, 'value'>>;
+      body?: StorefrontAPI.Maybe<Pick<StorefrontAPI.MetaobjectField, 'value'>>;
+      image?: StorefrontAPI.Maybe<{
+        reference?: StorefrontAPI.Maybe<
+          | {
+              __typename:
+                | 'Article'
+                | 'Collection'
+                | 'GenericFile'
+                | 'Metaobject'
+                | 'Model3d'
+                | 'Page'
+                | 'Product'
+                | 'ProductVariant'
+                | 'Video';
+            }
+          | ({__typename: 'MediaImage'} & {
+              image?: StorefrontAPI.Maybe<
+                Pick<
+                  StorefrontAPI.Image,
+                  'url' | 'altText' | 'width' | 'height'
+                >
+              >;
+            })
+        >;
+      }>;
+      quote?: StorefrontAPI.Maybe<{
+        reference?: StorefrontAPI.Maybe<
+          | {
+              __typename:
+                | 'Article'
+                | 'Collection'
+                | 'GenericFile'
+                | 'MediaImage'
+                | 'Model3d'
+                | 'Page'
+                | 'Product'
+                | 'ProductVariant'
+                | 'Video';
+            }
+          | ({__typename: 'Metaobject'} & {
+              text?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.MetaobjectField, 'value'>
+              >;
+              attribution?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.MetaobjectField, 'value'>
+              >;
+            })
+        >;
+      }>;
+      pillars?: StorefrontAPI.Maybe<{
+        references?: StorefrontAPI.Maybe<{
+          nodes: Array<
+            | {
+                __typename:
+                  | 'Article'
+                  | 'Collection'
+                  | 'GenericFile'
+                  | 'MediaImage'
+                  | 'Model3d'
+                  | 'Page'
+                  | 'Product'
+                  | 'ProductVariant'
+                  | 'Video';
+              }
+            | ({__typename: 'Metaobject'} & {
+                number?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.MetaobjectField, 'value'>
+                >;
+                title?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.MetaobjectField, 'value'>
+                >;
+                body?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.MetaobjectField, 'value'>
+                >;
+              })
+          >;
+        }>;
+      }>;
+    }
+  >;
+  subscriptionTiers: {
+    nodes: Array<
+      Pick<StorefrontAPI.Metaobject, 'id' | 'handle'> & {
+        tierId?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.MetaobjectField, 'value'>
+        >;
+        name?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.MetaobjectField, 'value'>
+        >;
+        bagsLabel?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.MetaobjectField, 'value'>
+        >;
+        description?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.MetaobjectField, 'value'>
+        >;
+        priceLabel?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.MetaobjectField, 'value'>
+        >;
+        badge?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.MetaobjectField, 'value'>
+        >;
+        highlighted?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.MetaobjectField, 'value'>
+        >;
+        image?: StorefrontAPI.Maybe<{
+          reference?: StorefrontAPI.Maybe<
+            | {
+                __typename:
+                  | 'Article'
+                  | 'Collection'
+                  | 'GenericFile'
+                  | 'Metaobject'
+                  | 'Model3d'
+                  | 'Page'
+                  | 'Product'
+                  | 'ProductVariant'
+                  | 'Video';
+              }
+            | ({__typename: 'MediaImage'} & {
+                image?: StorefrontAPI.Maybe<
+                  Pick<
+                    StorefrontAPI.Image,
+                    'url' | 'altText' | 'width' | 'height'
+                  >
+                >;
+              })
+          >;
+        }>;
+      }
+    >;
+  };
+};
+
 export type ArticleQueryVariables = StorefrontAPI.Exact<{
   articleHandle: StorefrontAPI.Scalars['String']['input'];
   blogHandle: StorefrontAPI.Scalars['String']['input'];
@@ -1208,6 +1468,14 @@ interface GeneratedQueryTypes {
   '#graphql\n  query Footer(\n    $country: CountryCode\n    $footerMenuHandle: String!\n    $language: LanguageCode\n  ) @inContext(language: $language, country: $country) {\n    menu(handle: $footerMenuHandle) {\n      ...Menu\n    }\n  }\n  #graphql\n  fragment MenuItem on MenuItem {\n    id\n    resourceId\n    tags\n    title\n    type\n    url\n  }\n  fragment ChildMenuItem on MenuItem {\n    ...MenuItem\n  }\n  fragment ParentMenuItem on MenuItem {\n    ...MenuItem\n    items {\n      ...ChildMenuItem\n    }\n  }\n  fragment Menu on Menu {\n    id\n    items {\n      ...ParentMenuItem\n    }\n  }\n\n': {
     return: FooterQuery;
     variables: FooterQueryVariables;
+  };
+  '#graphql\n  query HomepageHero(\n    $handle: String!\n    $type: String!\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(country: $country, language: $language) {\n    hero: metaobject(handle: {type: $type, handle: $handle}) {\n      id\n      handle\n      title: field(key: "title") {\n        value\n      }\n      eyebrow: field(key: "eyebrow") {\n        value\n      }\n      image: field(key: "image") {\n        reference {\n          __typename\n          ... on MediaImage {\n            ...MetaobjectImage\n          }\n        }\n      }\n      primaryCta: field(key: "primary_cta") {\n        reference {\n          __typename\n          ... on Metaobject {\n            ...MetaobjectCta\n          }\n        }\n      }\n      secondaryCta: field(key: "secondary_cta") {\n        reference {\n          __typename\n          ... on Metaobject {\n            ...MetaobjectCta\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment MetaobjectCta on Metaobject {\n    handle\n    label: field(key: "label") {\n      value\n    }\n    to: field(key: "to") {\n      value\n    }\n  }\n\n  #graphql\n  fragment MetaobjectImage on MediaImage {\n    image {\n      url\n      altText\n      width\n      height\n    }\n  }\n\n': {
+    return: HomepageHeroQuery;
+    variables: HomepageHeroQueryVariables;
+  };
+  '#graphql\n  query HomepageDeferred(\n    $storyHandle: String!\n    $storyType: String!\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(country: $country, language: $language) {\n    story: metaobject(handle: {type: $storyType, handle: $storyHandle}) {\n      id\n      handle\n      eyebrow: field(key: "eyebrow") {\n        value\n      }\n      title: field(key: "title") {\n        value\n      }\n      body: field(key: "body") {\n        value\n      }\n      image: field(key: "image") {\n        reference {\n          __typename\n          ... on MediaImage {\n            ...MetaobjectImage\n          }\n        }\n      }\n      quote: field(key: "quote") {\n        reference {\n          __typename\n          ... on Metaobject {\n            text: field(key: "text") {\n              value\n            }\n            attribution: field(key: "attribution") {\n              value\n            }\n          }\n        }\n      }\n      pillars: field(key: "pillars") {\n        references(first: 10) {\n          nodes {\n            __typename\n            ... on Metaobject {\n              ...MetaobjectStoryPillar\n            }\n          }\n        }\n      }\n    }\n    subscriptionTiers: metaobjects(type: "subscription_tier", first: 10) {\n      nodes {\n        id\n        handle\n        tierId: field(key: "tier_id") {\n          value\n        }\n        name: field(key: "name") {\n          value\n        }\n        bagsLabel: field(key: "bags_label") {\n          value\n        }\n        description: field(key: "description") {\n          value\n        }\n        priceLabel: field(key: "price_label") {\n          value\n        }\n        badge: field(key: "badge") {\n          value\n        }\n        highlighted: field(key: "highlighted") {\n          value\n        }\n        image: field(key: "image") {\n          reference {\n            __typename\n            ... on MediaImage {\n              ...MetaobjectImage\n            }\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment MetaobjectImage on MediaImage {\n    image {\n      url\n      altText\n      width\n      height\n    }\n  }\n\n  #graphql\n  fragment MetaobjectStoryPillar on Metaobject {\n    number: field(key: "number") {\n      value\n    }\n    title: field(key: "title") {\n      value\n    }\n    body: field(key: "body") {\n      value\n    }\n  }\n\n': {
+    return: HomepageDeferredQuery;
+    variables: HomepageDeferredQueryVariables;
   };
   '#graphql\n  query Article(\n    $articleHandle: String!\n    $blogHandle: String!\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(language: $language, country: $country) {\n    blog(handle: $blogHandle) {\n      handle\n      articleByHandle(handle: $articleHandle) {\n        handle\n        title\n        contentHtml\n        publishedAt\n        author: authorV2 {\n          name\n        }\n        image {\n          id\n          altText\n          url\n          width\n          height\n        }\n        seo {\n          description\n          title\n        }\n      }\n    }\n  }\n': {
     return: ArticleQuery;

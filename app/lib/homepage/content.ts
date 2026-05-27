@@ -61,7 +61,7 @@ export const HOMEPAGE_SUBSCRIPTION_TIERS: SubscriptionTier[] = [
       'Our most popular selection. Two contrasting profiles to compare and contrast.',
     priceLabel: '$42 / Delivery',
     highlighted: true,
-    badge: 'Most Coveted',
+    badge: 'Most Popular',
   },
   {
     id: 'master',
@@ -79,11 +79,22 @@ export const HOMEPAGE_QUIZ_CTA = {
   cta: {label: 'Find Your Profile', to: '/pages/quiz'},
 } as const;
 
+export const HOMEPAGE_EDITORIAL_INTRO = {
+  eyebrow: 'From the Journal',
+  title: 'Stories Worth Savoring',
+} as const;
+
 export const HOMEPAGE_EDITORIAL_FEATURE = {
   eyebrow: 'Brew Guide',
   title: 'The Ritual of the Chemex: Clarity in Every Cup',
   body: 'Learn why the thick paper filter is the secret to unlocking the delicate floral notes in our lighter Ethiopian roasts.',
   cta: {label: 'Read Article', to: '/blogs/journal'},
+} as const;
+
+export const HOMEPAGE_EDITORIAL_SUBSCRIPTION_REVIEW = {
+  text: '\u201cThe Enthusiast edition changed how I taste coffee. Each delivery feels like opening a letter from someone who truly understands my palate.\u201d',
+  attribution: 'Sarah M.',
+  detail: 'Enthusiast Subscriber \u00b7 8 months',
 } as const;
 
 export const HOMEPAGE_EDITORIAL_SIDEBAR = [
