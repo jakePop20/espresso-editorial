@@ -133,13 +133,45 @@
     @apply outline-2 outline-offset-2 outline-roasted-clay;
   }
 
-  /* Comparison table — bordered card with header/body contrast */
+  /* Comparison table — desktop grid + mobile feature cards */
   .ee-subscription-compare__title {
-    @apply mb-16 text-center font-display text-headline-md uppercase tracking-widest text-espresso;
+    @apply mb-10 text-center font-display text-headline-md uppercase tracking-widest text-espresso md:mb-16;
+  }
+
+  .ee-subscription-compare__mobile {
+    @apply flex flex-col gap-4 md:hidden;
+  }
+
+  .ee-subscription-compare__mobile-card {
+    @apply overflow-hidden rounded-lg border border-outline-variant/40 bg-surface-container-lowest;
+  }
+
+  .ee-subscription-compare__mobile-feature {
+    @apply border-b border-outline-variant/30 bg-cream-silk px-5 py-4 font-label text-label-caps uppercase tracking-widest text-espresso;
+  }
+
+  .ee-subscription-compare__mobile-list {
+    @apply m-0 list-none p-0;
+  }
+
+  .ee-subscription-compare__mobile-item {
+    @apply flex items-center justify-between gap-4 border-b border-outline-variant/15 px-5 py-4;
+  }
+
+  .ee-subscription-compare__mobile-item:last-child {
+    @apply border-b-0;
+  }
+
+  .ee-subscription-compare__mobile-item--featured {
+    @apply bg-surface-container-low/40;
+  }
+
+  .ee-subscription-compare__mobile-tier {
+    @apply flex min-w-0 flex-col gap-0.5;
   }
 
   .ee-subscription-compare__scroll {
-    @apply overflow-x-auto;
+    @apply hidden overflow-x-auto md:block;
   }
 
   .ee-subscription-compare__table {
