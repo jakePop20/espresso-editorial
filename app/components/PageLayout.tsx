@@ -144,11 +144,3 @@ function SearchAside() {
     </Aside>
   );
 }
-
-function MobileMenuAside() {
-  return (
-    <Aside type="mobile" heading="Menu">
-      <HeaderMenu viewport="mobile" />
-    </Aside>
-  );
-}
