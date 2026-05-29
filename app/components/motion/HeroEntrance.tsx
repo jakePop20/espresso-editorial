@@ -10,19 +10,26 @@ import {
 import {useMounted} from '~/lib/motion/useMounted';
 
 type HeroEntranceProps = {
-  media: ReactNode;
   content: ReactNode;
+  contentClassName?: string;
+  media: ReactNode;
+  mediaClassName?: string;
 };
 
-export function HeroEntrance({media, content}: HeroEntranceProps) {
+export function HeroEntrance({
+  content,
+  contentClassName = 'homepage-hero__content',
+  media,
+  mediaClassName = 'homepage-hero__media',
+}: HeroEntranceProps) {
   const mounted = useMounted();
   const reducedMotion = useReducedMotion();
 
   if (!mounted || reducedMotion) {
     return (
       <>
-        <div className="homepage-hero__media">{media}</div>
-        <div className="homepage-hero__content">{content}</div>
+        <div className={mediaClassName}>{media}</div>
+        <div className={contentClassName}>{content}</div>
       </>
     );
   }
@@ -30,7 +37,7 @@ export function HeroEntrance({media, content}: HeroEntranceProps) {
   return (
     <>
       <motion.div
-        className="homepage-hero__media"
+        className={mediaClassName}
         initial="hidden"
         animate="visible"
         variants={scaleIn}
@@ -42,7 +49,7 @@ export function HeroEntrance({media, content}: HeroEntranceProps) {
         {media}
       </motion.div>
       <motion.div
-        className="homepage-hero__content"
+        className={contentClassName}
         initial="hidden"
         animate="visible"
         variants={staggerContainer}

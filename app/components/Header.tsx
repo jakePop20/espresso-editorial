@@ -1,3 +1,4 @@
+import {useEffect} from 'react';
 import {NavLink} from 'react-router';
 import type {HeaderQuery} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
@@ -30,7 +31,7 @@ export function HeaderMenu({viewport}: {viewport: 'desktop' | 'mobile'}) {
     viewport === 'desktop' ? 'site-header__nav' : 'header-menu-mobile';
 
   return (
-    <nav className={className} role="navigation">
+    <nav aria-label="Main navigation" className={className} role="navigation">
       {EDITORIAL_HEADER_NAV.map((item) => (
         <NavLink
           className={navLinkClassName}
@@ -48,13 +49,24 @@ export function HeaderMenu({viewport}: {viewport: 'desktop' | 'mobile'}) {
 }
 
 function HeaderMenuMobileToggle() {
-  const {open} = useAside();
+  const {close, open, type} = useAside();
+  const isOpen = type === 'mobile';
+
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 48rem)');
+    const onChange = () => {
+      if (media.matches) close();
+    };
+    media.addEventListener('change', onChange);
+    return () => media.removeEventListener('change', onChange);
+  }, [close]);
 
   return (
     <button
-      aria-label="Open menu"
+      aria-expanded={isOpen}
+      aria-label={isOpen ? 'Close menu' : 'Open menu'}
       className="site-header__menu-toggle btn-icon"
-      onClick={() => open('mobile')}
+      onClick={() => (isOpen ? close() : open('mobile'))}
       type="button"
     >
       <Icon name="menu" />
@@ -81,6 +93,7 @@ function navLinkClassName({
 
 const EDITORIAL_HEADER_NAV = [
   {label: 'Home', to: '/', end: true},
+  {label: 'Our Story', to: '/pages/our-story', end: false},
   {label: 'Quiz', to: '/pages/quiz', end: false},
   {label: 'Subscriptions', to: '/pages/subscription', end: false},
 ] as const;

@@ -1,4 +1,11 @@
 import {useEffect, useMemo, useRef} from 'react';
+import {Stagger, StaggerItem} from '~/components/motion/Stagger';
+import {
+  QUIZ_STEP_CARD_DURATION,
+  QUIZ_STEP_CARD_STAGGER_DELAY,
+  QUIZ_STEP_ENTRANCE_START_DELAY,
+  quizStepFadeUp,
+} from '~/lib/motion/presets';
 import {getShipmentPrice, type SubscriptionCommerceTier} from '~/lib/subscription/commerce';
 import type {
   SubscriptionFrequencyId,
@@ -42,22 +49,30 @@ export function SubscriptionTierGrid({
   }, [initialTierId]);
 
   return (
-    <section className="section homepage-subscriptions__grid ee-subscription__tier-section">
-      {tiers.map((tier, index) => (
-        <div
-          key={tier.id}
-          ref={(node) => {
-            tierRefs.current[tier.id] = node;
-          }}
-        >
-          <SubscriptionTierCard
-            commerce={commerce}
-            frequency={frequency}
-            price={prices[index]}
-            tier={tier}
-          />
-        </div>
-      ))}
+    <section className="section ee-subscription__tier-section">
+      <Stagger
+        className="homepage-subscriptions__grid"
+        delayChildren={QUIZ_STEP_ENTRANCE_START_DELAY}
+        staggerChildren={QUIZ_STEP_CARD_STAGGER_DELAY}
+      >
+        {tiers.map((tier, index) => (
+          <div
+            key={tier.id}
+            ref={(node) => {
+              tierRefs.current[tier.id] = node;
+            }}
+          >
+            <StaggerItem duration={QUIZ_STEP_CARD_DURATION} variants={quizStepFadeUp}>
+              <SubscriptionTierCard
+                commerce={commerce}
+                frequency={frequency}
+                price={prices[index]}
+                tier={tier}
+              />
+            </StaggerItem>
+          </div>
+        ))}
+      </Stagger>
     </section>
   );
 }

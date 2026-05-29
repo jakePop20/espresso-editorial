@@ -30,6 +30,10 @@
     margin-top: var(--ee-subscription-gap-after-freq);
   }
 
+  .ee-subscription__tier-section--loading {
+    min-height: 28rem;
+  }
+
   .ee-subscription__comparison-section,
   .ee-subscription__testimonials-section {
     margin-top: var(--ee-subscription-gap-section);

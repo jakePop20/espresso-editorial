@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import {useReducedMotion} from 'motion/react';
+import {Reveal} from '~/components/motion/Reveal';
 import type {SubscriptionPageContent} from '~/lib/subscription/types';
 
 type SubscriptionTestimonialsProps = {
@@ -40,7 +41,7 @@ export function SubscriptionTestimonials({
           className="absolute top-0 right-0 hidden h-full w-1/3 bg-cover opacity-20 md:block"
           style={backgroundStyle}
         />
-        <div className="relative z-10 max-w-2xl">
+        <Reveal className="relative z-10 max-w-2xl">
           <span className="mb-8 block font-label text-label-caps uppercase tracking-[0.2em] text-inverse-primary">
             {testimonials.eyebrow}
           </span>
@@ -70,7 +71,7 @@ export function SubscriptionTestimonials({
               </p>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

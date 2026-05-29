@@ -1,3 +1,8 @@
+import {
+  ourStoryStoryHref,
+  OUR_STORY_STORY_IDS,
+} from '~/lib/our-story/content';
+
 export type SubscriptionTierId = 'discover' | 'enthusiast' | 'master';
 
 export type SubscriptionTier = {
@@ -89,7 +94,7 @@ export const HOMEPAGE_EDITORIAL_FEATURE = {
   eyebrow: 'Brew Guide',
   title: 'The Ritual of the Chemex: Clarity in Every Cup',
   body: 'Learn why the thick paper filter is the secret to unlocking the delicate floral notes in our lighter Ethiopian roasts.',
-  cta: {label: 'Read Article', to: '/blogs/journal'},
+  cta: {label: 'Read Article', to: ourStoryStoryHref(OUR_STORY_STORY_IDS.chemex)},
 } as const;
 
 export const HOMEPAGE_EDITORIAL_SUBSCRIPTION_REVIEW = {
@@ -103,12 +108,12 @@ export const HOMEPAGE_EDITORIAL_SIDEBAR = [
     handle: 'origin-story',
     eyebrow: 'Origin Story',
     title: 'Huila: High Altitude, Higher Standards',
-    cta: {label: 'Explore Region', to: '/blogs/journal'},
+    cta: {label: 'Explore Region', to: ourStoryStoryHref(OUR_STORY_STORY_IDS.huila)},
   },
   {
     handle: 'sustainability',
     eyebrow: 'Sustainability',
     title: 'Beyond the Fair Trade Label',
-    cta: {label: 'Our Commitment', to: '/pages/sustainability'},
+    cta: {label: 'Our Commitment', to: ourStoryStoryHref(OUR_STORY_STORY_IDS.sustainability)},
   },
 ] as const;

@@ -56,19 +56,26 @@ export function Aside({
   return (
     <div
       aria-modal
-      className={`overlay ${expanded ? 'expanded' : ''}`}
+      aria-label={type === 'mobile' ? 'Menu' : undefined}
+      className={`overlay ${expanded ? 'expanded' : ''}${
+        type === 'mobile' ? ' overlay--mobile-nav' : ''
+      }`}
       role="dialog"
-      aria-labelledby={id}
+      aria-labelledby={type === 'mobile' ? undefined : id}
     >
       <button className="close-outside" onClick={close} />
-      <aside>
-        <header>
-          <h3 id={id}>{heading}</h3>
-          <button className="close reset" onClick={close} aria-label="Close">
-            &times;
-          </button>
-        </header>
-        <main>{children}</main>
+      <aside className={type === 'mobile' ? 'aside-mobile-nav' : undefined}>
+        {type === 'mobile' ? null : (
+          <header>
+            <h3 id={id}>{heading}</h3>
+            <button className="close reset" onClick={close} aria-label="Close">
+              &times;
+            </button>
+          </header>
+        )}
+        <main className={type === 'mobile' ? 'aside-mobile-nav__main' : undefined}>
+          {children}
+        </main>
       </aside>
     </div>
   );

@@ -26,8 +26,14 @@
     @apply hidden items-center gap-6 md:flex;
   }
 
-  .site-header__menu-toggle {
-    @apply text-espresso md:hidden;
+  .site-header__menu-toggle.btn-icon {
+    @apply text-espresso;
+  }
+
+  @media (width >= 48rem) {
+    .site-header__menu-toggle.btn-icon {
+      display: none;
+    }
   }
 
   .site-header__menu-toggle .material-symbols-outlined {
@@ -41,5 +47,18 @@
 
   .site-header .nav-link--active {
     @apply border-b-2 border-espresso pb-1 text-espresso hover:text-espresso;
+  }
+
+  .header-menu-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    padding: 0;
+  }
+
+  .header-menu-mobile .nav-link {
+    @apply font-body text-body-md;
+    display: block;
+    white-space: nowrap;
   }
 }
