@@ -65,3 +65,15 @@ export type SubscriptionPageContent = {
     backgroundImage: HomepageImage | null;
   };
 };
+
+/** Static marketing copy and layout data — not fetched from Shopify. */
+export type SubscriptionPageShell = Omit<
+  SubscriptionPageContent,
+  'tiers' | 'commerce'
+>;
+
+/** Shopify-backed tier pricing and checkout options — loaded after the page shell. */
+export type SubscriptionDeferredContent = Pick<
+  SubscriptionPageContent,
+  'tiers' | 'commerce'
+>;

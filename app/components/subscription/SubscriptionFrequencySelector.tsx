@@ -1,3 +1,4 @@
+import {Reveal} from '~/components/motion/Reveal';
 import type {SubscriptionFrequencyId} from '~/lib/subscription/types';
 
 type SubscriptionFrequencySelectorProps = {
@@ -12,7 +13,7 @@ export function SubscriptionFrequencySelector({
   onChange,
 }: SubscriptionFrequencySelectorProps) {
   return (
-    <section className="section ee-subscription__freq-section">
+    <Reveal as="section" className="section ee-subscription__freq-section">
       <div className="flex flex-col items-center">
         <span className="font-label text-label-caps text-espresso mb-4 tracking-widest">
           Select your delivery cadence
@@ -47,6 +48,6 @@ export function SubscriptionFrequencySelector({
           })}
         </div>
       </div>
-    </section>
+    </Reveal>
   );
 }

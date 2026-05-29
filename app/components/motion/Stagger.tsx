@@ -1,4 +1,4 @@
-import {motion, useReducedMotion} from 'motion/react';
+import {motion, useReducedMotion, type Variants} from 'motion/react';
 import type {ReactNode} from 'react';
 import {
   EDITORIAL_EASE,
@@ -13,9 +13,17 @@ type StaggerProps = {
   children: ReactNode;
   className?: string;
   as?: 'div' | 'ul';
+  delayChildren?: number;
+  staggerChildren?: number;
 };
 
-export function Stagger({as = 'div', children, className}: StaggerProps) {
+export function Stagger({
+  as = 'div',
+  children,
+  className,
+  delayChildren = staggerContainer.visible.transition.delayChildren,
+  staggerChildren = staggerContainer.visible.transition.staggerChildren,
+}: StaggerProps) {
   const mounted = useMounted();
   const reducedMotion = useReducedMotion();
 
@@ -31,7 +39,15 @@ export function Stagger({as = 'div', children, className}: StaggerProps) {
     initial: 'hidden' as const,
     whileInView: 'visible' as const,
     viewport,
-    variants: staggerContainer,
+    variants: {
+      hidden: {},
+      visible: {
+        transition: {
+          staggerChildren,
+          delayChildren,
+        },
+      },
+    },
   };
 
   if (as === 'ul') {
@@ -42,31 +58,54 @@ export function Stagger({as = 'div', children, className}: StaggerProps) {
 }
 
 type StaggerItemProps = {
+  as?: 'div' | 'article' | 'li';
   children: ReactNode;
   className?: string;
-  as?: 'div' | 'article' | 'li';
+  duration?: number;
+  id?: string;
+  variants?: Variants;
 };
 
-export function StaggerItem({as = 'div', children, className}: StaggerItemProps) {
+export function StaggerItem({
+  as = 'div',
+  children,
+  className,
+  duration = MOTION_DURATION.medium,
+  id,
+  variants = fadeUp,
+}: StaggerItemProps) {
   const mounted = useMounted();
   const reducedMotion = useReducedMotion();
 
   if (!mounted || reducedMotion) {
     switch (as) {
       case 'article':
-        return <article className={className}>{children}</article>;
+        return (
+          <article className={className} id={id}>
+            {children}
+          </article>
+        );
       case 'li':
-        return <li className={className}>{children}</li>;
+        return (
+          <li className={className} id={id}>
+            {children}
+          </li>
+        );
       default:
-        return <div className={className}>{children}</div>;
+        return (
+          <div className={className} id={id}>
+            {children}
+          </div>
+        );
     }
   }
 
   const motionProps = {
     className,
-    variants: fadeUp,
+    id,
+    variants,
     transition: {
-      duration: MOTION_DURATION.medium,
+      duration,
       ease: EDITORIAL_EASE,
     },
   };

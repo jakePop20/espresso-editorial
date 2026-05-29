@@ -4,6 +4,8 @@ import type {
   SubscriptionComparisonRow,
   SubscriptionTierId,
 } from '~/lib/subscription/types';
+import {Reveal} from '~/components/motion/Reveal';
+import {Stagger, StaggerItem} from '~/components/motion/Stagger';
 
 type SubscriptionComparisonProps = {
   comparison: SubscriptionComparisonContent;
@@ -89,9 +91,13 @@ function ComparisonMobile({
   rows: SubscriptionComparisonRow[];
 }) {
   return (
-    <div className="ee-subscription-compare__mobile">
+    <Stagger className="ee-subscription-compare__mobile">
       {rows.map((row) => (
-        <article key={row.label} className="ee-subscription-compare__mobile-card">
+        <StaggerItem
+          as="article"
+          className="ee-subscription-compare__mobile-card"
+          key={row.label}
+        >
           <h3 className="ee-subscription-compare__mobile-feature">{row.label}</h3>
           <ul className="ee-subscription-compare__mobile-list">
             {columns.map((column) => {
@@ -120,9 +126,9 @@ function ComparisonMobile({
               );
             })}
           </ul>
-        </article>
+        </StaggerItem>
       ))}
-    </div>
+    </Stagger>
   );
 }
 
@@ -182,9 +188,13 @@ function ComparisonDesktop({comparison}: {comparison: SubscriptionComparisonCont
 export function SubscriptionComparison({comparison}: SubscriptionComparisonProps) {
   return (
     <section className="section ee-subscription__comparison-section">
-      <h2 className="ee-subscription-compare__title">{comparison.title}</h2>
+      <Reveal>
+        <h2 className="ee-subscription-compare__title">{comparison.title}</h2>
+      </Reveal>
       <ComparisonMobile columns={comparison.columns} rows={comparison.rows} />
-      <ComparisonDesktop comparison={comparison} />
+      <Reveal delay={0.12}>
+        <ComparisonDesktop comparison={comparison} />
+      </Reveal>
     </section>
   );
 }

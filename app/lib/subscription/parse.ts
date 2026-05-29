@@ -10,7 +10,10 @@ import {
   getDefaultSubscriptionPage,
   SUBSCRIPTION_DEFAULT_TIERS,
 } from '~/lib/subscription/content';
-import type {SubscriptionPageContent} from '~/lib/subscription/types';
+import type {
+  SubscriptionDeferredContent,
+  SubscriptionPageContent,
+} from '~/lib/subscription/types';
 
 function parseBasePrice(priceLabel: string): number | null {
   const match = priceLabel.match(/\$(\d+)/);
@@ -64,4 +67,17 @@ export function parseSubscriptionPage(
 
 export function getDefaultSubscriptionPageContent() {
   return getDefaultSubscriptionPage();
+}
+
+export function getDefaultSubscriptionDeferred(): SubscriptionDeferredContent {
+  const {tiers, commerce} = getDefaultSubscriptionPage();
+  return {tiers, commerce};
+}
+
+export function parseSubscriptionDeferred(
+  data: SubscriptionPageTiersQuery | null | undefined,
+  productsData?: SubscriptionProductsQuery | null,
+): SubscriptionDeferredContent {
+  const {tiers, commerce} = parseSubscriptionPage(data, productsData);
+  return {tiers, commerce};
 }

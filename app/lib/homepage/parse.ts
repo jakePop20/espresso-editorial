@@ -365,8 +365,8 @@ function parseEditorialSidebar(
   return parsed.length ? parsed : defaults.sidebar;
 }
 
-function parseEditorialContent(
-  data: HomepageDeferredQuery,
+export function parseEditorialContent(
+  data: Pick<HomepageDeferredQuery, 'editorialFeature' | 'editorialSidebar'>,
 ): HomepageEditorialContent {
   const defaults = getDefaultHomepageEditorial();
 

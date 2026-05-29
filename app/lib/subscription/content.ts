@@ -2,6 +2,7 @@ import type {HomepageImage} from '~/lib/homepage/types';
 import type {
   SubscriptionFrequencyId,
   SubscriptionPageContent,
+  SubscriptionPageShell,
   SubscriptionPageTier,
 } from '~/lib/subscription/types';
 
@@ -168,7 +169,7 @@ export const SUBSCRIPTION_TESTIMONIALS = {
   ],
 };
 
-export function getDefaultSubscriptionPage(): SubscriptionPageContent {
+export function getSubscriptionPageShell(): SubscriptionPageShell {
   return {
     metaTitle: 'Espresso Editorial | Subscriptions',
     hero: {
@@ -178,10 +179,16 @@ export function getDefaultSubscriptionPage(): SubscriptionPageContent {
     },
     frequencies: SUBSCRIPTION_FREQUENCIES,
     frequencyModifiers: SUBSCRIPTION_FREQUENCY_MODIFIERS,
-    tiers: SUBSCRIPTION_DEFAULT_TIERS,
-    commerce: [],
     comparison: SUBSCRIPTION_COMPARISON,
     testimonials: SUBSCRIPTION_TESTIMONIALS,
+  };
+}
+
+export function getDefaultSubscriptionPage(): SubscriptionPageContent {
+  return {
+    ...getSubscriptionPageShell(),
+    tiers: SUBSCRIPTION_DEFAULT_TIERS,
+    commerce: [],
   };
 }
 
